@@ -2,13 +2,21 @@
 
 **Automating India's public law processes — RTI applications, legal notices, and statutory compliance.**
 
+🏆 Built for the **Automate India Hackathon**, organised at **Microsoft Office, Noida**.
+
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://arzi-rti-filedesk.up.railway.app/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
 [![Python](https://img.shields.io/badge/backend-Flask-black)](#tech-stack)
 [![Database](https://img.shields.io/badge/database-Supabase%20%2F%20Postgres-3ecf8e)](#tech-stack)
 
 🔗 **Live App:** [arzi-rti-filedesk.up.railway.app](https://arzi-rti-filedesk.up.railway.app/)
-📦 **Repository:** [github.com/shivanshu23625/Arzi](https://github.com/shivanshu23625/Arzi)
+📦 **Repository:** [github.com/samikshakalra02/Arzi](https://github.com/samikshakalra02/Arzi)
+
+---
+
+## 🏆 Hackathon Context
+
+This project was built as part of the **Automate India Hackathon**, hosted at **Microsoft's office in Noida**. The goal was to tackle a real, everyday civic problem in India — the friction citizens face when trying to exercise their legal right to information — by automating the drafting, filing, and tracking of RTI applications, legal notices, and related statutory compliance work.
 
 ---
 
@@ -28,7 +36,7 @@ The platform combines rule-based legal templates with intelligent classification
 - **Document Export** — Produce polished, ready-to-file PDF documents.
 - **Intelligent Classification** — ML-assisted routing/categorization of requests using `scikit-learn`.
 - **Web Dashboard** — A frontend interface for creating, tracking, and managing filings.
-- **Cloud-Native Deployment** — Ships with Docker, Procfile, and Railway/Supabase configuration for one-click deployment.
+- **Multi-Cloud Ready** — Ships with configuration for Railway, Render, and Vercel, alongside Docker support, so it can be deployed on whichever platform is available during a hackathon.
 
 ---
 
@@ -43,7 +51,7 @@ The platform combines rule-based legal templates with intelligent classification
 | Document Generation | ReportLab (PDF generation) |
 | Validation | Pydantic / Pydantic Settings |
 | Testing | Pytest |
-| Deployment | Docker, Railway, Procfile |
+| Deployment | Docker, Railway, Render, Vercel |
 
 ---
 
@@ -51,23 +59,26 @@ The platform combines rule-based legal templates with intelligent classification
 
 ```
 Arzi/
-├── api/                  # API layer / route handlers
-├── arzi-frontend/        # Frontend web dashboard (Node/npm)
-├── common/               # Shared utilities and helpers
-├── config/               # App configuration
-├── flask_backend/        # Core Flask application (app.py entrypoint)
-├── scripts/              # Setup & database scripts (e.g. init_db.sql)
-├── services/             # Business logic / service layer
-├── tests/                # Automated test suite
-├── .env.example          # Environment variable template
-├── Dockerfile            # Container build definition
-├── docker-compose.yml    # Local multi-service orchestration
-├── Procfile              # Railway/Heroku-style process definition
-├── requirements.txt      # Python dependencies
-├── package.json          # NPM scripts for fullstack orchestration
-├── seed_db.py            # Database seeding script
-├── start.py              # Single-command fullstack launcher
-└── DEPLOYMENT_GUIDE.md   # Detailed deployment instructions
+├── api/                     # API layer / route handlers
+├── arzi-frontend/           # Frontend web dashboard (Node/npm)
+├── common/                  # Shared utilities and helpers
+├── config/                  # App configuration
+├── flask_backend/           # Core Flask application (app.py entrypoint)
+├── scripts/                 # Setup & database scripts (e.g. init_db.sql)
+├── services/                # Business logic / service layer
+├── tests/                   # Automated test suite
+├── .env.example             # Environment variable template
+├── Dockerfile                # Container build definition
+├── docker-compose.yml        # Local multi-service orchestration
+├── Procfile                  # Railway/Heroku-style process definition
+├── render.yaml                # Render deployment configuration
+├── vercel.json                 # Vercel deployment configuration
+├── requirements.txt           # Python dependencies
+├── package.json                # NPM scripts for fullstack orchestration
+├── seed_db.py                  # Database seeding script
+├── start.py                    # Single-command fullstack launcher
+├── DEPLOYMENT_GUIDE.md         # Detailed deployment instructions
+└── NOTION_SETUP_GUIDE.md       # Notion workspace setup notes (project tracking)
 ```
 
 ---
@@ -84,7 +95,7 @@ Arzi/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/shivanshu23625/Arzi.git
+   git clone https://github.com/samikshakalra02/Arzi.git
    cd Arzi
    ```
 
@@ -149,9 +160,9 @@ pytest tests/test_flask_api.py
 
 ## ☁️ Deployment
 
-ARZI is designed for zero-configuration deployment on **Railway** with a **Supabase** Postgres backend. Full step-by-step instructions — including required environment variables and Docker/Procfile setup — are documented in [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md).
+ARZI supports **Railway + Supabase**, **Render**, and **Vercel**, so it can be deployed on whatever infrastructure is available. Full step-by-step instructions are documented in [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md).
 
-**Quick summary:**
+**Quick summary (Railway + Supabase):**
 
 1. Push your code to GitHub.
 2. Create a new Railway project → **Deploy from GitHub repo**.
@@ -167,7 +178,9 @@ ARZI is designed for zero-configuration deployment on **Railway** with a **Supab
 
 5. Connect Supabase by running `scripts/init_db.sql` in the Supabase SQL editor and adding your connection string as `DATABASE_URL`.
 
-A live instance is available at: **https://arzi-rti-filedesk.up.railway.app/**
+Render (`render.yaml`) and Vercel (`vercel.json`) configuration files are also included for alternate deployment targets.
+
+A live instance built during the hackathon is available at: **https://arzi-rti-filedesk.up.railway.app/**
 
 ---
 
@@ -193,4 +206,4 @@ This project is licensed under the **MIT License**.
 
 ## 🙏 Acknowledgements
 
-Built to make Indian public law — RTI filings, legal notices, and statutory compliance — more accessible to everyday citizens.
+Built during the **Automate India Hackathon** at **Microsoft Office, Noida**, with the goal of making Indian public law — RTI filings, legal notices, and statutory compliance — more accessible to everyday citizens.
