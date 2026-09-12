@@ -301,7 +301,55 @@ const STATUS_I18N = {
   "DISPATCHED": { en: "DISPATCHED", hi: "प्रेषित" }
 };
 
+
+const LEGAL_GROUNDS_I18N = {
+  "Illegitimate denial or delay in issuance of NFSA/BPL ration cards to eligible below-poverty-line beneficiaries.": "पात्र बीपीएल/एनएफएसए लाभार्थियों को राशन कार्ड जारी करने में अवैध इनकार या अनुचित विलंब।",
+  "Unlawful siphoning and black-marketing of subsidized food grains allocated by Central/State Govts.": "केंद्र व राज्य सरकार द्वारा आवंटित रियायती खाद्यान्न की अवैध कालाबाजारी एवं हेराफेरी।",
+  "Violation of NFSA 2013 statutory timelines and non-maintenance of PDS electronic point-of-sale logs.": "राष्ट्रीय खाद्य सुरक्षा अधिनियम 2013 की समयसीमा का खुला उल्लंघन एवं ई-पॉस (e-PoS) रिकॉर्ड न रखना।",
+  "Deliberate omission by revenue officials (Patwari/Lekhpal/Tehsildar) to record undisputed inheritance/sale mutation.": "राजस्व अधिकारियों (पटवारी/लेखपाल/तहसीलदार) द्वारा निर्विवाद वरासत/बैनामा नामांतरण दर्ज करने में जानबूझकर उपेक्षा।",
+  "Violation of statutory mandate requiring mutation disposal within 30 to 45 days under State Revenue Codes.": "राज्य राजस्व संहिता के तहत 30 से 45 दिनों में नामांतरण निस्तारण की विधिक बाध्यता का उल्लंघन।",
+  "Constructive fraud and breach of public trust by withholding certified Khasra/Khatauni land records.": "प्रमाणित खसरा/खतौनी भू-अभिलेख न देकर जनता के विश्वास के साथ धोखाधड़ी एवं विधिक कर्तव्य में विफलता।",
+  "Gross civic dereliction leading to hazardous waterlogging, open sewer health crises, and environmental poisoning.": "गंभीर नागरिक लापरवाही जिसके कारण भारी जलभराव, खुली नालियों से स्वास्थ्य संकट और पर्यावरण प्रदूषण उत्पन्न हुआ।",
+  "Non-execution of approved civil drainage works despite budgetary allocation and contractor disbursement.": "बजट आवंटन एवं ठेकेदार को भुगतान के बावजूद स्वीकृत जल निकासी कार्यों को पूरा न करना।",
+  "Breach of fundamental Right to Clean Environment and Public Health under Article 21 of the Constitution of India.": "भारतीय संविधान के अनुच्छेद 21 के तहत स्वच्छ पर्यावरण एवं स्वास्थ्य के मौलिक अधिकार का हनन।",
+  "Direct violation of Supreme Court Constitution Bench mandate in *Lalita Kumari v. Govt of UP* (Mandatory FIR).": "ललिता कुमारी बनाम यूपी सरकार में सुप्रीम कोर्ट की संविधान पीठ के अनिवार्य एफआईआर आदेश का सीधा उल्लंघन।",
+  "Unlawful inaction on cognizable crime complaint and failure to provide copy of FIR free of cost under Sec 154(2).": "संज्ञेय अपराध की शिकायत पर गैर-कानूनी निष्क्रियता एवं धारा 154(2) के तहत निशुल्क एफआईआर प्रति न देना।",
+  "Dereliction of statutory policing duties punishable under Section 166A/199.": "धारा 166A/199 के तहत दंडनीय विधिक पुलिस कर्तव्यों की घोर उपेक्षा।",
+  "Arbitrary and prolonged withholding of sanctioned Post-Matric / Merit-cum-Means scholarship funds.": "स्वीकृत पोस्ट-मैट्रिक / मेरिट-कम-मीन्स छात्रवृत्ति धनराशि को मनमाने ढंग से लंबे समय तक रोकना।",
+  "Breach of Ministry of Social Justice / UGC disbursement timelines causing irreparable academic injury.": "सामाजिक न्याय मंत्रालय / यूजीसी वितरण समयसीमा का उल्लंघन जिससे अपूरणीय शैक्षणिक क्षति हुई।",
+  "Unlawful denial of education entitlements under Article 14 & Article 21A of the Constitution.": "संविधान के अनुच्छेद 14 व 21A के अंतर्गत शिक्षा के अधिकारों से गैर-कानूनी रूप से वंचित करना।",
+  "Denial of mandatory free emergency medical care in violation of *Paschim Banga Khet Mazdoor Samity v. State of WB*.": "पश्चिम बंग खेत मजदूर समिति फैसले का उल्लंघन करते हुए अनिवार्य निशुल्क आपातकालीन चिकित्सा से इनकार।",
+  "Non-availability of life-saving medicines listed under National Essential Medicines List (NEML).": "राष्ट्रीय आवश्यक औषधि सूची (NEML) के अंतर्गत सूचीबद्ध जीवनरक्षक दवाओं की अनुपलब्धता।",
+  "Violation of Right to Health guaranteed under Article 21 of Constitution of India.": "संविधान के अनुच्छेद 21 के अंतर्गत स्वास्थ्य के गारंटीकृत विधिक अधिकार का उल्लंघन।",
+  "Statutory failure under Citizen Charter": "नागरिक अधिकार पत्र के अंतर्गत विधिक कर्तव्य में विफलता"
+};
+
+const CUSTOM_ACTS_I18N = {
+  "Consumer Protection Act, 2019": "उपभोक्ता संरक्षण अधिनियम, 2019",
+  "Bharatiya Nagarik Suraksha Sanhita (BNSS 2023)": "भारतीय नागरिक सुरक्षा संहिता (BNSS 2023)",
+  "Uttar Pradesh Revenue Code, 2006": "उत्तर प्रदेश राजस्व संहिता, 2006",
+  "Section 35 & Section 38 (Consumer Grievance Redressal)": "धारा 35 एवं धारा 38 (उपभोक्ता शिकायत निवारण)",
+  "Section 175(3) & Section 173(4) (Magisterial Direction for Investigation)": "धारा 175(3) एवं धारा 173(4) (जांच हेतु मजिस्ट्रेट का निर्देश)",
+  "Section 32 & Section 38 (Correction of Revenue Land Maps & Registers)": "धारा 32 एवं धारा 38 (भू-नक्शा एवं खतौनी संशोधन)",
+  "Consumer Protection & Essential Services": "उपभोक्ता संरक्षण एवं आवश्यक सेवाएं",
+  "Police & Criminal Justice": "पुलिस एवं आपराधिक न्याय",
+  "Revenue & Land Records": "राजस्व एवं भूमि अभिलेख",
+  "Empowers citizens to claim full restitution, litigation costs, and severe damages for deficiency in public/private services within statutory 90-day time-limit.": "नागरिकों को सार्वजनिक/निजी सेवाओं में कमी के विरुद्ध 90 दिनों के भीतर पूर्ण क्षतिपूर्ति, वाद व्यय एवं हर्जाना पाने का अधिकार देता है।",
+  "Mandates Judicial Magistrate to direct immediate registration of FIR and monitor investigation upon police refusal under Section 173.": "धारा 173 के तहत पुलिस द्वारा एफआईआर न लिखने पर न्यायिक मजिस्ट्रेट को तत्काल एफआईआर दर्ज कराने और जांच की निगरानी का अधिकार देता है।",
+  "Statutory duty of Sub-Divisional Officer (SDO) to correct clerical and map errors in Khasra/Khatauni within 45 days of application.": "आवेदन के 45 दिनों के भीतर खसरा/खतौनी में लिपिकीय व नक्शा त्रुटियों को सुधारने का उप-जिलाधिकारी (एसडीओ) का विधिक कर्तव्य।",
+  "Full refund + General damages up to Rs. 5,00,000 + Product recall orders": "पूर्ण धनराशि वापसी + ₹5,00,000 तक हर्जाना + दोषपूर्ण उत्पाद वापसी आदेश",
+  "Judicial Court Order for immediate criminal investigation against accused public servants": "आरोपी लोक सेवकों के विरुद्ध तत्काल आपराधिक जांच हेतु न्यायिक न्यायालय का आदेश",
+  "Mandatory administrative rectification of Land Title Records": "भू-अभिलेखों का अनिवार्य प्रशासनिक शुद्धिकरण",
+  "Adv. S. Kalra (Bar Council Counsel)": "अधिवक्ता एस. कालरा (बार काउंसिल काउंसिल)",
+  "Advocate Legal Team": "विधिक परामर्शदाता दल"
+};
+
 const INFRACTIONS_I18N = {
+  "Public Nuisance, Drainage Negligence & Misappropriation of Civil Tender Funds": "सार्वजनिक उपद्रव, जल निकासी में लापरवाही एवं निविदा गबन",
+  "Refusal to Register FIR & Malicious Delay in Investigation": "एफआईआर दर्ज करने से इनकार एवं जांच में द्वेषपूर्ण विलंब",
+  "Withholding Government Student Scholarships & Grant Embezzlement": "सरकारी छात्रवृत्ति रोकना एवं अनुदान गबन",
+  "Denial of Emergency Healthcare & Government Hospital Negligence": "आपातकालीन स्वास्थ्य सेवा से इनकार एवं सरकारी अस्पताल लापरवाही",
+
   "Public Distribution System (PDS) Diversion & Essential Commodities Black Marketing": "सार्वजनिक वितरण प्रणाली (PDS) कालाबाजारी एवं खाद्यान्न हेराफेरी",
   "Land Record Tampering & Fraudulent Property Mutation": "भूमि अभिलेख में हेराफेरी एवं अवैध नामांतरण",
   "Administrative Infraction": "प्रशासनिक उल्लंघन / विलंब",
@@ -318,6 +366,27 @@ const INFRACTIONS_I18N = {
 };
 
 const SECTIONS_I18N = {
+  "BNS Section 270 (Public Nuisance)": "बीएनएस धारा 270 (सार्वजनिक उपद्रव)",
+  "IPC Section 268 (Public Nuisance)": "आईपीसी धारा 268 (सार्वजनिक उपद्रव)",
+  "BNS Section 270": "बीएनएस धारा 270",
+  "IPC Section 268": "आईपीसी धारा 268",
+  "BNS Sec 270": "बीएनएस धारा 270",
+  "IPC Sec 268": "आईपीसी धारा 268",
+  "IPC Section 166A (Public Servant disobeying law)": "आईपीसी धारा 166A (कानून की अवहेलना करने वाला लोक सेवक)",
+  "IPC Section 166A (Public servant disobeying direction under law)": "आईपीसी धारा 166A (कानूनी निर्देश की अवहेलना)",
+  "BNS Section 199 (Public Servant disobeying direction under law)": "बीएनएस धारा 199 (कानूनी निर्देश की अवहेलना करने वाला लोक सेवक)",
+  "BNS Section 199 (Public servant disobeying direction under law)": "बीएनएस धारा 199 (कानूनी निर्देश की अवहेलना)",
+  "IPC Section 166A": "आईपीसी धारा 166A",
+  "IPC Sec 166A": "आईपीसी धारा 166A",
+  "BNS Section 199": "बीएनएस धारा 199",
+  "BNS Sec 199": "बीएनएस धारा 199",
+  "IPC Section 166 (Disobedience of Law)": "आईपीसी धारा 166 (कानून की अवज्ञा)",
+  "BNS Section 198 (Public Servant Disobedience)": "बीएनएस धारा 198 (लोक सेवक द्वारा अवज्ञा)",
+  "IPC Section 166": "आईपीसी धारा 166",
+  "IPC Sec 166": "आईपीसी धारा 166",
+  "BNS Section 198": "बीएनएस धारा 198",
+  "BNS Sec 198": "बीएनएस धारा 198",
+
   "BNS Section 316(5) (Criminal Breach of Trust by Public Servant/Dealer)": "बीएनएस धारा 316(5) (लोक सेवक/डीलर द्वारा आपराधिक विश्वासघात)",
   "BNS Section 316(5)": "बीएनएस धारा 316(5)",
   "BNS Sec 316(5)": "बीएनएस धारा 316(5)",
@@ -351,6 +420,16 @@ const SECTIONS_I18N = {
 };
 
 const PEOPLE_AND_OFFICES_I18N = {
+  "Executive Engineer (Civil/Drainage)": "अधिशासी अभियंता (सिविल/जल निकासी)",
+  "Executive Engineer": "अधिशासी अभियंता",
+  "Shivanshu": "शिवांशु",
+  "Sunita Devi": "सुनीता देवी",
+  "Shivanshu Pandey": "शिवांशु पाण्डेय",
+  "Dr. Rita Sharma": "डॉ. रीता शर्मा",
+  "25 feet road,sgm nagar, faridabad (121001)": "25 फीट रोड, एसजीएम नगर, फरीदाबाद (121001)",
+  "Sector 4, Mehrauli, New Delhi": "सेक्टर 4, महरौली, नई दिल्ली",
+  "House No. 45, BPL Cluster, Ward 4, New Delhi": "मकान नं. 45, बीपीएल क्लस्टर, वार्ड 4, नई दिल्ली",
+
   // Complainants
   "Sunita Devi": "सुनीता देवी",
   "Shivanshu Pandey": "शिवांशु पाण्डेय",
@@ -439,6 +518,27 @@ const PEOPLE_AND_OFFICES_I18N = {
 };
 
 const SEED_CASES_I18N = {
+  "ARZ-1048": {
+    raw_grievance: "25 फीट रोड, एसजीएम नगर, फरीदाबाद में मुख्य नाली टूटी हुई है और मानसून में भीषण जलभराव व दुर्गंध फैलती है। नगर निगम द्वारा निविदा पास होने के बावजूद कोई कार्य नहीं कराया गया है। ठेकेदार और अधिकारियों की मिलीभगत से फंड का गबन किया गया है।",
+    draft_subject: "नगर निगम लोक निर्माण एवं जल निकासी के संबंध में 25 फीट रोड, एसजीएम नगर, फरीदाबाद में नाली निर्माण एवं निविदा फंड की स्थिति हेतु धारा 6(1) के तहत आवेदन",
+    questions: [
+      "1. कृपया 25 फीट रोड, एसजीएम नगर में स्वीकृत नाली निर्माण एवं जल निकासी कार्य की स्वीकृत डीपीआर (विस्तृत परियोजना रिपोर्ट) एवं वित्तीय स्वीकृति आदेश की प्रमाणित प्रति प्रदान करें।",
+      "2. उक्त कार्य हेतु आवंटित कुल बजट, ठेकेदार को किए गए भुगतान का विवरण एवं संबंधित एमबी (माप पुस्तिका) की प्रमाणित प्रतिलिपि उपलब्ध कराएं।",
+      "3. निर्माण कार्य पूर्ण न होने के बावजूद भुगतान जारी करने वाले संबंधित अधिशासी अभियंता एवं कनिष्ठ अभियंता का नाम व पदनाम बताएं।",
+      "4. क्या उक्त नाली अवरोध एवं घटिया निर्माण के विरुद्ध नगर निगम द्वारा कोई जांच समिति गठित की गई है? यदि हां, तो जांच आख्या उपलब्ध कराएं।"
+    ],
+    fees_paid: "आरटीआई नियमावली 2012 के नियम 3 के तहत ₹10 का पोस्टल ऑर्डर विहित शुल्क के रूप में संलग्न है।",
+    appeal_subject: "केस ARZ-1048 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील",
+    appeal_grounds: [
+      "1. सक्षम जन सूचना अधिकारी द्वारा 30-दिवसीय अनिवार्य समयसीमा में सूचना प्रदान नहीं की गई।",
+      "2. धारा 7(2) के तहत सूचना न देना स्वतः अस्वीकृति (Deemed Refusal) है।"
+    ],
+    appeal_prayers: [
+      "1. जन सूचना अधिकारी को निर्देश दिया जाए कि वह समस्त वांछित अभिलेख निःशुल्क उपलब्ध कराएं।",
+      "2. धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना लगाया जाए।"
+    ]
+  },
+
   "ARZ-1042": {
     raw_grievance: "मेरे परिवार का बीपीएल राशन कार्ड आवेदन (संदर्भ संख्या RC-88492) 6 महीने पहले वार्ड 4 आपूर्ति कार्यालय में जमा किया गया था। हमें अभी तक न तो राशन कार्ड मिला है और न ही खाद्यान्न। राशन डीलर स्टॉक रजिस्टर दिखाने से मना करता है।",
     draft_subject: "खाद्य एवं नागरिक आपूर्ति के संबंध में वार्ड 4, सिविल लाइंस में लंबित शिकायत (संदर्भ सं: RC-88492, जमा तिथि: 15-फरवरी-2026) की स्थिति जानने हेतु सूचना का अधिकार अधिनियम 2005 की धारा 6(1) के तहत आवेदन",
@@ -540,6 +640,10 @@ function tAddress(addr) {
     }
   }
   res = res.replace(/\bHouse No\.\b/gi, "मकान नं.")
+           .replace(/\b25 feet road\b/gi, "25 फीट रोड")
+           .replace(/\bsgm nagar\b/gi, "एसजीएम नगर")
+           .replace(/\bfaridabad\b/gi, "फरीदाबाद")
+           .replace(/\bFaridabad\b/gi, "फरीदाबाद")
            .replace(/\bCluster\b/gi, "क्लस्टर")
            .replace(/\bWard\b/gi, "वार्ड")
            .replace(/\bSector\b/gi, "सेक्टर")
@@ -570,18 +674,31 @@ function tSection(sec) {
   if (!sec) return "";
   if (currentLang !== "hi") return sec;
   if (SECTIONS_I18N[sec]) return SECTIONS_I18N[sec];
-  let res = sec;
   for (let k in SECTIONS_I18N) {
-    if (res.includes(k)) {
-      res = res.replace(k, SECTIONS_I18N[k]);
+    if (sec.toLowerCase() === k.toLowerCase()) {
+      return SECTIONS_I18N[k];
     }
   }
+  for (let k in SECTIONS_I18N) {
+    if (sec.includes(k)) {
+      return SECTIONS_I18N[k];
+    }
+  }
+  let res = sec;
   res = res.replace(/BNS Section/gi, "बीएनएस धारा")
            .replace(/BNS Sec/gi, "बीएनएस धारा")
            .replace(/IPC Section/gi, "आईपीसी धारा")
            .replace(/IPC Sec/gi, "आईपीसी धारा")
            .replace(/Section/gi, "धारा")
-           .replace(/Sec/gi, "धारा");
+           .replace(/Sec/gi, "धारा")
+           .replace(/Cheating/gi, "धोखाधड़ी")
+           .replace(/Public Nuisance/gi, "सार्वजनिक उपद्रव")
+           .replace(/Criminal Breach of Trust by Public Servant\/Dealer/gi, "लोक सेवक/डीलर द्वारा आपराधिक न्यासभंग")
+           .replace(/Criminal Breach of Trust by Public Servant/gi, "लोक सेवक द्वारा आपराधिक न्यासभंग")
+           .replace(/Public Servant disobeying law/gi, "लोक सेवक द्वारा कानून की अवहेलना")
+           .replace(/Public Servant disobeying direction under law/gi, "लोक सेवक द्वारा कानूनी निर्देश की अवहेलना")
+           .replace(/Public Servant Disobedience/gi, "लोक सेवक द्वारा अवज्ञा")
+           .replace(/Disobedience of Law/gi, "कानून की अवज्ञा");
   return res;
 }
 
@@ -603,81 +720,225 @@ function tStatus(status) {
   return status;
 }
 
+
+function tLegalGround(ground) {
+  if (!ground) return "";
+  if (currentLang !== "hi") return ground;
+  if (LEGAL_GROUNDS_I18N[ground]) return LEGAL_GROUNDS_I18N[ground];
+  for (let k in LEGAL_GROUNDS_I18N) {
+    if (ground.includes(k) || k.includes(ground)) {
+      return LEGAL_GROUNDS_I18N[k];
+    }
+  }
+  return ground;
+}
+
+function tWinProb(prob) {
+  if (!prob) return currentLang === "hi" ? "उच्च संभावना" : "High Probability";
+  if (currentLang !== "hi") return prob;
+  if (prob.includes("VERY HIGH") || prob.includes("95%")) return "अत्यधिक उच्च (95%+)";
+  if (prob.includes("HIGH") || prob.includes("High")) return "उच्च";
+  if (prob.includes("MEDIUM") || prob.includes("Medium")) return "मध्यम";
+  return prob;
+}
+
+function tDesignation(desig) {
+  if (!desig) return currentLang === "hi" ? "नामित प्राधिकारी" : "Designated Authority";
+  if (currentLang !== "hi") return desig;
+  if (PEOPLE_AND_OFFICES_I18N[desig]) return PEOPLE_AND_OFFICES_I18N[desig];
+  let res = desig;
+  for (let k in PEOPLE_AND_OFFICES_I18N) {
+    if (res.includes(k)) {
+      res = res.replace(k, PEOPLE_AND_OFFICES_I18N[k]);
+    }
+  }
+  return res.replace(/Public Information Officer & Assistant Commissioner/gi, "जन सूचना अधिकारी एवं सहायक आयुक्त")
+            .replace(/Public Information Officer/gi, "जन सूचना अधिकारी")
+            .replace(/Assistant Commissioner/gi, "सहायक आयुक्त")
+            .replace(/Deputy Registrar & PIO \(Scholarships\)/gi, "उप कुलसचिव एवं पीआईओ (छात्रवृत्ति)")
+            .replace(/Deputy Registrar/gi, "उप कुलसचिव")
+            .replace(/Director of Higher Education \/ First Appellate Authority/gi, "निदेशक उच्च शिक्षा / प्रथम अपीलीय अधिकारी")
+            .replace(/Director of Higher Education/gi, "निदेशक उच्च शिक्षा")
+            .replace(/Additional Commissioner \(PDS\) \/ First Appellate Authority/gi, "अपर आयुक्त (पीडीएस) / प्रथम अपीलीय अधिकारी")
+            .replace(/Additional Commissioner/gi, "अपर आयुक्त")
+            .replace(/First Appellate Authority/gi, "प्रथम अपीलीय अधिकारी")
+            .replace(/Executive Engineer \(Civil\/Drainage\)/gi, "अधिशासी अभियंता (सिविल/जल निकासी)")
+            .replace(/Executive Engineer/gi, "अधिशासी अभियंता")
+            .replace(/Civil\/Drainage/gi, "सिविल/जल निकासी")
+            .replace(/Drainage & Stormwater/gi, "जल निकासी एवं वर्षा जल")
+            .replace(/Scholarships/gi, "छात्रवृत्ति")
+            .replace(/Appellate Officer/gi, "अपीलीय अधिकारी")
+            .replace(/Designated PIO/gi, "नामित जन सूचना अधिकारी");
+}
+
+function tReviewer(name) {
+  if (!name) return currentLang === "hi" ? "विधिक समीक्षक" : "Legal Reviewer";
+  if (currentLang !== "hi") return name;
+  if (name.includes("Kalra")) return "अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)";
+  if (name.includes("Advocate Legal Team")) return "विधिक परामर्शदाता दल";
+  if (name.includes("Advocate")) return "विधिक परामर्शदाता";
+  return name;
+}
+
+
+function tCustomAct(str) {
+  if (!str) return "";
+  if (currentLang !== "hi") return str;
+  if (CUSTOM_ACTS_I18N[str]) return CUSTOM_ACTS_I18N[str];
+  for (let k in CUSTOM_ACTS_I18N) {
+    if (str.includes(k) || k.includes(str)) {
+      return CUSTOM_ACTS_I18N[k];
+    }
+  }
+  return str;
+}
+
+function tTimelineField(field) {
+  if (!field) return "";
+  if (currentLang !== "hi") return field;
+  const map = {
+    "Case Intake": "केस दर्ज",
+    "status": "केस स्थिति",
+    "Status": "केस स्थिति",
+    "dispatch_info": "प्रेषण विवरण",
+    "assigned_pio": "नामित जन सूचना अधिकारी",
+    "suggested_pio": "सुझावित जन सूचना अधिकारी",
+    "is_life_liberty": "जीवन व स्वतंत्रता प्राथमिकता"
+  };
+  return map[field] || field;
+}
+
+function tTimelineVal(val) {
+  if (!val) return currentLang === "hi" ? "कोई नहीं" : "None";
+  if (currentLang !== "hi") return val;
+  if (val === "None" || val === "null" || val === "undefined") return "कोई नहीं";
+  let str = String(val);
+  str = str.replace(/Case\s+([A-Z0-9-]+)\s+created/gi, "केस $1 दर्ज किया गया")
+           .replace(/UNDER_REVIEW/gi, "समीक्षाधीन")
+           .replace(/APPROVED/gi, "स्वीकृत")
+           .replace(/TRANSFERRED_SEC_6_3/gi, "अंतरित (धारा 6(3))")
+           .replace(/MERGED_DUPLICATE/gi, "विलय किया गया डुप्लिकेट")
+           .replace(/DISPATCHED/gi, "प्रेषित");
+  return str;
+}
+
 function tPunishment(pun) {
   if (!pun) return currentLang === "hi" ? "कठोर कारावास + जुर्माना" : "Rigorous Imprisonment + Fine";
   if (currentLang !== "hi") return pun;
   const map = {
-    "Rigorous Imprisonment + Fine": "कठोर कारावास + आर्थिक जुर्माना",
     "Rigorous imprisonment up to 7 years + fine": "7 वर्ष तक का कठोर कारावास + जुर्माना",
     "Rigorous imprisonment up to 10 years + fine": "10 वर्ष तक का कठोर कारावास + जुर्माना",
     "Life Imprisonment or Imprisonment up to 10 years + Fine": "आजीवन कारावास या 10 वर्ष तक कारावास + जुर्माना",
+    "Imprisonment for Life or up to 10 years + Fine (Non-bailable under Sec 409/316(5))": "आजीवन कारावास या 10 वर्ष तक कारावास + जुर्माना (गैर-जमानती धारा 409/316(5))",
+    "Imprisonment up to 7 years + Fine (Non-bailable & Cognizable under Section 468/336)": "7 वर्ष तक कारावास + जुर्माना (गैर-जमानती धारा 468/336)",
+    "Imprisonment up to 6 months + Fine + High Court Mandamus Writ liability under Article 226": "6 माह तक कारावास + जुर्माना + अनुच्छेद 226 के तहत रिट देयता",
+    "Rigorous Imprisonment up to 2 years + Mandatory departmental inquiry and disciplinary penalty": "2 वर्ष तक कठोर कारावास + अनिवार्य विभागीय जांच व दंडात्मक कार्रवाई",
+    "Imprisonment up to 10 years + Disciplinary recovery under Comptroller and Auditor General (CAG) norms": "10 वर्ष तक कारावास + कैग (CAG) नियमों के तहत वसूली",
+    "Imprisonment up to 5 years + Medical License cancellation and Consumer Tribunal damages": "5 वर्ष तक कारावास + मेडिकल लाइसेंस रद्दीकरण एवं हर्जाना",
     "Imprisonment up to 3 years or fine": "3 वर्ष तक कारावास या जुर्माना",
     "Imprisonment up to 3 years or fine or both": "3 वर्ष तक कारावास या जुर्माना या दोनों",
     "Imprisonment up to 7 years and fine": "7 वर्ष तक कारावास और जुर्माना",
-    "Imprisonment up to 7 years + fine": "7 वर्ष तक कारावास + जुर्माना",
-    "Imprisonment for life or up to 10 years + fine": "आजीवन कारावास या 10 वर्ष तक कारावास + जुर्माना"
+    "Imprisonment up to 7 years + fine": "7 वर्ष तक कारावास + जुर्माना"
   };
-  return map[pun] || pun;
+  if (map[pun]) return map[pun];
+  for (let k in map) {
+    if (pun.toLowerCase() === k.toLowerCase() || pun.includes(k) || k.includes(pun)) {
+      return map[k];
+    }
+  }
+  let str = pun;
+  str = str.replace(/Imprisonment for Life/gi, "आजीवन कारावास")
+           .replace(/Life Imprisonment/gi, "आजीवन कारावास")
+           .replace(/Rigorous Imprisonment/gi, "कठोर कारावास")
+           .replace(/Rigorous imprisonment/gi, "कठोर कारावास")
+           .replace(/Imprisonment/gi, "कारावास")
+           .replace(/imprisonment/gi, "कारावास")
+           .replace(/up to (\d+) years/gi, "$1 वर्ष तक")
+           .replace(/up to (\d+) months/gi, "$1 माह तक")
+           .replace(/\+ fine/gi, "+ जुर्माना")
+           .replace(/\+ Fine/gi, "+ जुर्माना")
+           .replace(/and fine/gi, "और जुर्माना")
+           .replace(/or fine/gi, "या जुर्माना")
+           .replace(/or both/gi, "या दोनों")
+           .replace(/Non-bailable/gi, "गैर-जमानती")
+           .replace(/Cognizable/gi, "संज्ञेय")
+           .replace(/under Sec/gi, "धारा के तहत")
+           .replace(/under Section/gi, "धारा के तहत");
+  return str;
 }
 
-function tGrievance(caseId, raw) {
+function tGrievance(caseIdOrRaw, maybeRaw) {
+  let caseId = maybeRaw !== undefined ? caseIdOrRaw : (currentCase ? currentCase.case_id : null);
+  let raw = maybeRaw !== undefined ? maybeRaw : caseIdOrRaw;
   if (!raw) return "";
   if (currentLang !== "hi") return raw;
-  if (caseId && SEED_CASES_I18N[caseId]?.raw_grievance) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].raw_grievance) {
     return SEED_CASES_I18N[caseId].raw_grievance;
   }
   return raw;
 }
 
-function tDraftSubject(caseId, subj) {
+function tDraftSubject(caseIdOrSubj, maybeSubj) {
+  let caseId = maybeSubj !== undefined ? caseIdOrSubj : (currentCase ? currentCase.case_id : null);
+  let subj = maybeSubj !== undefined ? maybeSubj : caseIdOrSubj;
   if (!subj) return currentLang === "hi" ? "सूचना का अधिकार आवेदन" : "Right to Information Application";
   if (currentLang !== "hi") return subj;
-  if (caseId && SEED_CASES_I18N[caseId]?.draft_subject) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].draft_subject) {
     return SEED_CASES_I18N[caseId].draft_subject;
   }
   return subj;
 }
 
-function tDraftQuestions(caseId, questions) {
+function tDraftQuestions(caseIdOrQuestions, maybeQuestions) {
+  let caseId = maybeQuestions !== undefined ? caseIdOrQuestions : (currentCase ? currentCase.case_id : null);
+  let questions = maybeQuestions !== undefined ? maybeQuestions : caseIdOrQuestions;
   if (!questions || !Array.isArray(questions)) return [];
   if (currentLang !== "hi") return questions;
-  if (caseId && SEED_CASES_I18N[caseId]?.questions) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].questions) {
     return SEED_CASES_I18N[caseId].questions;
   }
   return questions;
 }
 
-function tDraftFees(caseId, fees) {
+function tDraftFees(caseIdOrFees, maybeFees) {
+  let caseId = maybeFees !== undefined ? caseIdOrFees : (currentCase ? currentCase.case_id : null);
+  let fees = maybeFees !== undefined ? maybeFees : caseIdOrFees;
   if (!fees) return currentLang === "hi" ? "₹10 विहित आरटीआई शुल्क संलग्न" : "Rs. 10 prescribed fee attached";
   if (currentLang !== "hi") return fees;
-  if (caseId && SEED_CASES_I18N[caseId]?.fees_paid) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].fees_paid) {
     return SEED_CASES_I18N[caseId].fees_paid;
   }
   return fees;
 }
 
-function tAppealSubject(caseId, subj) {
+function tAppealSubject(caseIdOrSubj, maybeSubj) {
+  let caseId = maybeSubj !== undefined ? caseIdOrSubj : (currentCase ? currentCase.case_id : null);
+  let subj = maybeSubj !== undefined ? maybeSubj : caseIdOrSubj;
   if (!subj) return currentLang === "hi" ? "धारा 19(1) के तहत प्रथम अपील" : "FIRST APPEAL UNDER SECTION 19(1)";
   if (currentLang !== "hi") return subj;
-  if (caseId && SEED_CASES_I18N[caseId]?.appeal_subject) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_subject) {
     return SEED_CASES_I18N[caseId].appeal_subject;
   }
   return subj;
 }
 
-function tAppealGrounds(caseId, grounds) {
+function tAppealGrounds(caseIdOrGrounds, maybeGrounds) {
+  let caseId = maybeGrounds !== undefined ? caseIdOrGrounds : (currentCase ? currentCase.case_id : null);
+  let grounds = maybeGrounds !== undefined ? maybeGrounds : caseIdOrGrounds;
   if (!grounds || !Array.isArray(grounds)) return [];
   if (currentLang !== "hi") return grounds;
-  if (caseId && SEED_CASES_I18N[caseId]?.appeal_grounds) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_grounds) {
     return SEED_CASES_I18N[caseId].appeal_grounds;
   }
   return grounds;
 }
 
-function tAppealPrayers(caseId, prayers) {
+function tAppealPrayers(caseIdOrPrayers, maybePrayers) {
+  let caseId = maybePrayers !== undefined ? caseIdOrPrayers : (currentCase ? currentCase.case_id : null);
+  let prayers = maybePrayers !== undefined ? maybePrayers : caseIdOrPrayers;
   if (!prayers || !Array.isArray(prayers)) return [];
   if (currentLang !== "hi") return prayers;
-  if (caseId && SEED_CASES_I18N[caseId]?.appeal_prayers) {
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_prayers) {
     return SEED_CASES_I18N[caseId].appeal_prayers;
   }
   return prayers;
@@ -846,6 +1107,13 @@ function setLanguage(lang) {
   const repoStatus = document.getElementById("repoStatusText");
   if (repoStatus) {
     repoStatus.textContent = (lang === "hi" ? "सक्रिय" : "Operational");
+  }
+
+  const revInp = document.getElementById("reviewerName");
+  if (revInp) {
+    revInp.value = (lang === "hi"
+      ? "अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)"
+      : "Adv. S. Kalra (Bar Council / Legal Counsel)");
   }
 
   // Refresh workspace or queue if active
@@ -1679,7 +1947,7 @@ function populateWorkspaceFields(c) {
   groundsList.innerHTML = "";
   (legal.legal_grounds || ["Statutory failure under Citizen Charter"]).forEach(g => {
     const li = document.createElement("li");
-    li.textContent = currentLang === "hi" ? tInfraction(g) : g;
+    li.textContent = currentLang === "hi" ? tLegalGround(g) : g;
     groundsList.appendChild(li);
   });
 
@@ -1700,6 +1968,13 @@ function populateWorkspaceFields(c) {
 
   // ML Dossier
   document.getElementById("viewMlReportFormat").value = tMlReport(c);
+
+  const revEl = document.getElementById("reviewerName");
+  if (revEl) {
+    revEl.value = currentLang === "hi"
+      ? "अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)"
+      : "Adv. S. Kalra (Bar Council / Legal Counsel)";
+  }
 
   // Timeline
   renderCaseTimeline(c);
@@ -1764,9 +2039,9 @@ function renderCaseTimeline(c) {
       
       const evType = tRunLogEvent(h.update_type);
       const actor = tRunLogActor(h.actor);
-      const field = currentLang === "hi" ? tAddress(h.field_changed) : h.field_changed;
-      const oldVal = currentLang === "hi" ? tAddress(h.old_value) : h.old_value;
-      const newVal = currentLang === "hi" ? tAddress(h.new_value) : h.new_value;
+      const field = tTimelineField(h.field_changed);
+      const oldVal = tTimelineVal(h.old_value);
+      const newVal = tTimelineVal(h.new_value);
       const remarks = currentLang === "hi" ? tRunLogAction(h.remarks || "") : h.remarks;
 
       card.innerHTML = `
@@ -2163,30 +2438,31 @@ async function openCaseDetailView(caseId) {
     const docketIdEl = document.getElementById("detailDocketId");
     if (docketIdEl) docketIdEl.textContent = caseData.case_id;
     const breadcrumbEl = document.getElementById("detailCaseBreadcrumb");
-    if (breadcrumbEl) breadcrumbEl.textContent = `${caseData.case_id} Dossier`;
+    if (breadcrumbEl) breadcrumbEl.textContent = currentLang === "hi" ? `${caseData.case_id} डॉसियर` : `${caseData.case_id} Dossier`;
     const subjectEl = document.getElementById("detailDocketSubject");
-    if (subjectEl) subjectEl.textContent = caseData.draft_rti?.application_subject || "Right to Information Application";
+    if (subjectEl) subjectEl.textContent = tDraftSubject(caseData.case_id, caseData.draft_rti && caseData.draft_rti.application_subject);
     const dateEl = document.getElementById("detailDocketDate");
     if (dateEl) dateEl.textContent = caseData.original_submission_date || caseData.created_at || "—";
     const refEl = document.getElementById("detailDocketRef");
-    if (refEl) refEl.textContent = caseData.application_ref_no || "Standard Filing";
+    if (refEl) refEl.textContent = caseData.application_ref_no || (currentLang === "hi" ? "मानक आवेदन" : "Standard Filing");
     const deptEl = document.getElementById("detailDocketDept");
-    if (deptEl) deptEl.textContent = caseData.department || "Revenue & Land Records";
+    if (deptEl) deptEl.textContent = tDept(caseData.department);
     const compNameEl = document.getElementById("detailDocketComplainantName");
-    if (compNameEl) compNameEl.textContent = caseData.complainant?.name || "Citizen Applicant";
+    if (compNameEl) compNameEl.textContent = tComplainant(caseData.complainant && caseData.complainant.name);
     const locEl = document.getElementById("detailDocketLocation");
-    if (locEl) locEl.textContent = caseData.district ? `${caseData.district}, ${caseData.state || ''}` : (caseData.confidence?.user_locality || "Local Jurisdiction");
+    if (locEl) locEl.textContent = caseData.district ? tAddress(`${caseData.district}, ${caseData.state || ''}`) : tAddress(caseData.confidence?.user_locality || "Local Jurisdiction");
     const pinEl = document.getElementById("detailPincodeBadge");
-    if (pinEl) pinEl.textContent = `PIN: ${caseData.pincode || caseData.complainant?.pincode || '—'}`;
+    if (pinEl) pinEl.textContent = `PIN: ${caseData.pincode || (caseData.complainant && caseData.complainant.pincode) || '—'}`;
 
     // Status & SLA
-          const statusMap = {
-        "APPROVED": currentLang === "hi" ? "स्वीकृत" : (currentLang === "bi" ? "APPROVED • स्वीकृत" : "APPROVED"),
-        "TRANSFERRED_SEC_6_3": currentLang === "hi" ? "अंतरित (धारा 6(3))" : (currentLang === "bi" ? "TRANSFERRED • अंतरित" : "TRANSFERRED (SEC 6(3))"),
-        "NEEDS_REVIEW": currentLang === "hi" ? "समीक्षाधीन" : (currentLang === "bi" ? "UNDER REVIEW • समीक्षाधीन" : "UNDER REVIEW"),
-        "UNDER_REVIEW": currentLang === "hi" ? "समीक्षाधीन" : (currentLang === "bi" ? "UNDER REVIEW • समीक्षाधीन" : "UNDER REVIEW"),
-        "REJECTED": currentLang === "hi" ? "अस्वीकृत" : (currentLang === "bi" ? "REJECTED • अस्वीकृत" : "REJECTED")
-      };
+    const statusMap = {
+      "APPROVED": currentLang === "hi" ? "स्वीकृत" : "APPROVED",
+      "TRANSFERRED_SEC_6_3": currentLang === "hi" ? "अंतरित (धारा 6(3))" : "TRANSFERRED (SEC 6(3))",
+      "NEEDS_REVIEW": currentLang === "hi" ? "समीक्षाधीन" : "UNDER REVIEW",
+      "UNDER_REVIEW": currentLang === "hi" ? "समीक्षाधीन" : "UNDER REVIEW",
+      "REJECTED": currentLang === "hi" ? "अस्वीकृत" : "REJECTED",
+      "MERGED_DUPLICATE": currentLang === "hi" ? "विलय किया गया डुप्लिकेट" : "MERGED DUPLICATE"
+    };
     const statusPill = document.getElementById("detailDocketStatusPill");
     if (statusPill) {
       statusPill.textContent = statusMap[caseData.status] || caseData.status;
@@ -2199,8 +2475,6 @@ async function openCaseDetailView(caseId) {
     if (slaBadge) {
       if (currentLang === "hi") {
         slaBadge.textContent = isUrgent ? "48 घंटे आपातकालीन समयसीमा" : "30-दिवसीय समयसीमा";
-      } else if (currentLang === "bi") {
-        slaBadge.textContent = isUrgent ? "48-Hour Urgent SLA • 48 घंटे आपातकालीन समयसीमा" : "30-Day Standard SLA • 30-दिवसीय समयसीमा";
       } else {
         slaBadge.textContent = isUrgent ? "48-Hour Urgent SLA" : "30-Day Standard SLA";
       }
@@ -2211,8 +2485,6 @@ async function openCaseDetailView(caseId) {
     if (slaCountdown) {
       if (currentLang === "hi") {
         slaCountdown.textContent = isUrgent ? "48 घंटे" : `${daysRemaining} दिन शेष`;
-      } else if (currentLang === "bi") {
-        slaCountdown.textContent = isUrgent ? "48 Hours • 48 घंटे" : `${daysRemaining} Days • दिन शेष`;
       } else {
         slaCountdown.textContent = isUrgent ? "48 Hours" : `${daysRemaining} Days Remaining`;
       }
@@ -2222,8 +2494,6 @@ async function openCaseDetailView(caseId) {
     if (dueDateEl) {
       if (currentLang === "hi") {
         dueDateEl.textContent = `अंतिम तिथि: ${caseData.due_date || 'विधिक अवधि में'}`;
-      } else if (currentLang === "bi") {
-        dueDateEl.textContent = `Due / अंतिम तिथि: ${caseData.due_date || 'Within Statutory Period • विधिक अवधि में'}`;
       } else {
         dueDateEl.textContent = `Due: ${caseData.due_date || 'Within Statutory Period'}`;
       }
@@ -2231,32 +2501,32 @@ async function openCaseDetailView(caseId) {
 
     // 2. Complainant & PIO Details
     const cName = document.getElementById("detailCompName");
-    if (cName) cName.textContent = caseData.complainant?.name || "—";
+    if (cName) cName.textContent = tComplainant(caseData.complainant && caseData.complainant.name);
     const cContact = document.getElementById("detailCompContact");
-    if (cContact) cContact.textContent = caseData.complainant?.contact || "Contact not specified";
+    if (cContact) cContact.textContent = caseData.complainant?.contact || (currentLang === "hi" ? "संपर्क निर्दिष्ट नहीं" : "Contact not specified");
     const cAddress = document.getElementById("detailCompAddress");
-    if (cAddress) cAddress.textContent = caseData.complainant?.address || "Address not provided";
+    if (cAddress) cAddress.textContent = tAddress(caseData.complainant?.address || (currentLang === "hi" ? "पता उपलब्ध नहीं" : "Address not provided"));
 
     const pio = caseData.suggested_pio || caseData.assigned_pio || {};
     const pioName = document.getElementById("detailPioName");
-    if (pioName) pioName.textContent = pio.pio_name || "Designated PIO Officer";
+    if (pioName) pioName.textContent = tOfficer(pio.pio_name || (currentLang === "hi" ? "नामित जन सूचना अधिकारी" : "Designated PIO Officer"));
     const pioDept = document.getElementById("detailPioDept");
-    if (pioDept) pioDept.textContent = pio.department || caseData.department || "Public Authority";
+    if (pioDept) pioDept.textContent = tDept(pio.department || caseData.department);
     const pioAddress = document.getElementById("detailPioAddress");
-    if (pioAddress) pioAddress.textContent = pio.office_address || "Tehsil / District Collectorate Complex";
+    if (pioAddress) pioAddress.textContent = tAddress(pio.office_address || "Tehsil / District Collectorate Complex");
     const pioDist = document.getElementById("detailPioDistance");
-    if (pioDist) pioDist.textContent = pio.distance_label ? `📍 ${pio.distance_label} • भू-स्थानिक निकटता` : "📍 1.2 km away • 1.2 किमी निकट";
+    if (pioDist) pioDist.textContent = `📍 ${formatDistanceLabel(pio.distance_label || "1.2 km away")}`;
 
     // 3. Grievance & Questions
     const grievanceText = document.getElementById("detailGrievanceText");
-    if (grievanceText) grievanceText.textContent = caseData.raw_grievance || "No grievance narrative recorded.";
+    if (grievanceText) grievanceText.textContent = tGrievance(caseData.case_id, caseData.raw_grievance);
     const questionsList = document.getElementById("detailQuestionsList");
     if (questionsList) {
-      const qArr = caseData.draft_rti?.questions || [];
+      const qArr = tDraftQuestions(caseData.case_id, caseData.draft_rti?.questions) || [];
       if (qArr.length > 0) {
         questionsList.innerHTML = qArr.map(q => `<li style="margin-bottom: 6px;">${q}</li>`).join("");
       } else {
-        questionsList.innerHTML = `<li style="color: var(--ink-muted);">Standard certified inspection and dispatch status questions drafted.</li>`;
+        questionsList.innerHTML = `<li style="color: var(--ink-muted);">${currentLang === "hi" ? "मानक प्रमाणित निरीक्षण एवं प्रेषण स्थिति प्रश्न तैयार।" : "Standard certified inspection and dispatch status questions drafted."}</li>`;
       }
     }
 
@@ -2264,13 +2534,13 @@ async function openCaseDetailView(caseId) {
     const mlConf = caseData.confidence?.overall || 95;
     const mlConfBadge = document.getElementById("detailMlConfidenceBadge");
     if (mlConfBadge) {
-      mlConfBadge.textContent = `${mlConf}% ML Confidence • एआई सटीकता`;
+      mlConfBadge.textContent = currentLang === "hi" ? `${mlConf}% एमएल सटीकता स्कोर` : `${mlConf}% ML Confidence`;
       mlConfBadge.className = `status-pill ${mlConf >= 80 ? "approved" : "under-review"}`;
     }
     const domainTitle = document.getElementById("detailMlDomainTitle");
-    if (domainTitle) domainTitle.textContent = caseData.department || "Revenue & Land Records";
+    if (domainTitle) domainTitle.textContent = tDept(caseData.department);
     const mlReason = document.getElementById("detailMlReason");
-    if (mlReason) mlReason.textContent = caseData.confidence?.ml_prediction_reason || "Classified via multi-gram TF-IDF domain scoring with authentic statutory keyword triggers.";
+    if (mlReason) mlReason.textContent = currentLang === "hi" ? "प्रामाणिक विधिक कीवर्ड ट्रिगर्स के साथ बहु-ग्राम टीएफ-आईडीएफ स्कोरिंग द्वारा वर्गीकृत।" : (caseData.confidence?.ml_prediction_reason || "Classified via multi-gram TF-IDF domain scoring with authentic statutory keyword triggers.");
 
     const triggersEl = document.getElementById("detailMlTriggers");
     if (triggersEl) {
@@ -2892,11 +3162,11 @@ async function updatePioMapForCase(c) {
   const locality = c.confidence?.user_locality || c.complainant?.address || "Administrative Jurisdiction";
 
   if (caseIdEl) caseIdEl.textContent = c.case_id;
-  if (compEl) compEl.textContent = c.complainant?.name || "Citizen Applicant";
-  if (locEl) locEl.textContent = locality;
-  if (domainEl) domainEl.textContent = c.department || c.category || "General Administration";
-  if (assignedNameEl) assignedNameEl.textContent = `${pio.pio_name || 'Designated PIO'} (${pio.designation || 'PIO'})`;
-  if (assignedDistEl) assignedDistEl.textContent = `${pio.distance_label || 'Jurisdiction Assigned'} • ${pio.department || c.department}`;
+  if (compEl) compEl.textContent = tComplainant(c.complainant && c.complainant.name);
+  if (locEl) locEl.textContent = tAddress(locality);
+  if (domainEl) domainEl.textContent = tDept(c.department || c.category);
+  if (assignedNameEl) assignedNameEl.textContent = `${tOfficer(pio.pio_name)} (${tDesignation(pio.designation)})`;
+  if (assignedDistEl) assignedDistEl.textContent = `${formatDistanceLabel(pio.distance_label)} • ${tDept(pio.department || c.department)}`;
 
   // Populate Dropdown Selector
   populatePioCaseSelector(c.case_id);
@@ -2981,54 +3251,72 @@ function renderAreaPiosDirectory(c, filterType = "all") {
 
     let badgeHtml = "";
     if (isAssigned) {
-      badgeHtml = `<span class="status-pill approved" style="font-size: 9.5px; font-weight: 700; background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC;">★ ASSIGNED DOMAIN PIO</span>`;
+      const assignedTxt = currentLang === "hi" ? "★ आवंटित विभागीय जन सूचना अधिकारी" : "★ ASSIGNED DOMAIN PIO";
+      badgeHtml = `<span class="status-pill approved" style="font-size: 9.5px; font-weight: 700; background: #DCFCE7; color: #166534; border: 1px solid #86EFAC;">${assignedTxt}</span>`;
     } else if (p.is_domain_match || (c.department && p.department && p.department.toLowerCase().includes(c.department.toLowerCase()))) {
-      badgeHtml = `<span class="statutory-tag bns" style="font-size: 9.5px;">Domain Match &bull; ${p.department}</span>`;
+      const domainTxt = currentLang === "hi" ? `विभागीय समानता • ${tDept(p.department)}` : `Domain Match • ${p.department}`;
+      badgeHtml = `<span class="statutory-tag bns" style="font-size: 9.5px;">${domainTxt}</span>`;
     } else {
-      badgeHtml = `<span class="statutory-tag" style="font-size: 9.5px; background: var(--bg-subtle); color: var(--ink-secondary);">${p.department}</span>`;
+      const otherDept = currentLang === "hi" ? tDept(p.department || 'नागरिक प्रशासन') : (p.department || 'Civic Administration');
+      badgeHtml = `<span class="statutory-tag" style="font-size: 9.5px; background: var(--bg-subtle); color: var(--ink-secondary);">${otherDept}</span>`;
     }
+
+    const pioName = tOfficer(p.pio_name);
+    const pioDesig = tDesignation(p.designation);
+    const pioAddr = tAddress(p.office_address);
+    const pioRoom = tAddress(p.room_no || (currentLang === "hi" ? "कमरा 101, भूतल" : "Room 101, Ground Floor"));
+    const emailLabel = currentLang === "hi" ? "ईमेल:" : "Email:";
+    const phoneLabel = currentLang === "hi" ? "फोन:" : "Phone:";
+    const faaTitle = currentLang === "hi" ? "प्रथम अपीलीय अधिकारी (FAA):" : "First Appellate Authority (FAA):";
+    const faaName = tOfficer(faa.faa_name || (currentLang === "hi" ? "नामित अपीलीय प्राधिकारी" : "Designated Appellate Authority"));
+    const faaDesig = tDesignation(faa.designation || (currentLang === "hi" ? "अपीलीय अधिकारी" : "Appellate Officer"));
+    const distText = formatDistanceLabel(p.distance_label);
+
+    const btnAssignText = currentLang === "hi" ? "केस अधिकारी बनाएं" : "Assign as Docket PIO";
+    const btnAssignedText = currentLang === "hi" ? "✓ आवंटित अधिकारी" : "✓ Assigned PIO";
+    const btnTransferText = currentLang === "hi" ? "धारा 6(3) अंतरण" : "Transfer Sec 6(3)";
 
     return `
       <div class="${cardClass}" id="pio-card-${p.id || p.latitude}">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
           <div>${badgeHtml}</div>
-          <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gov-copper);">${p.distance_label || (p.distance_km ? p.distance_km + ' km away' : 'Near')}</span>
+          <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gov-copper);">${distText}</span>
         </div>
 
         <div style="font-size: 13px; font-weight: 700; color: var(--ink-primary); margin-bottom: 2px;">
-          ${p.pio_name}
-          <span style="font-weight: 400; font-size: 11.5px; color: var(--ink-muted);">&mdash; ${p.designation}</span>
+          ${pioName}
+          <span style="font-weight: 400; font-size: 11.5px; color: var(--ink-muted);">&mdash; ${pioDesig}</span>
         </div>
 
         <div style="font-size: 11px; color: var(--ink-secondary); margin-bottom: 6px;">
           <i data-lucide="building" style="width: 11px; height: 11px; display: inline-block; vertical-align: middle; color: var(--gov-navy);"></i>
-          <span>${p.office_address} &bull; ${p.room_no || 'RTI Nodal Office'}</span>
+          <span>${pioAddr} &bull; ${pioRoom}</span>
         </div>
 
         <div style="display: flex; gap: 12px; font-size: 10.5px; color: var(--ink-muted); margin-bottom: 8px;">
-          <span><b>Email:</b> ${p.email || 'pio@gov.in'}</span>
-          <span><b>Phone:</b> ${p.phone || '+91-XX-XXXX'}</span>
+          <span><b>${emailLabel}</b> ${p.email || 'उपलब्ध नहीं'}</span>
+          <span><b>${phoneLabel}</b> ${p.phone || 'उपलब्ध नहीं'}</span>
         </div>
 
         <!-- First Appellate Authority Information -->
-        <div style="background: var(--bg-subtle); padding: 6px 8px; border-radius: 3px; font-size: 10.5px; margin-bottom: 8px; border-left: 2px solid var(--gov-navy);">
+        <div style="background: var(--bg-subtle); padding: 6px 8px; border-radius: 3px; font-size: 10.5px; margin-bottom: 8px;">
           <div style="color: var(--gov-navy); font-weight: 600;">
-            First Appellate Authority (FAA):
+            ${faaTitle}
           </div>
           <div style="color: var(--ink-secondary); margin-top: 1px;">
-            <b>${faa.faa_name || 'Designated Appellate Authority'}</b> &bull; ${faa.designation || 'Appellate Officer'}
+            <b>${faaName}</b> &bull; ${faaDesig}
           </div>
         </div>
 
         <!-- Action Controls -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 6px;">
-          <span style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted);">ID: ${p.id || 'GOV-PIO'} &bull; (${p.latitude?.toFixed(4)}, ${p.longitude?.toFixed(4)})</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 8px;">
+          <span style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted);">ID: ${p.id || 'GOV-PIO'}</span>
           <div style="display: flex; gap: 6px;">
             ${isAssigned
-        ? `<button class="btn-gov-primary" style="font-size: 10.5px; padding: 3px 8px; background: #16A34A; cursor: default; border: none;">✓ Assigned PIO</button>`
-        : `<button class="btn-gov-outline" style="font-size: 10.5px; padding: 3px 8px;" onclick="assignPioFromMap('${p.id}')"><span>Assign as Docket PIO</span></button>
-                 <button class="btn-gov-outline" style="font-size: 10.5px; padding: 3px 8px;" onclick="openTransferModalForDept('${p.department}')"><span>Transfer Sec 6(3)</span></button>`
+        ? `<button class="btn-gov-primary" style="font-size: 10.5px; padding: 3px 8px; background: #16A34A; cursor: default;">${btnAssignedText}</button>`
+        : `<button class="btn-gov-outline" style="font-size: 10.5px; padding: 3px 8px;" onclick="assignPioFromMap('${p.id}')">${btnAssignText}</button>`
       }
+            <button class="btn-gov-outline" style="font-size: 10.5px; padding: 3px 8px;" onclick="openTransferModal('${p.id}')">${btnTransferText}</button>
           </div>
         </div>
       </div>
@@ -3100,31 +3388,41 @@ async function loadCustomActs() {
       card.className = "statutory-card";
       card.style.cssText = "display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid var(--accent-gold);";
 
+      const title = tCustomAct(act.act_title);
+      const sec = tCustomAct(act.section);
+      const domain = tDept(act.domain) || tCustomAct(act.domain);
+      const grounds = tCustomAct(act.statutory_grounds);
+      const relief = tCustomAct(act.punishment_or_relief);
+      const author = tReviewer(act.added_by) || tCustomAct(act.added_by);
+      const scopeLabel = currentLang === "hi" ? "दायरा / राहत:" : "Scope:";
+      const regByLabel = currentLang === "hi" ? "पंजीकरणकर्ता:" : "Registered by:";
+      const linkBtnText = currentLang === "hi" ? "केस से जोड़ें" : "Link to Case";
+
       card.innerHTML = `
         <div>
           <div class="statutory-card-header">
-            <span>${act.act_title}</span>
+            <span>${title}</span>
             <span class="badge badge-gold">${act.act_id}</span>
           </div>
           <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-cyan); margin-bottom: 6px;">
-            <b>${act.section}</b>
+            <b>${sec}</b>
           </div>
           <div style="margin-bottom: 6px;">
-            <span class="badge badge-blue">${act.domain}</span>
+            <span class="badge badge-blue">${domain}</span>
           </div>
           <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-            ${act.statutory_grounds}
+            ${grounds}
           </p>
-          ${act.punishment_or_relief ? `<div class="text-mono" style="font-size: 10.5px; color: var(--accent-terracotta); margin-bottom: 8px;"><b>Scope:</b> ${act.punishment_or_relief}</div>` : ''}
+          ${act.punishment_or_relief ? `<div class="text-mono" style="font-size: 10.5px; color: var(--accent-terracotta); margin-bottom: 8px;"><b>${scopeLabel}</b> ${relief}</div>` : ''}
           <div class="text-mono" style="font-size: 10px; color: var(--text-muted); margin-bottom: 12px;">
-            Registered by: <b>${act.added_by}</b> &middot; ${act.created_at}
+            ${regByLabel} <b>${author}</b> &middot; ${act.created_at}
           </div>
         </div>
 
         <div style="display: flex; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 10px;">
           <button class="btn btn-sm btn-primary framer-button" style="flex: 1;" onclick="applyCustomActToActiveCase('${act.act_id}')">
             <i data-lucide="link"></i>
-            <span>Link to Case</span>
+            <span>${linkBtnText}</span>
           </button>
           <button class="btn btn-sm btn-outline framer-button" style="color: var(--color-rose); border-color: #FECDD3;" onclick="deleteCustomAct('${act.act_id}')">
             <i data-lucide="trash-2"></i>
@@ -3888,9 +4186,9 @@ function calculateSlaPenalty() {
   const elClause = document.getElementById("slaGeneratedClause");
 
   if (elDeadline) elDeadline.textContent = deadlineStr;
-  if (elElapsed) elElapsed.textContent = `${elapsedDays} Days`;
+  if (elElapsed) elElapsed.textContent = currentLang === "hi" ? `${elapsedDays} दिन` : `${elapsedDays} Days`;
   if (elOverdue) {
-    elOverdue.textContent = `${overdueDays} Days`;
+    elOverdue.textContent = currentLang === "hi" ? `${overdueDays} दिन` : `${overdueDays} Days`;
     elOverdue.style.color = overdueDays > 0 ? "var(--status-review)" : "var(--status-active)";
   }
   if (elPenalty) {
@@ -3902,13 +4200,13 @@ function calculateSlaPenalty() {
     elPill.className = "status-pill";
     if (overdueDays > 0) {
       elPill.classList.add("needs-review");
-      elPill.textContent = `Statutory Overdue (₹${penaltyAmount.toLocaleString("en-IN")})`;
+      elPill.textContent = currentLang === "hi" ? `वैधानिक विलंब (₹${penaltyAmount.toLocaleString("en-IN")})` : `Statutory Overdue (₹${penaltyAmount.toLocaleString("en-IN")})`;
     } else if (elapsedDays >= slaDays - 5) {
       elPill.classList.add("under-review");
-      elPill.textContent = "Approaching Deadline";
+      elPill.textContent = currentLang === "hi" ? "समयसीमा निकट" : "Approaching Deadline";
     } else {
       elPill.classList.add("approved");
-      elPill.textContent = "Within Statutory Window";
+      elPill.textContent = currentLang === "hi" ? "वैधानिक समयसीमा के भीतर" : "Within Statutory Window";
     }
   }
 
@@ -3918,10 +4216,7 @@ function calculateSlaPenalty() {
       elGuidanceTitle.style.color = "var(--status-review)";
       if (currentLang === "hi") {
         elGuidanceTitle.textContent = `⚠️ वैधानिक डिफ़ॉल्ट: वेतन से कटौती प्रारंभ (${overdueDays} दिन का विलंब)`;
-        elGuidanceText.innerHTML = `<b>${escapeHtml(targetDept)}</b> के जन सूचना अधिकारी ने कानूनी 30-दिवसीय सीमा का <b>${overdueDays} दिन</b> उल्लंघन किया है। आरटीआई अधिनियम की धारा 20(1) के तहत ₹250/दिन की दर से कुल <b>₹${penaltyAmount.toLocaleString("en-IN")}</b> जुर्माना देय है जो अधिकारी के वेतन से काटा जाएगा। तुरंत धारा 19(1) के तहत प्रथम अपील दर्ज करें।`;
-      } else if (currentLang === "bi") {
-        elGuidanceTitle.textContent = `⚠️ Statutory Default: Personal Salary Deduction Triggered (${overdueDays} Days Overdue) • वैधानिक विलंब: वेतन कटौती लागू`;
-        elGuidanceText.innerHTML = `The Designated PIO at <b>${escapeHtml(targetDept)}</b> has exceeded statutory SLA by <b>${overdueDays} days</b>. Under Section 20(1), a mandatory ₹250/day penalty (Total: <b>₹${penaltyAmount.toLocaleString("en-IN")}</b>) has accrued.<br/><span style="color: var(--ink-secondary); font-size: 11px; display: inline-block; margin-top: 4px;">संबंधित जन सूचना अधिकारी ने तय सीमा से <b>${overdueDays} दिन</b> का विलंब किया है। धारा 20(1) के तहत कुल <b>₹${penaltyAmount.toLocaleString("en-IN")}</b> जुर्माना अधिकारी के वेतन से काटा जाएगा।</span>`;
+        elGuidanceText.innerHTML = `<b>${escapeHtml(tDept(targetDept))}</b> के जन सूचना अधिकारी ने कानूनी 30-दिवसीय सीमा का <b>${overdueDays} दिन</b> उल्लंघन किया है। आरटीआई अधिनियम की धारा 20(1) के तहत ₹250/दिन की दर से कुल <b>₹${penaltyAmount.toLocaleString("en-IN")}</b> जुर्माना देय है जो अधिकारी के वेतन से काटा जाएगा। तुरंत धारा 19(1) के तहत प्रथम अपील दर्ज करें।`;
       } else {
         elGuidanceTitle.textContent = `⚠️ Statutory Default: Personal Salary Deduction Triggered (${overdueDays} Days Overdue)`;
         elGuidanceText.innerHTML = `The Designated Public Information Officer at <b>${escapeHtml(targetDept)}</b> has exceeded the statutory deadline by <b>${overdueDays} days</b> without lawful order. Under Section 20(1) of the RTI Act 2005 and Supreme Court precedent <i>Manohar Anchule (2013)</i>, a mandatory penalty of ₹250/day (Total: <b>₹${penaltyAmount.toLocaleString("en-IN")}</b>) has accrued and is deductible directly from the officer's salary. Recommended action: Immediately file First Appeal under Section 19(1) or penalty complaint under Section 18.`;
@@ -3932,9 +4227,6 @@ function calculateSlaPenalty() {
       if (currentLang === "hi") {
         elGuidanceTitle.textContent = "✓ आवेदन वैधानिक समयसीमा के भीतर";
         elGuidanceText.innerHTML = `<b>${filingStr}</b> को दर्ज आवेदन अभी निर्धारित ${slaDays}-दिवसीय समयसीमा में है। अधिकारी को <b>${deadlineStr}</b> तक जानकारी देनी होगी।`;
-      } else if (currentLang === "bi") {
-        elGuidanceTitle.textContent = "✓ Within Statutory Window • वैधानिक समयसीमा के भीतर";
-        elGuidanceText.innerHTML = `Application filed on <b>${filingStr}</b> is within lawful ${slaDays}-day window. PIO has until <b>${deadlineStr}</b> to furnish information.<br/><span style="color: var(--ink-secondary); font-size: 11px; display: inline-block; margin-top: 4px;">आवेदन अभी निर्धारित सीमा में है। अधिकारी को <b>${deadlineStr}</b> तक जवाब देना अनिवार्य है।</span>`;
       } else {
         elGuidanceTitle.textContent = "✓ Application Within Lawful SLA Window";
         elGuidanceText.innerHTML = `Application filed on <b>${filingStr}</b> is currently within the lawful ${slaDays}-day SLA window. The PIO has until <b>${deadlineStr}</b> to furnish the certified information or issue a Section 6(3) transfer notice.`;
@@ -3943,10 +4235,18 @@ function calculateSlaPenalty() {
   }
 
   if (elClause) {
-    if (overdueDays > 0) {
-      elClause.value = `TAKE NOTICE that the Applicant submitted RTI Application dated ${filingStr} before the Designated PIO, ${targetDept}. In terms of Section 7(1) of the RTI Act 2005, the statutory 30-day window expired on ${deadlineStr}. The PIO has defaulted for ${overdueDays} days without reasonable cause. Under Section 20(1) and the law declared in Manohar s/o Manikrao Anchule v. State of Maharashtra (AIR 2013 SC 681), the PIO is personally liable for a penalty of ₹250 per day amounting to ₹${penaltyAmount.toLocaleString("en-IN")}, deductible directly from the officer's personal salary.`;
+    if (currentLang === "hi") {
+      if (overdueDays > 0) {
+        elClause.value = `विधिक नोटिस: आवेदक ने दिनांक ${filingStr} को नामित जन सूचना अधिकारी, ${tDept(targetDept)} के समक्ष सूचना का अधिकार अधिनियम 2005 की धारा 6(1) के तहत आवेदन प्रस्तुत किया था। धारा 7(1) के तहत निर्धारित समयसीमा ${deadlineStr} को समाप्त हो चुकी है। जन सूचना अधिकारी ने बिना किसी उचित कारण के ${overdueDays} दिनों का गंभीर विलंब किया है। धारा 20(1) एवं सुप्रीम कोर्ट के फैसले मनोहर बनाम महाराष्ट्र राज्य के तहत अधिकारी के वेतन से ₹250 प्रति दिन (कुल ₹${penaltyAmount.toLocaleString("en-IN")}) की व्यक्तिगत कटौती की जानी अनिवार्य है।`;
+      } else {
+        elClause.value = `विषय: नामित जन सूचना अधिकारी, ${tDept(targetDept)} के समक्ष प्रस्तुत दिनांक ${filingStr} का आरटीआई आवेदन। धारा 7(1) के तहत निर्धारित वैधानिक समयसीमा ${deadlineStr} तक लागू है।`;
+      }
     } else {
-      elClause.value = `IN RE: RTI Application dated ${filingStr} submitted before Designated PIO, ${targetDept}. Statutory compliance deadline under Section 7(1) of RTI Act 2005 expires on ${deadlineStr}.`;
+      if (overdueDays > 0) {
+        elClause.value = `TAKE NOTICE that the Applicant submitted RTI Application dated ${filingStr} before the Designated PIO, ${targetDept}. In terms of Section 7(1) of the RTI Act 2005, the statutory 30-day window expired on ${deadlineStr}. The PIO has defaulted for ${overdueDays} days without reasonable cause. Under Section 20(1) and the law declared in Manohar s/o Manikrao Anchule v. State of Maharashtra (AIR 2013 SC 681), the PIO is personally liable for a penalty of ₹250 per day amounting to ₹${penaltyAmount.toLocaleString("en-IN")}, deductible directly from the officer's personal salary.`;
+      } else {
+        elClause.value = `IN RE: RTI Application dated ${filingStr} submitted before Designated PIO, ${targetDept}. Statutory compliance deadline under Section 7(1) of RTI Act 2005 expires on ${deadlineStr}.`;
+      }
     }
   }
 }
