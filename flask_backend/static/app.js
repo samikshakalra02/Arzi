@@ -674,31 +674,47 @@ function tSection(sec) {
   if (!sec) return "";
   if (currentLang !== "hi") return sec;
   if (SECTIONS_I18N[sec]) return SECTIONS_I18N[sec];
-  for (let k in SECTIONS_I18N) {
+  
+  // Sort dictionary keys by length descending to match specific sections first
+  const sortedKeys = Object.keys(SECTIONS_I18N).sort((a, b) => b.length - a.length);
+  for (let k of sortedKeys) {
     if (sec.toLowerCase() === k.toLowerCase()) {
       return SECTIONS_I18N[k];
     }
   }
-  for (let k in SECTIONS_I18N) {
-    if (sec.includes(k)) {
+  for (let k of sortedKeys) {
+    if (sec.toLowerCase().includes(k.toLowerCase())) {
       return SECTIONS_I18N[k];
     }
   }
+
   let res = sec;
-  res = res.replace(/BNS Section/gi, "बीएनएस धारा")
-           .replace(/BNS Sec/gi, "बीएनएस धारा")
-           .replace(/IPC Section/gi, "आईपीसी धारा")
-           .replace(/IPC Sec/gi, "आईपीसी धारा")
-           .replace(/Section/gi, "धारा")
-           .replace(/Sec/gi, "धारा")
-           .replace(/Cheating/gi, "धोखाधड़ी")
-           .replace(/Public Nuisance/gi, "सार्वजनिक उपद्रव")
-           .replace(/Criminal Breach of Trust by Public Servant\/Dealer/gi, "लोक सेवक/डीलर द्वारा आपराधिक न्यासभंग")
-           .replace(/Criminal Breach of Trust by Public Servant/gi, "लोक सेवक द्वारा आपराधिक न्यासभंग")
-           .replace(/Public Servant disobeying law/gi, "लोक सेवक द्वारा कानून की अवहेलना")
-           .replace(/Public Servant disobeying direction under law/gi, "लोक सेवक द्वारा कानूनी निर्देश की अवहेलना")
-           .replace(/Public Servant Disobedience/gi, "लोक सेवक द्वारा अवज्ञा")
-           .replace(/Disobedience of Law/gi, "कानून की अवज्ञा");
+  res = res.replace(/Bharatiya Nyaya Sanhita/gi, "भारतीय न्याय संहिता")
+           .replace(/Indian Penal Code/gi, "भारतीय दंड संहिता")
+           .replace(/BNS\s*Section/gi, "बीएनएस धारा")
+           .replace(/BNS\s*Sec\.?/gi, "बीएनएस धारा")
+           .replace(/\bBNS\b/gi, "बीएनएस")
+           .replace(/IPC\s*Section/gi, "आईपीसी धारा")
+           .replace(/IPC\s*Sec\.?/gi, "आईपीसी धारा")
+           .replace(/\bIPC\b/gi, "आईपीसी")
+           .replace(/\bSection\b/gi, "धारा")
+           .replace(/\bSec\.?\b/gi, "धारा")
+           .replace(/RTI\s*Act\s*2005/gi, "आरटीआई अधिनियम 2005")
+           .replace(/RTI\s*Act/gi, "आरटीआई अधिनियम")
+           .replace(/\bRTI\b/gi, "आरटीआई")
+           .replace(/First\s*Appeal/gi, "प्रथम अपील")
+           .replace(/Cheating\s*&\s*Dishonest\s*Property\s*Inducement/gi, "धोखाधड़ी एवं संपत्ति हड़पना")
+           .replace(/Cheating/gi, "धोखाधड़ी / छल")
+           .replace(/Public\s*Nuisance/gi, "सार्वजनिक उपद्रव")
+           .replace(/Criminal\s*Breach\s*of\s*Trust\s*by\s*Public\s*Servant\/Dealer/gi, "लोक सेवक/डीलर द्वारा आपराधिक विश्वासघात")
+           .replace(/Criminal\s*Breach\s*of\s*Trust\s*by\s*Public\s*Servant/gi, "लोक सेवक द्वारा आपराधिक विश्वासघात")
+           .replace(/Public\s*Servant\s*disobeying\s*law/gi, "लोक सेवक द्वारा कानून की अवहेलना")
+           .replace(/Public\s*Servant\s*disobeying\s*direction\s*under\s*law/gi, "लोक सेवक द्वारा कानूनी निर्देश की अवहेलना")
+           .replace(/Public\s*Servant\s*Disobedience/gi, "लोक सेवक द्वारा अवज्ञा")
+           .replace(/Disobedience\s*of\s*Law/gi, "कानून की अवज्ञा")
+           .replace(/Fouling\s*water\s*of\s*public\s*spring\s*or\s*reservoir/gi, "सार्वजनिक जल स्रोत को दूषित करना")
+           .replace(/Forgery\s*for\s*purpose\s*of\s*cheating/gi, "धोखाधड़ी हेतु कूटरचना")
+           .replace(/Forgery/gi, "जालसाजी / कूटरचना");
   return res;
 }
 
@@ -1041,6 +1057,12 @@ function tRunLogResult(res) {
 }
 
 function setLanguage(lang) {
+  // Sync auth and studio language
+  if (typeof updateHeaderAuthState === "function") updateHeaderAuthState();
+  if (typeof loadStudioPreset === "function" && typeof currentStudioPreset !== "undefined") {
+    loadStudioPreset(currentStudioPreset);
+  }
+
   if (lang !== "hi") lang = "en";
   currentLang = lang;
   localStorage.setItem("arzi_lang", lang);
@@ -1060,6 +1082,11 @@ function setLanguage(lang) {
   const btnHi = document.getElementById("langHi");
   if (btnEn) btnEn.classList.toggle("active", lang === "en");
   if (btnHi) btnHi.classList.toggle("active", lang === "hi");
+
+  const authBtnEn = document.getElementById("authLangEn");
+  const authBtnHi = document.getElementById("authLangHi");
+  if (authBtnEn) authBtnEn.classList.toggle("active", lang === "en");
+  if (authBtnHi) authBtnHi.classList.toggle("active", lang === "hi");
 
   // Switch all select options having data-en and data-hi
   document.querySelectorAll("option[data-en]").forEach(opt => {
@@ -1173,17 +1200,1087 @@ function renderLucide() {
   }
 }
 
+
+// Toast Notification System
+function showToast(message, type = "info") {
+  try {
+    let toastContainer = document.getElementById("toastContainer");
+    if (!toastContainer) {
+      toastContainer = document.createElement("div");
+      toastContainer.id = "toastContainer";
+      toastContainer.style.cssText = "position:fixed;bottom:24px;right:24px;z-index:999999;display:flex;flex-direction:column;gap:10px;pointer-events:none;";
+      document.body.appendChild(toastContainer);
+    }
+
+    const toast = document.createElement("div");
+    toast.className = `app-toast toast-${type}`;
+    toast.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      background: ${type === "success" ? "#065F46" : type === "error" ? "#991B1B" : "#1E3A8A"};
+      color: #FFFFFF;
+      font-family: var(--font-sans, system-ui, sans-serif);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+    `;
+
+    const icon = type === "success" ? "✓" : type === "error" ? "⚠" : "ℹ";
+    toast.innerHTML = `<span style="font-size:15px;font-weight:bold;">${icon}</span><span>${message}</span>`;
+    toastContainer.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.style.opacity = "1";
+      toast.style.transform = "translateY(0)";
+    });
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(-8px)";
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 3500);
+  } catch (e) {
+    console.log("[Toast]", message);
+  }
+}
+window.showToast = showToast;
+
+function getAuthSession() {
+  try {
+    const raw = sessionStorage.getItem("arzi_user_session");
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function setAuthSession(session) {
+  try {
+    sessionStorage.setItem("arzi_user_session", JSON.stringify(session));
+    localStorage.setItem("arzi_user_session", JSON.stringify(session));
+  } catch (e) {}
+  updateHeaderAuthState();
+}
+
+function clearAuthSession() {
+  try {
+    sessionStorage.removeItem("arzi_user_session");
+    localStorage.removeItem("arzi_user_session");
+  } catch (e) {}
+  updateHeaderAuthState();
+}
+
+function initAuthFlow() {
+  updateHeaderAuthState();
+  switchAuthTab("law_firm");
+}
+
+// Pre-configured Default Credentials for Instant & Demo Access
+const DEFAULT_ACCOUNTS = {
+  law_firm: [
+    { id: "lawyer@arzi.internal", pass: "arzi2024", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "lawyer", pass: "arzi2024", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "lawyer", pass: "lawyer123", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "D/1420/2018", pass: "arzi2024", name: "Adv. Shivanshu Pandey", barId: "D/1420/2018", category: "advocate" },
+    { id: "advocate@delhibar.org", pass: "arzi2024", name: "Adv. Kalra & Associates", barId: "D/2026/104", category: "advocate" }
+  ],
+  admin: [
+    { id: "admin@arzi.internal", pass: "arzi-root-key", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin@arzi.internal", pass: "admin", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin@arzi.internal", pass: "admin123", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin", pass: "admin", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "admin123", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "arzi-root-key", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "password", name: "Root Administrator", role: "admin" },
+    { id: "root", pass: "root", name: "Master Console Admin", role: "admin" },
+    { id: "root", pass: "arzi-root-key", name: "Master Console Admin", role: "admin" },
+    { id: "root", pass: "admin", name: "Master Console Admin", role: "admin" }
+  ]
+};
+
+function getRegisteredAccounts() {
+  try {
+    const raw = localStorage.getItem("arzi_registered_accounts");
+    if (!raw) return { law_firm: [], admin: [] };
+    const data = JSON.parse(raw);
+    return {
+      law_firm: Array.isArray(data.law_firm) ? data.law_firm : [],
+      admin: Array.isArray(data.admin) ? data.admin : []
+    };
+  } catch (e) {
+    return { law_firm: [], admin: [] };
+  }
+}
+
+function saveRegisteredAccount(role, account) {
+  try {
+    const all = getRegisteredAccounts();
+    if (!all[role]) all[role] = [];
+    all[role].push(account);
+    localStorage.setItem("arzi_registered_accounts", JSON.stringify(all));
+  } catch (e) {
+    console.warn("Save account error:", e);
+  }
+}
+
+function showAuthAlert(message, type = "error") {
+  const box = document.getElementById("authAlertBox");
+  const text = document.getElementById("authAlertText");
+  const icon = document.getElementById("authAlertIcon");
+  if (!box || !text) return;
+
+  box.className = `auth-alert-box show ${type}`;
+  text.innerHTML = message;
+  if (icon) {
+    icon.setAttribute("data-lucide", type === "error" ? "alert-triangle" : "check-circle-2");
+  }
+  renderLucide();
+}
+
+function clearAuthAlert() {
+  const box = document.getElementById("authAlertBox");
+  if (box) box.className = "auth-alert-box";
+}
+
+function togglePasswordVisibility(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    if (icon) icon.setAttribute("data-lucide", "eye-off");
+  } else {
+    input.type = "password";
+    if (icon) icon.setAttribute("data-lucide", "eye");
+  }
+  renderLucide();
+}
+
+function fillQuickCreds(role, id, pass) {
+  clearAuthAlert();
+  if (role === "admin") {
+    const u = document.getElementById("authAdminUser");
+    const p = document.getElementById("authAdminToken");
+    if (u) u.value = id;
+    if (p) p.value = pass;
+  } else {
+    const u = document.getElementById("authLawId");
+    const p = document.getElementById("authLawPin");
+    if (u) u.value = id;
+    if (p) p.value = pass;
+  }
+}
+
+function switchAuthTab(role) {
+  clearAuthAlert();
+  const tabLaw = document.getElementById("tabRoleLaw");
+  const tabAdmin = document.getElementById("tabRoleAdmin");
+  const panelLaw = document.getElementById("authPanelLaw");
+  const panelAdmin = document.getElementById("authPanelAdmin");
+
+  if (role === "admin") {
+    if (tabAdmin) tabAdmin.classList.add("active");
+    if (tabLaw) tabLaw.classList.remove("active");
+    if (panelAdmin) {
+      panelAdmin.classList.remove("hidden");
+      panelAdmin.style.display = "block";
+    }
+    if (panelLaw) {
+      panelLaw.classList.add("hidden");
+      panelLaw.style.display = "none";
+    }
+  } else {
+    if (tabLaw) tabLaw.classList.add("active");
+    if (tabAdmin) tabAdmin.classList.remove("active");
+    if (panelLaw) {
+      panelLaw.classList.remove("hidden");
+      panelLaw.style.display = "block";
+    }
+    if (panelAdmin) {
+      panelAdmin.classList.add("hidden");
+      panelAdmin.style.display = "none";
+    }
+  }
+  renderLucide();
+}
+
+function switchAuthMode(role, mode) {
+  clearAuthAlert();
+  const btnLawLogin = document.getElementById("btnModeLawLogin");
+  const btnLawReg = document.getElementById("btnModeLawRegister");
+  const viewLawLogin = document.getElementById("authLawLoginView");
+  const viewLawReg = document.getElementById("authLawRegisterView");
+
+  const btnAdminLogin = document.getElementById("btnModeAdminLogin");
+  const btnAdminReg = document.getElementById("btnModeAdminRegister");
+  const viewAdminLogin = document.getElementById("authAdminLoginView");
+  const viewAdminReg = document.getElementById("authAdminRegisterView");
+
+  if (role === "law_firm") {
+    if (mode === "register") {
+      if (btnLawReg) btnLawReg.classList.add("active");
+      if (btnLawLogin) btnLawLogin.classList.remove("active");
+      if (viewLawReg) viewLawReg.style.display = "block";
+      if (viewLawLogin) viewLawLogin.style.display = "none";
+    } else {
+      if (btnLawLogin) btnLawLogin.classList.add("active");
+      if (btnLawReg) btnLawReg.classList.remove("active");
+      if (viewLawLogin) viewLawLogin.style.display = "block";
+      if (viewLawReg) viewLawReg.style.display = "none";
+    }
+  } else {
+    if (mode === "register") {
+      if (btnAdminReg) btnAdminReg.classList.add("active", "admin");
+      if (btnAdminLogin) btnAdminLogin.classList.remove("active");
+      if (viewAdminReg) viewAdminReg.style.display = "block";
+      if (viewAdminLogin) viewAdminLogin.style.display = "none";
+    } else {
+      if (btnAdminLogin) btnAdminLogin.classList.add("active", "admin");
+      if (btnAdminReg) btnAdminReg.classList.remove("active");
+      if (viewAdminLogin) viewAdminLogin.style.display = "block";
+      if (viewAdminReg) viewAdminReg.style.display = "none";
+    }
+  }
+  renderLucide();
+}
+
+function handleAuthLogin(role, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  clearAuthAlert();
+  
+  let enteredId = "";
+  let enteredPass = "";
+
+  if (role === "admin") {
+    const elU = document.getElementById("authAdminUser");
+    const elP = document.getElementById("authAdminToken");
+    enteredId = (elU ? elU.value : "").trim();
+    enteredPass = (elP ? elP.value : "").trim();
+    if (!enteredId) enteredId = "admin@arzi.internal";
+    if (!enteredPass) enteredPass = "arzi-root-key";
+  } else {
+    const elU = document.getElementById("authLawId");
+    const elP = document.getElementById("authLawPin");
+    enteredId = (elU ? elU.value : "").trim();
+    enteredPass = (elP ? elP.value : "").trim();
+    if (!enteredId) enteredId = "lawyer@arzi.internal";
+    if (!enteredPass) enteredPass = "arzi2024";
+  }
+
+  // Look up credentials in default accounts and user registrations
+  const defaults = DEFAULT_ACCOUNTS[role] || [];
+  const registered = getRegisteredAccounts()[role] || [];
+  const allAccounts = [...defaults, ...registered];
+
+  let matched = allAccounts.find(acc => {
+    const idMatches = (acc.id && acc.id.toLowerCase() === enteredId.toLowerCase()) ||
+                      (acc.barId && acc.barId.toLowerCase() === enteredId.toLowerCase());
+    const passMatches = acc.pass === enteredPass;
+    return idMatches && passMatches;
+  });
+
+  // Permissive fallback for admin: accept any entered credentials
+  if (!matched && role === "admin") {
+    matched = {
+      id: enteredId || "admin@arzi.internal",
+      pass: enteredPass || "arzi-root-key",
+      name: (enteredId && enteredId.toLowerCase().includes("root")) ? "Master Console Admin" : "Lead Systems Engineer",
+      role: "admin",
+      chamber: "Engineering Core"
+    };
+  }
+
+  // Permissive fallback for law firm: accept any entered credentials
+  if (!matched && role === "law_firm") {
+    const chamberEl = document.getElementById("authLawChamber");
+    const chamberVal = chamberEl ? chamberEl.value.trim() : "";
+    matched = {
+      id: enteredId || "lawyer@arzi.internal",
+      pass: enteredPass || "arzi2024",
+      name: chamberVal || "Chambers of Adv. S. Kalra",
+      role: "law_firm",
+      chamber: "Delhi High Court Bar"
+    };
+  }
+
+  const session = {
+    role: role,
+    user: matched.id,
+    name: matched.name || (role === "admin" ? "Developer Admin" : "Advocate Counsel"),
+    chamber: matched.chamber || (role === "admin" ? "Engineering Core" : "Practicing Chambers"),
+    loginTime: new Date().toISOString()
+  };
+
+  setAuthSession(session);
+  clearAuthAlert();
+  showToast(currentLang === "hi"
+    ? `सफलतापूर्वक लॉगिन किया गया: ${session.name}`
+    : `Successfully signed in as ${session.name}`, "success");
+
+  // Reveal header & footer and navigate to Home page
+  document.body.classList.remove("auth-mode");
+  updateHeaderAuthState();
+  showPage("home");
+}
+
+function handleAuthRegister(role, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  clearAuthAlert();
+
+  if (role === "law_firm") {
+    const chamber = (document.getElementById("regLawChamber")?.value || "").trim();
+    const barId = (document.getElementById("regLawBarId")?.value || "").trim();
+    const category = document.getElementById("regLawCategory")?.value || "advocate";
+    const email = (document.getElementById("regLawEmail")?.value || "").trim();
+    const pin = (document.getElementById("regLawPin")?.value || "").trim();
+    const pinConfirm = (document.getElementById("regLawPinConfirm")?.value || "").trim();
+
+    if (!chamber || !barId || !email || !pin) {
+      showAuthAlert("Please fill in all required registration fields.", "error");
+      return;
+    }
+
+    if (pin.length < 6) {
+      showAuthAlert("Password must be at least 6 characters.", "error");
+      return;
+    }
+
+    if (pin !== pinConfirm) {
+      showAuthAlert("Passwords do not match. Please re-enter your password.", "error");
+      return;
+    }
+
+    const newAccount = {
+      id: email,
+      barId: barId,
+      pass: pin,
+      name: chamber,
+      category: category,
+      registeredAt: new Date().toISOString()
+    };
+
+    saveRegisteredAccount("law_firm", newAccount);
+
+    // Auto-login newly registered Law Firm
+    const session = {
+      role: "law_firm",
+      user: email,
+      name: chamber,
+      barId: barId,
+      loginTime: new Date().toISOString()
+    };
+
+    setAuthSession(session);
+    showToast(currentLang === "hi"
+      ? `विधिक खाता सफलतापूर्वक पंजीकृत किया गया: ${chamber}`
+      : `Law Firm account successfully registered: ${chamber}!`, "success");
+
+    // Reveal portal and navigate to Home
+    document.body.classList.remove("auth-mode");
+    updateHeaderAuthState();
+    showPage("home");
+
+  } else {
+    const name = (document.getElementById("regAdminName")?.value || "").trim();
+    const username = (document.getElementById("regAdminUser")?.value || "").trim();
+    const authKey = (document.getElementById("regAdminAuthKey")?.value || "").trim();
+    const pin = (document.getElementById("regAdminPin")?.value || "").trim();
+    const pinConfirm = (document.getElementById("regAdminPinConfirm")?.value || "").trim();
+
+    if (!name || !username || !authKey || !pin) {
+      showAuthAlert("Please fill in all required administrator fields.", "error");
+      return;
+    }
+
+    // Authorization key check for security
+    if (authKey !== "arzi-root-key" && authKey !== "admin2026") {
+      showAuthAlert("Invalid Master Authorization Token. Use 'arzi-root-key' to provision.", "error");
+      return;
+    }
+
+    if (pin.length < 6) {
+      showAuthAlert("Password must be at least 6 characters.", "error");
+      return;
+    }
+
+    if (pin !== pinConfirm) {
+      showAuthAlert("Passwords do not match. Please re-enter your password.", "error");
+      return;
+    }
+
+    const newAccount = {
+      id: username,
+      pass: pin,
+      name: name,
+      role: "admin",
+      registeredAt: new Date().toISOString()
+    };
+
+    saveRegisteredAccount("admin", newAccount);
+
+    const session = {
+      role: "admin",
+      user: username,
+      name: name,
+      loginTime: new Date().toISOString()
+    };
+
+    setAuthSession(session);
+    showToast(currentLang === "hi"
+      ? `व्यवस्थापक खाता पंजीकृत: ${name}`
+      : `Administrator account successfully provisioned: ${name}!`, "success");
+
+    // Reveal portal and navigate to Home
+    document.body.classList.remove("auth-mode");
+    updateHeaderAuthState();
+    showPage("home");
+  }
+}
+
+function quickDemoLogin(role) {
+  clearAuthAlert();
+  if (role === "admin") {
+    const u = document.getElementById("authAdminUser");
+    const t = document.getElementById("authAdminToken");
+    if (u) u.value = "admin@arzi.internal";
+    if (t) t.value = "arzi-root-key";
+    handleAuthLogin("admin", null);
+  } else {
+    const lid = document.getElementById("authLawId");
+    const pin = document.getElementById("authLawPin");
+    if (lid) lid.value = "lawyer@arzi.internal";
+    if (pin) pin.value = "arzi2024";
+    handleAuthLogin("law_firm", null);
+  }
+}
+
+function handleBrandClick() {
+  const session = getAuthSession();
+  if (session && session.role) {
+    showPage("home");
+  } else {
+    showPage("auth");
+  }
+}
+
+function handleLogout() {
+  clearAuthSession();
+  clearAuthAlert();
+  document.body.classList.add("auth-mode");
+  updateHeaderAuthState();
+  showToast(currentLang === "hi"
+    ? "सफलतापूर्वक लॉग आउट किया गया।"
+    : "Successfully signed out.", "info");
+  showPage("auth");
+}
+
+function updateHeaderAuthState() {
+  const session = getAuthSession();
+  const mainHeader = document.getElementById("mainAppHeader");
+  const mainFooter = document.getElementById("mainAppFooter");
+  const headerNav = document.getElementById("headerNav");
+  const badge = document.getElementById("headerRoleBadge");
+  const roleText = document.getElementById("headerRoleText");
+  const navDash = document.getElementById("navDashboardBtn");
+  const logoutBtn = document.getElementById("headerLogoutBtn");
+
+  if (session && session.role) {
+    document.body.classList.remove("auth-mode");
+    if (mainHeader) mainHeader.style.display = "flex";
+    if (mainFooter) mainFooter.style.display = "block";
+    if (headerNav) headerNav.style.display = "flex";
+
+    if (badge) {
+      badge.style.display = "inline-flex";
+      if (roleText) {
+        const displayName = session.name || (session.role === "admin" ? "Admin" : "Law Firm");
+        if (session.role === "admin") {
+          roleText.innerHTML = `<span class="i18n-en">Admin: ${displayName}</span><span class="i18n-sep"> / </span><span class="i18n-hi">एडमिन: ${displayName}</span>`;
+        } else {
+          roleText.innerHTML = `<span class="i18n-en">Law Firm: ${displayName}</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिवक्ता: ${displayName}</span>`;
+        }
+      }
+    }
+    if (navDash) navDash.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-flex";
+  } else {
+    document.body.classList.add("auth-mode");
+    if (mainHeader) mainHeader.style.display = "none";
+    if (mainFooter) mainFooter.style.display = "none";
+    if (headerNav) headerNav.style.display = "none";
+    if (badge) badge.style.display = "none";
+    if (navDash) navDash.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "none";
+  }
+}
+
+window.switchAuthTab = switchAuthTab;
+window.switchAuthMode = switchAuthMode;
+window.handleAuthLogin = handleAuthLogin;
+window.handleAuthRegister = handleAuthRegister;
+window.quickDemoLogin = quickDemoLogin;
+window.fillQuickCreds = fillQuickCreds;
+window.togglePasswordVisibility = togglePasswordVisibility;
+window.handleBrandClick = handleBrandClick;
+window.handleLogout = handleLogout;
+window.getAuthSession = getAuthSession;
+window.showAuthAlert = showAuthAlert;
+window.clearAuthAlert = clearAuthAlert;
+
+// =========================================================================
+// STREAMLINED STATUTORY DOCUMENT STUDIO & LIVE PREVIEW ENGINE
+// =========================================================================
+
+let currentStudioDocType = "form"; // 'form', 'appeal', 'notice'
+let currentStudioPreset = "railway";
+
+const STUDIO_PRESETS = {
+  railway: {
+    en: {
+      applicantName: "Shivanshu Pandey",
+      applicantContact: "+91 99887 76655",
+      applicantAddress: "H-42, Civil Lines, North Delhi - 110054",
+      authorityName: "Northern Railway (Commercial Directorate)",
+      pioDesignation: "Public Information Officer, Commercial Division",
+      authorityAddress: "Baroda House, Copernicus Marg, New Delhi - 110001",
+      docketRef: "ARZI-2024-NR-7821",
+      subjectLine: "Application under Section 6(1) regarding non-disbursement of ticket refund on PNR 245-8819283",
+      demandsText: "1. Provide certified copy of the complete processing file and official file-notings regarding refund on PNR 245-8819283.\\n2. State reasons in writing why refund was withheld beyond the mandatory 14-day statutory timeline under Railway Passenger Charter.\\n3. Provide the names and designations of the dealing officials responsible for processing said refund.\\n4. Provide the exact date by which the lawful refund along with statutory commercial interest will be credited.",
+      penaltyClause: "Notice under Section 20(1) RTI Act: Failure to supply requested information within 30 days shall invite mandatory penalty of ₹250/day up to ₹25,000.",
+      reliefDemanded: "Immediate supply of certified file-notings within 30 days and electronic release of withheld refund amount with compensatory interest.",
+      feeParticulars: "₹10/- paid via Indian Postal Order (IPO) No. 42G 918273 drawn in favour of Accounts Officer, Northern Railway.",
+      signatoryName: "Shivanshu Pandey (Applicant / Advocate)"
+    },
+    hi: {
+      applicantName: "शिवंशु पांडेय",
+      applicantContact: "+91 99887 76655",
+      applicantAddress: "मकान नं. 42, सिविल लाइन्स, उत्तरी दिल्ली - 110054",
+      authorityName: "उत्तर रेलवे (मुख्यालय - वाणिज्य निदेशालय)",
+      pioDesignation: "जन सूचना अधिकारी, वाणिज्य मंडल कार्यालय",
+      authorityAddress: "बड़ौदा हाउस, कस्तूरबा गांधी मार्ग, नई दिल्ली - 110001",
+      docketRef: "ARZI-2024-NR-7821",
+      subjectLine: "पीएनआर 245-8819283 के लंबित टिकट रिफंड एवं अनावश्यक देरी के संबंध में आरटीआई अधिनियम की धारा 6(1) के तहत आवेदन",
+      demandsText: "1. कृपया पीएनआर 245-8819283 के निरस्तीकरण एवं रिफंड फ़ाइल की प्रमाणित प्रतिलिपि व संबंधित नोटशीट उपलब्ध कराएं।\\n2. कृपया लिखित में कारण स्पष्ट करें कि 45 दिन बीत जाने के बावजूद रिफंड राशि आवेदक के बैंक खाते में प्रेषित क्यों नहीं की गई।\\n3. उक्त रिफंड फ़ाइल के निस्तारण हेतु जिम्मेदार संबंधित अधिकारियों/कर्मचारियों के नाम व पदनाम प्रदान किए जाएं।\\n4. कृपया रेलवे नागरिक चार्टर के अनुसार इस प्रकार के विलंबित मामलों में ब्याज सहित भुगतान की अंतिम तिथि बताएं।",
+      penaltyClause: "धारा 20(1) नोटिस: निर्धारित 30 दिनों में सूचना उपलब्ध न कराने पर जन सूचना अधिकारी पर ₹250 प्रतिदिन (अधिकतम ₹25,000) का दण्ड अधिरोपित किया जाएगा।",
+      reliefDemanded: "निर्धारित 30 दिनों के भीतर प्रमाणित अभिलेख प्रदान किए जाएं एवं देय रिफंड राशि अविलंब बैंक खाते में जारी की जाए।",
+      feeParticulars: "₹10/- भारतीय पोस्टल ऑर्डर (IPO) सं. 42G 918273 द्वारा मुख्य लेखा अधिकारी, उत्तर रेलवे के पक्ष में संलग्न।",
+      signatoryName: "शिवंशु पांडेय (आवेदक / अधिकृत अधिवक्ता)"
+    }
+  },
+  road: {
+    en: {
+      applicantName: "Anil Kumar Sharma",
+      applicantContact: "+91 98112 34567",
+      applicantAddress: "Plot 88, Sector 14, Rohini, New Delhi - 110085",
+      authorityName: "Public Works Department (PWD Delhi)",
+      pioDesignation: "Executive Engineer & Designated PIO, Road Division",
+      authorityAddress: "PWD Secretariat, MSO Building, IP Estate, New Delhi - 110002",
+      docketRef: "ARZI-2024-PWD-4019",
+      subjectLine: "Quality Audit, Tender Expenditure and Defect Liability of Sector 14 Main Arterial Road",
+      demandsText: "1. Provide certified copy of the contract agreement, Bill of Quantities (BOQ), and total approved budget for the carpeting of Sector 14 Main Road.\\n2. Provide certified copies of all core-cut laboratory density and bitumen penetration test reports conducted by Quality Control cell.\\n3. State the mandatory Defect Liability Period (DLP) specified in the contract and penalty clause invoked against the contractor for premature potholes.\\n4. Provide the daily inspection log submitted by the Assistant Engineer during bituminous laying.",
+      penaltyClause: "Notice under Section 20(1) RTI Act: Delay or obstruction in providing public infrastructure records shall attract statutory disciplinary action and daily penalties.",
+      reliefDemanded: "Supply of complete certified technical test reports and inspection of raw site records under Section 2(j)(i) of the RTI Act.",
+      feeParticulars: "₹10/- Court Fee Stamp affixed on application as per Delhi RTI Rules.",
+      signatoryName: "Anil Kumar Sharma (Resident & Complainant)"
+    },
+    hi: {
+      applicantName: "अनिल कुमार शर्मा",
+      applicantContact: "+91 98112 34567",
+      applicantAddress: "प्लॉट 88, सेक्टर 14, रोहिणी, नई दिल्ली - 110085",
+      authorityName: "लोक निर्माण विभाग (पीडब्ल्यूडी दिल्ली)",
+      pioDesignation: "अधिशासी अभियंता एवं जन सूचना अधिकारी, सड़क निर्माण मंडल",
+      authorityAddress: "पीडब्ल्यूडी मुख्यालय, एमएसओ भवन, आईटीओ, नई दिल्ली - 110002",
+      docketRef: "ARZI-2024-PWD-4019",
+      subjectLine: "सेक्टर 14 मुख्य मार्ग निर्माण, निविदा व्यय एवं गुणवत्ता जांच के संबंध में धारा 6(1) के तहत आवेदन",
+      demandsText: "1. कृपया सेक्टर 14 मुख्य मार्ग निर्माण हेतु जारी निविदा अनुबंध, सामग्री बिल (BOQ) एवं कुल स्वीकृत बजट की प्रमाणित प्रतिलिपि दें।\\n2. कृपया गुणवत्ता नियंत्रण प्रयोगशाला द्वारा किए गए डामर घनत्व एवं बिटुमेन कोर-कटिंग परीक्षण रिपोर्ट की प्रमाणित प्रति उपलब्ध कराएं।\\n3. उक्त सड़क के अनुबंध में दर्ज अनिवार्य दोष देयता अवधि (Defect Liability Period) एवं समय पूर्व गड्ढे होने पर संवेदक पर की गई कार्रवाई का विवरण दें।\\n4. संबंधित सहायक अभियंता द्वारा निर्माण के दौरान प्रस्तुत दैनिक निरीक्षण दैनिकी की प्रमाणित प्रति प्रदान करें।",
+      penaltyClause: "धारा 20(1) नोटिस: जनहित में सड़क सुरक्षा से संबंधित अभिलेखों को 30 दिन में उपलब्ध कराना अनिवार्य है अन्यथा विधिक दण्ड की कार्रवाई की जाएगी।",
+      reliefDemanded: "समस्त तकनीकी परीक्षण रिपोर्टों की प्रमाणित प्रतिलिपि एवं धारा 2(j)(i) के तहत सड़क कार्य स्थल अभिलेखों का भौतिक निरीक्षण।",
+      feeParticulars: "₹10/- कोर्ट फीस टिकट आवेदन पत्र पर नियमानुसार चस्पा।",
+      signatoryName: "अनिल कुमार शर्मा (स्थानीय नागरिक / आवेदक)"
+    }
+  },
+  water: {
+    en: {
+      applicantName: "Sunita Devi",
+      applicantContact: "+91 97118 99221",
+      applicantAddress: "C-14, Gali No. 3, Sangam Vihar, New Delhi - 110080",
+      authorityName: "Delhi Jal Board (Government of NCT of Delhi)",
+      pioDesignation: "Assistant Commissioner & PIO (Water Distribution)",
+      authorityAddress: "Varunalaya Phase-II, Jhandewalan, New Delhi - 110005",
+      docketRef: "ARZI-2024-DJB-5102",
+      subjectLine: "Urgent Information on Contaminated Drinking Water Supply and Pipeline Cross-Connection in Ward 28",
+      demandsText: "1. Provide certified copies of water sample bacteriological and chemical testing reports collected from Ward 28 in the last 60 days.\\n2. State daily chlorine residual levels recorded at the primary distribution underground booster reservoir.\\n3. Provide the log of complaints registered regarding sewage contamination mixing in drinking water pipelines in this locality.\\n4. State the timeline and remedial plan sanctioned by Delhi Jal Board to replace leaking subterranean pipelines.",
+      penaltyClause: "URGENT LIFE & LIBERTY (Section 7(1)): Since contaminated drinking water poses severe risk to public health, information must be provided within 48 hours.",
+      reliefDemanded: "Supply of certified laboratory test reports within 48 hours and emergency deployment of mobile water testing van.",
+      feeParticulars: "₹10/- paid via Indian Postal Order (IPO) No. 51G 109284.",
+      signatoryName: "Sunita Devi (Applicant)"
+    },
+    hi: {
+      applicantName: "सुनीता देवी",
+      applicantContact: "+91 97118 99221",
+      applicantAddress: "मकान सं. सी-14, गली नं. 3, संगम विहार, नई दिल्ली - 110080",
+      authorityName: "दिल्ली जल बोर्ड (राष्ट्रीय राजधानी क्षेत्र दिल्ली सरकार)",
+      pioDesignation: "सहायक आयुक्त एवं जन सूचना अधिकारी (जल वितरण)",
+      authorityAddress: "वरुणालय फेज-2, झंडेवालान, नई दिल्ली - 110005",
+      docketRef: "ARZI-2024-DJB-5102",
+      subjectLine: "वार्ड 28 में दूषित पेयजल आपूर्ति एवं सीवर-पेयजल पाइपलाइन क्रॉस कनेक्शन के संबंध में धारा 7(1) के तहत त्वरित आवेदन",
+      demandsText: "1. कृपया पिछले 60 दिनों में वार्ड 28 से एकत्रित किए गए पेयजल नमूनों की जीवाणु एवं रासायनिक प्रयोगशाला परीक्षण रिपोर्ट की प्रमाणित प्रति दें।\\n2. कृपया मुख्य वितरण बूस्टर जलाशय पर प्रतिदिन दर्ज की जाने वाली अवशिष्ट क्लोरीन मात्रा का विवरण दें।\\n3. इस क्षेत्र में गंदे पानी एवं सीवर रिसाव के संबंध में दर्ज समस्त नागरिक शिकायतों एवं उन पर की गई कार्रवाई की डायरी प्रतिलिपि दें।\\n4. दूषित पेयजल पाइपलाइनों को बदलने अथवा मरम्मत करने हेतु स्वीकृत आपातकालीन कार्य योजना एवं समय-सीमा की प्रतिलिपि दें।",
+      penaltyClause: "जीवन एवं स्वतंत्रता (धारा 7(1)): चूंकि दूषित पेयजल से जन-स्वास्थ्य एवं जीवन को गंभीर खतरा है, अतः यह सूचना 48 घंटे के भीतर प्रदान की जाए।",
+      reliefDemanded: "48 घंटे के भीतर प्रमाणित जल परीक्षण रिपोर्ट उपलब्ध कराई जाए एवं स्वच्छ पेयजल हेतु मोबाइल जल परीक्षण दल तैनात किया जाए।",
+      feeParticulars: "₹10/- भारतीय पोस्टल ऑर्डर (IPO) सं. 51G 109284 द्वारा संलग्न।",
+      signatoryName: "सुनीता देवी (आवेदक)"
+    }
+  },
+  police: {
+    en: {
+      applicantName: "Rajeshwar Singh",
+      applicantContact: "+91 98223 44119",
+      applicantAddress: "Flat 204, Shanti Kunj, Vasant Kunj, New Delhi - 110070",
+      authorityName: "Delhi Police (South West District)",
+      pioDesignation: "Additional Deputy Commissioner of Police & PIO",
+      authorityAddress: "District Police Headquarters, Sector 19, Dwarka, New Delhi - 110075",
+      docketRef: "ARZI-2024-POL-9921",
+      subjectLine: "Status of Written Complaint and Action Taken Report under Section 173 of BNSS 2023",
+      demandsText: "1. Provide certified copy of the Daily Diary (DD) entry made upon receipt of the written complaint dated 10th August 2024.\\n2. Provide certified copy of the Preliminary Enquiry (PE) report conducted under Section 173(3) of Bharatiya Nagarik Suraksha Sanhita (BNSS 2023).\\n3. State the specific reasons recorded in writing for non-registration of statutory First Information Report (FIR) despite commission of cognizable offence.\\n4. Provide the name, designation, and contact details of the Supervisory Officer overseeing this investigation.",
+      penaltyClause: "Notice under Section 20(1) RTI Act: Withholding status of public complaints is contrary to statutory accountability and transparent policing mandates.",
+      reliefDemanded: "Supply of complete certified enquiry papers and written explanation regarding statutory compliance under BNSS 2023.",
+      feeParticulars: "₹10/- paid via Indian Postal Order (IPO) No. 99P 827162.",
+      signatoryName: "Rajeshwar Singh (Complainant / Legal Counsel)"
+    },
+    hi: {
+      applicantName: "राजेश्वर सिंह",
+      applicantContact: "+91 98223 44119",
+      applicantAddress: "फ्लैट 204, शांति कुंज, वसंत कुंज, नई दिल्ली - 110070",
+      authorityName: "दिल्ली पुलिस (दक्षिण-पश्चिम जिला)",
+      pioDesignation: "अपर पुलिस उपायुक्त एवं जन सूचना अधिकारी",
+      authorityAddress: "जिला पुलिस मुख्यालय, सेक्टर 19, द्वारका, नई दिल्ली - 110075",
+      docketRef: "ARZI-2024-POL-9921",
+      subjectLine: "लिखित शिकायत पर कार्रवाई आख्या एवं भारतीय नागरिक सुरक्षा संहिता 2023 (BNSS) की धारा 173 के अनुपालन के संबंध में आवेदन",
+      demandsText: "1. कृपया 10 अगस्त 2024 को प्रस्तुत लिखित शिकायत पर दर्ज दैनिक दैनिकी (DD Entry) की प्रमाणित प्रतिलिपि उपलब्ध कराएं।\\n2. कृपया भारतीय नागरिक सुरक्षा संहिता 2023 (BNSS) की धारा 173(3) के अंतर्गत की गई प्राथमिक जांच (PE) रिपोर्ट की प्रमाणित प्रति दें।\\n3. संज्ञेय अपराध घटित होने के बावजूद अनिवार्य प्राथमिकी (FIR) दर्ज न करने के संबंध में केस डायरी में दर्ज कारणों का विवरण दें।\\n4. उक्त मामले की जांच कर रहे संबंधित जांच अधिकारी (IO) एवं पर्यवेक्षी अधिकारी का नाम व पदनाम प्रदान करें।",
+      penaltyClause: "धारा 20(1) नोटिस: नागरिक शिकायतों की स्थिति छिपाना विधिक दायित्वों का उल्लंघन है, अतः 30 दिन में संपूर्ण आख्या उपलब्ध कराई जाए।",
+      reliefDemanded: "जांच आख्या की प्रमाणित प्रतिलिपि एवं BNSS 2023 के तहत दर्ज की गई कार्रवाई का संपूर्ण विवरण।",
+      feeParticulars: "₹10/- भारतीय पोस्टल ऑर्डर (IPO) सं. 99P 827162 द्वारा संलग्न।",
+      signatoryName: "राजेश्वर सिंह (शिकायतकर्ता / अधिवक्ता)"
+    }
+  }
+};
+
+function initStudioDocumentGenerator() {
+  const dateInput = document.getElementById("stDocDate");
+  if (dateInput && !dateInput.value) {
+    dateInput.value = new Date().toISOString().split("T")[0];
+  }
+  loadStudioPreset("railway");
+}
+
+function setStudioDocType(docType) {
+  currentStudioDocType = docType;
+  
+  const pForm = document.getElementById("docTypePillForm");
+  const pAppeal = document.getElementById("docTypePillAppeal");
+  const pNotice = document.getElementById("docTypePillNotice");
+
+  if (pForm) pForm.classList.toggle("active", docType === "form");
+  if (pAppeal) pAppeal.classList.toggle("active", docType === "appeal");
+  if (pNotice) pNotice.classList.toggle("active", docType === "notice");
+
+  const secSelect = document.getElementById("stLegalSection");
+  if (secSelect) {
+    if (docType === "form") secSelect.value = "rti_sec6";
+    else if (docType === "appeal") secSelect.value = "rti_sec19";
+    else if (docType === "notice") secSelect.value = "cpc_sec80";
+  }
+
+  updateStudioLivePreview();
+  renderLucide();
+}
+
+function loadStudioPreset(presetId) {
+  currentStudioPreset = presetId;
+
+  document.querySelectorAll(".preset-chip").forEach(c => c.classList.remove("active"));
+  const presetBtnMap = {
+    railway: "presetBtnRailway",
+    road: "presetBtnRoad",
+    water: "presetBtnWater",
+    police: "presetBtnPolice"
+  };
+  const activeBtn = document.getElementById(presetBtnMap[presetId]);
+  if (activeBtn) activeBtn.classList.add("active");
+
+  const langKey = (currentLang === "hi") ? "hi" : "en";
+  const data = STUDIO_PRESETS[presetId]?.[langKey] || STUDIO_PRESETS[presetId]?.["en"];
+  if (!data) return;
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  };
+
+  setVal("stApplicantName", data.applicantName);
+  setVal("stApplicantContact", data.applicantContact);
+  setVal("stApplicantAddress", data.applicantAddress);
+  setVal("stAuthorityName", data.authorityName);
+  setVal("stPioDesignation", data.pioDesignation);
+  setVal("stAuthorityAddress", data.authorityAddress);
+  setVal("stDocketRef", data.docketRef);
+  setVal("stSubjectLine", data.subjectLine);
+  setVal("stDemandsText", data.demandsText.replace(/\\n/g, "\n"));
+  setVal("stPenaltyClause", data.penaltyClause);
+  setVal("stReliefDemanded", data.reliefDemanded);
+  setVal("stFeeParticulars", data.feeParticulars);
+  setVal("stSignatoryName", data.signatoryName);
+
+  const dateInput = document.getElementById("stDocDate");
+  if (dateInput && !dateInput.value) {
+    dateInput.value = new Date().toISOString().split("T")[0];
+  }
+
+  updateStudioLivePreview();
+}
+
+function updateStudioLivePreview() {
+  const previewBox = document.getElementById("studioLivePreviewDoc");
+  if (!previewBox) return;
+
+  const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
+
+  const applicantName = getVal("stApplicantName") || (currentLang === "hi" ? "श्री शिवंशु पांडेय" : "Shivanshu Pandey");
+  const applicantContact = getVal("stApplicantContact") || "+91 99887 76655";
+  const applicantAddress = getVal("stApplicantAddress") || (currentLang === "hi" ? "सिविल लाइन्स, उत्तरी दिल्ली - 110054" : "Civil Lines, North Delhi - 110054");
+  const authorityName = getVal("stAuthorityName") || (currentLang === "hi" ? "उत्तर रेलवे" : "Northern Railway");
+  const pioDesignation = getVal("stPioDesignation") || (currentLang === "hi" ? "जन सूचना अधिकारी" : "Public Information Officer");
+  const authorityAddress = getVal("stAuthorityAddress") || (currentLang === "hi" ? "बड़ौदा हाउस, नई दिल्ली" : "Baroda House, New Delhi");
+  const docketRef = getVal("stDocketRef") || "ARZI-2024-DOC-8942";
+  const docDate = getVal("stDocDate") || new Date().toISOString().split("T")[0];
+  const subjectLine = getVal("stSubjectLine") || "";
+  const demandsRaw = getVal("stDemandsText") || "";
+  const penaltyClause = getVal("stPenaltyClause") || "";
+  const reliefDemanded = getVal("stReliefDemanded") || "";
+  const feeParticulars = getVal("stFeeParticulars") || "";
+  const signatoryName = getVal("stSignatoryName") || applicantName;
+  const isVerified = document.getElementById("stVerifyCheck")?.checked !== false;
+
+  // Split demands by newlines into clean numbered list
+  const lines = demandsRaw.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+  let demandsHtml = "";
+  if (lines.length > 0) {
+    demandsHtml = `<ol style="margin: 8px 0 12px 20px; padding: 0; line-height: 1.6;">` +
+      lines.map(l => {
+        const clean = l.replace(/^[0-9]+[\.\)]\s*/, "");
+        return `<li style="margin-bottom: 6px;">${clean}</li>`;
+      }).join("") +
+      `</ol>`;
+  } else {
+    demandsHtml = `<p style="font-style: italic; color: #718096;">${currentLang === "hi" ? "(कोई विशिष्ट बिंदु दर्ज नहीं किया गया)" : "(No itemized questions entered)"}</p>`;
+  }
+
+  let docHeaderTitle = "";
+  let docSubtitle = "";
+  let salutation = "";
+  let preamble = "";
+
+  if (currentLang === "hi") {
+    if (currentStudioDocType === "form") {
+      docHeaderTitle = "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत आवेदन पत्र (फॉर्म-क)";
+      docSubtitle = "सत्यमेव जयते • भारत सरकार एवं राज्य जन प्राधिकरणों के लिए आधिकारिक विधिक प्रारूप";
+      salutation = "महोदय / महोदया,";
+      preamble = "सविनय निवेदन है कि मैं भारत का नागरिक हूँ तथा सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत प्रदत्त मौलिक अधिकारों के अधीन आपसे निम्नलिखित विशिष्ट सूचना एवं अभिलेखों की प्रमाणित प्रतियां उपलब्ध कराने का अनुरोध करता हूँ:";
+    } else if (currentStudioDocType === "appeal") {
+      docHeaderTitle = "सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत प्रथम अपील का ज्ञापन";
+      docSubtitle = "प्रथम अपीलीय प्राधिकारी (FAA) के समक्ष सांविधिक प्रथम अपील";
+      salutation = "मान्यवर प्रथम अपीलीय प्राधिकारी महोदय,";
+      preamble = "सविनय निवेदन है कि अपीलार्थी द्वारा जन सूचना अधिकारी के समक्ष विहित आवेदन प्रस्तुत किया गया था, किन्तु निर्धारित 30 दिनों की वैधानिक अवधि बीत जाने पर भी सूचना उपलब्ध न कराए जाने (डीम्ड रिफ्यूजल) अथवा असंतोषजनक उत्तर से क्षुब्ध होकर यह प्रथम अपील निम्नलिखित आधारों पर प्रस्तुत की जा रही है:";
+    } else {
+      docHeaderTitle = "सिविल प्रक्रिया संहिता, 1908 की धारा 80 के अंतर्गत वैधानिक कानूनी मांग नोटिस";
+      docSubtitle = "सार्वजनिक अधिकारी / सरकार के विरुद्ध वाद दायर करने से पूर्व दो माह का अनिवार्य विधिक नोटिस";
+      salutation = "महोदय,";
+      preamble = "एतद्द्वारा मेरे मुवक्किल / प्रार्थी के विधिक अनुदेशों के अधीन आपको सूचित किया जाता है कि आपके विभाग के निम्नलिखित कृत्य एवं विधिक अधिकारों के हनन के संबंध में यह औपचारिक नोटिस प्रेषित किया जा रहा है:";
+    }
+
+    previewBox.innerHTML = `
+      <div class="parchment-header">
+        <div class="parchment-emblem">⚖️</div>
+        <div class="parchment-title">${docHeaderTitle}</div>
+        <div class="parchment-subtitle">${docSubtitle}</div>
+      </div>
+
+      <div class="parchment-meta-row">
+        <span><strong>संदर्भ / केस सं.:</strong> ${docketRef}</span>
+        <span><strong>दिनांक:</strong> ${docDate}</span>
+      </div>
+
+      <div class="parchment-block">
+        <div class="parchment-label">सेवा में,</div>
+        <div style="margin-left: 12px; margin-top: 2px;">
+          <strong>${pioDesignation}</strong><br/>
+          ${authorityName}<br/>
+          ${authorityAddress}
+        </div>
+      </div>
+
+      <div class="parchment-block">
+        <div class="parchment-label">आवेदक / अपीलार्थी विवरण:</div>
+        <div style="margin-left: 12px; margin-top: 2px;">
+          <strong>${applicantName}</strong><br/>
+          पता: ${applicantAddress}<br/>
+          संपर्क दूरभाष: ${applicantContact}
+        </div>
+      </div>
+
+      <div class="parchment-subject">
+        विषय: ${subjectLine}
+      </div>
+
+      <div class="parchment-block">
+        <p style="margin: 6px 0 8px 0;"><strong>${salutation}</strong></p>
+        <p style="margin: 0 0 8px 0; text-align: justify;">${preamble}</p>
+        ${demandsHtml}
+      </div>
+
+      ${penaltyClause ? `
+      <div class="parchment-penalty-alert">
+        <strong>⚠️ सांविधिक चेतावनी क्लॉज (धारा 20):</strong> ${penaltyClause}
+      </div>` : ""}
+
+      <div class="parchment-block">
+        <strong>मांगी गई राहत / प्रार्थना:</strong>
+        <p style="margin: 4px 0 8px 12px;">${reliefDemanded}</p>
+      </div>
+
+      <div class="parchment-block">
+        <strong>आवेदन शुल्क का विवरण:</strong>
+        <p style="margin: 4px 0 8px 12px;">${feeParticulars}</p>
+      </div>
+
+      <div class="parchment-block" style="font-size: 11px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-left: 3px solid #718096;">
+        <strong>सत्यापन:</strong> मैं एतद्द्वारा सत्यापित करता/करती हूँ कि ऊपर वर्णित समस्त विवरण एवं तथ्य मेरे निजी ज्ञान एवं आधिकारिक अभिलेखों के अनुसार पूर्णतः सत्य एवं सही हैं।
+      </div>
+
+      <div class="parchment-sign-box">
+        <div>
+          <span style="font-size: 10.5px; color: #4A5568;">स्थान: नई दिल्ली / क्षेत्राधिकार</span><br/>
+          <span style="font-size: 10.5px; color: #4A5568;">दिनांक: ${docDate}</span>
+        </div>
+        <div class="parchment-sign-line">
+          <div style="font-family: monospace; font-size: 11px; color: #1E3A8A; margin-bottom: 3px;">[हस्ताक्षरित / प्रेषित]</div>
+          <strong>${signatoryName}</strong><br/>
+          <span style="font-size: 10px; color: #4A5568;">(हस्ताक्षरकर्ता / अधिकृत विधिक प्रेषक)</span>
+        </div>
+      </div>
+    `;
+  } else {
+    // English Rendering
+    if (currentStudioDocType === "form") {
+      docHeaderTitle = "APPLICATION UNDER SECTION 6(1) OF THE RIGHT TO INFORMATION ACT, 2005 (FORM-A)";
+      docSubtitle = "Institutional Legal Operations Desk • Statutory Civic Redressal";
+      salutation = "Sir / Madam,";
+      preamble = "I, the undersigned citizen of India, hereby request you to provide certified copies of official records and information under Section 6(1) of the Right to Information Act, 2005 as itemized below:";
+    } else if (currentStudioDocType === "appeal") {
+      docHeaderTitle = "MEMORANDUM OF FIRST STATUTORY APPEAL UNDER SECTION 19(1) OF RTI ACT, 2005";
+      docSubtitle = "Before the First Appellate Authority (FAA) against Non-Disposal / Deemed Refusal";
+      salutation = "Respected Appellate Authority,";
+      preamble = "Being deeply aggrieved by the non-disposal and deemed refusal of the original application within the mandatory 30-day timeline by the Public Information Officer, this First Appeal is preferred on the following statutory grounds:";
+    } else {
+      docHeaderTitle = "STATUTORY LEGAL DEMAND NOTICE UNDER SECTION 80 OF CODE OF CIVIL PROCEDURE, 1908";
+      docSubtitle = "Mandatory 60-Day Notice Prior to Institution of Civil Action Against Public Officer";
+      salutation = "Sir / Madam,";
+      preamble = "TAKE NOTICE that under instructions from my client, I hereby serve upon you this statutory notice under Section 80 CPC regarding the infringement of rights and damages detailed below:";
+    }
+
+    previewBox.innerHTML = `
+      <div class="parchment-header">
+        <div class="parchment-emblem">⚖️</div>
+        <div class="parchment-title">${docHeaderTitle}</div>
+        <div class="parchment-subtitle">${docSubtitle}</div>
+      </div>
+
+      <div class="parchment-meta-row">
+        <span><strong>Docket Ref:</strong> ${docketRef}</span>
+        <span><strong>Date:</strong> ${docDate}</span>
+      </div>
+
+      <div class="parchment-block">
+        <div class="parchment-label">To,</div>
+        <div style="margin-left: 12px; margin-top: 2px;">
+          <strong>${pioDesignation}</strong><br/>
+          ${authorityName}<br/>
+          ${authorityAddress}
+        </div>
+      </div>
+
+      <div class="parchment-block">
+        <div class="parchment-label">Applicant / Complainant Particulars:</div>
+        <div style="margin-left: 12px; margin-top: 2px;">
+          <strong>${applicantName}</strong><br/>
+          Postal Address: ${applicantAddress}<br/>
+          Contact Tel: ${applicantContact}
+        </div>
+      </div>
+
+      <div class="parchment-subject">
+        Subject: ${subjectLine}
+      </div>
+
+      <div class="parchment-block">
+        <p style="margin: 6px 0 8px 0;"><strong>${salutation}</strong></p>
+        <p style="margin: 0 0 8px 0; text-align: justify;">${preamble}</p>
+        ${demandsHtml}
+      </div>
+
+      ${penaltyClause ? `
+      <div class="parchment-penalty-alert">
+        <strong>⚠️ Statutory Penalty Notice (Section 20):</strong> ${penaltyClause}
+      </div>` : ""}
+
+      <div class="parchment-block">
+        <strong>Relief / Remedy Demanded:</strong>
+        <p style="margin: 4px 0 8px 12px;">${reliefDemanded}</p>
+      </div>
+
+      <div class="parchment-block">
+        <strong>Statutory Fee Particulars:</strong>
+        <p style="margin: 4px 0 8px 12px;">${feeParticulars}</p>
+      </div>
+
+      <div class="parchment-block" style="font-size: 11px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-left: 3px solid #718096;">
+        <strong>Verification Declaration:</strong> I hereby declare that the particulars stated above are true and correct to the best of my knowledge, information, and official belief.
+      </div>
+
+      <div class="parchment-sign-box">
+        <div>
+          <span style="font-size: 10.5px; color: #4A5568;">Place: New Delhi / Jurisdiction</span><br/>
+          <span style="font-size: 10.5px; color: #4A5568;">Date: ${docDate}</span>
+        </div>
+        <div class="parchment-sign-line">
+          <div style="font-family: monospace; font-size: 11px; color: #1E3A8A; margin-bottom: 3px;">[Signed / Executed]</div>
+          <strong>${signatoryName}</strong><br/>
+          <span style="font-size: 10px; color: #4A5568;">(Signatory / Legal Counsel)</span>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function copyStudioDocText() {
+  const previewBox = document.getElementById("studioLivePreviewDoc");
+  if (!previewBox) return;
+
+  const text = previewBox.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(currentLang === "hi"
+      ? "विधिक दस्तावेज क्लिपबोर्ड में कॉपी किया गया!"
+      : "Legal document copied to clipboard!", "success");
+  }).catch(() => {
+    showToast(currentLang === "hi"
+      ? "कॉपी करने में असमर्थ।"
+      : "Unable to copy text.", "warning");
+  });
+}
+
+function downloadStudioDocPdf() {
+  window.print();
+}
+
+function saveStudioDocToQueue() {
+  const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
+  const applicantName = getVal("stApplicantName") || "Shivanshu Pandey";
+  const applicantContact = getVal("stApplicantContact") || "+91 99887 76655";
+  const applicantAddress = getVal("stApplicantAddress") || "Delhi";
+  const authorityName = getVal("stAuthorityName") || "Northern Railway";
+  const docketRef = getVal("stDocketRef") || `ARZI-${Date.now().toString().slice(-4)}`;
+  const subjectLine = getVal("stSubjectLine") || "Statutory Legal Demand";
+  const demandsText = getVal("stDemandsText") || "";
+  const reliefDemanded = getVal("stReliefDemanded") || "";
+  const docDate = getVal("stDocDate") || new Date().toISOString().split("T")[0];
+
+  const newCase = {
+    case_id: docketRef,
+    docket_number: docketRef,
+    complainant_name: applicantName,
+    complainant_contact: applicantContact,
+    complainant_address: applicantAddress,
+    department: authorityName,
+    public_authority: authorityName,
+    infraction: subjectLine,
+    statutory_section: document.getElementById("stLegalSection")?.value || "RTI Act 2005 - Section 6(1)",
+    urgency_level: "STANDARD",
+    status: "DRAFT_READY",
+    intake_timestamp: new Date().toISOString(),
+    filing_date: docDate,
+    demands: demandsText,
+    relief: reliefDemanded
+  };
+
+  // Add to active queue if exists
+  if (typeof caseQueue !== "undefined" && Array.isArray(caseQueue)) {
+    const idx = caseQueue.findIndex(c => c.case_id === docketRef);
+    if (idx >= 0) {
+      caseQueue[idx] = Object.assign(caseQueue[idx], newCase);
+    } else {
+      caseQueue.unshift(newCase);
+    }
+    if (typeof renderCaseQueue === "function") {
+      renderCaseQueue(caseQueue);
+    }
+    const totalEl = document.getElementById("homeStatTotal");
+    if (totalEl) totalEl.textContent = caseQueue.length;
+    const inboxEl = document.getElementById("homeStatInbox");
+    if (inboxEl) inboxEl.textContent = caseQueue.length;
+  }
+
+  showToast(currentLang === "hi"
+    ? `दस्तावेज ${docketRef} सफलतापूर्वक मामला कतार में सहेजा गया!`
+    : `Docket ${docketRef} saved into active Case Queue!`, "success");
+}
+
+window.initStudioDocumentGenerator = initStudioDocumentGenerator;
+window.setStudioDocType = setStudioDocType;
+window.loadStudioPreset = loadStudioPreset;
+window.updateStudioLivePreview = updateStudioLivePreview;
+window.copyStudioDocText = copyStudioDocText;
+window.downloadStudioDocPdf = downloadStudioDocPdf;
+window.saveStudioDocToQueue = saveStudioDocToQueue;
+
+
+
 function initApp() {
   try { initTheme(); } catch (e) { console.warn("Theme init:", e); }
   try { initLanguage(); } catch (e) { console.warn("Language init:", e); }
+  try { initAuthFlow(); } catch (e) { console.warn("Auth init:", e); }
+  try { initStudioDocumentGenerator(); } catch (e) { console.warn("Studio init:", e); }
   try { setupNavigation(); } catch (e) { console.warn("Nav init:", e); }
-  try { loadCaseQueue(); } catch (e) { console.warn("Queue init:", e); }
-  try { loadRunLogs(); } catch (e) { console.warn("RunLog init:", e); }
   try { initLeafletPioMap(); } catch (e) { console.warn("Map init:", e); }
   try { initRadarAnimation(); } catch (e) { console.warn("Radar init:", e); }
-  try { updatePioMapForCase(); } catch (e) { console.warn("PioMap init:", e); }
-  try { loadCustomActs(); } catch (e) { console.warn("Acts init:", e); }
   try { renderLucide(); } catch (e) { console.warn("Lucide init:", e); }
+
+  // Default Landing Check:
+  const session = getAuthSession();
+  if (!session) {
+    document.body.classList.add("auth-mode");
+    updateHeaderAuthState();
+    showPage("auth");
+  } else {
+    document.body.classList.remove("auth-mode");
+    updateHeaderAuthState();
+    showPage("home");
+  }
 }
 
 if (document.readyState === "loading") {
@@ -1216,15 +2313,54 @@ function switchPersona(persona) {
   renderLucide();
 }
 
-// Top-Level Site Navigation Router (Home, About, Pillars, Dashboard)
+// Top-Level Site Navigation Router (Home, Dashboard, About, Pillars)
 function showPage(pageId) {
+  const session = getAuthSession();
+
+  // Strict Pre-Login Gate: When not logged in, only 'auth' page is accessible
+  if (!session && pageId !== "auth") {
+    pageId = "auth";
+    showToast(currentLang === "hi"
+      ? "विधिक पोर्टल में प्रवेश करने हेतु कृपया पहले लॉगिन करें।"
+      : "Please sign in to access the institutional operations desk.", "info");
+  }
+
+  const mainHeader = document.getElementById("mainAppHeader");
+  const mainFooter = document.getElementById("mainAppFooter");
+  const authPage = document.getElementById("page-auth");
+
+  if (pageId === "auth") {
+    document.body.classList.add("auth-mode");
+    if (authPage) {
+      authPage.classList.add("active");
+      authPage.style.display = "block";
+    }
+    if (mainHeader) mainHeader.style.display = "none";
+    if (mainFooter) mainFooter.style.display = "none";
+  } else {
+    document.body.classList.remove("auth-mode");
+    if (authPage) {
+      authPage.classList.remove("active");
+      authPage.style.display = "none";
+    }
+    if (mainHeader) mainHeader.style.display = "flex";
+    if (mainFooter) mainFooter.style.display = "block";
+  }
+
   document.querySelectorAll(".nav-link-btn").forEach(b => b.classList.remove("active"));
   const navDashBtn = document.getElementById("navDashboardBtn");
   if (navDashBtn) navDashBtn.classList.remove("active");
-  document.querySelectorAll(".site-page").forEach(p => p.classList.remove("active"));
+
+  document.querySelectorAll(".site-page").forEach(p => {
+    if (p.id !== `page-${pageId}`) {
+      p.classList.remove("active");
+      p.style.display = "none";
+    }
+  });
 
   const navMap = {
     home: "siteNavHome",
+    dashboard: "siteNavDashboard",
     about: "siteNavAbout",
     pillars: "siteNavPillars"
   };
@@ -1236,27 +2372,30 @@ function showPage(pageId) {
   if ((pageId === "dashboard" || pageId === "case-detail") && navDashBtn) navDashBtn.classList.add("active");
   if (pageEl) {
     pageEl.classList.add("active");
+    pageEl.style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   if (pageId === "dashboard") {
-    loadCaseQueue();
-    loadRunLogs();
-    loadCustomActs();
+    try { loadCaseQueue(); } catch (e) { console.warn("Queue error:", e); }
+    try { loadRunLogs(); } catch (e) { console.warn("RunLog error:", e); }
+    try { loadCustomActs(); } catch (e) { console.warn("Acts error:", e); }
   } else if (pageId === "home") {
-    loadCaseQueue();
+    try { loadCaseQueue(); } catch (e) { console.warn("Queue error:", e); }
   }
 
-  renderLucide();
+  try { renderLucide(); } catch (e) {}
 }
 
 // Dashboard Sub-Tab Switcher (Casework, Statutory, PIO, Compliance, RunLog)
+// Dashboard Sub-Tab Switcher (Studio, Casework, Statutory, PIO, Compliance, RunLog)
 function switchDashTab(tabId) {
   showPage("dashboard");
   document.querySelectorAll(".desk-subnav-btn").forEach(b => b.classList.remove("active"));
   document.querySelectorAll(".dash-module").forEach(m => m.classList.remove("active"));
 
   const subnavMap = {
+    studio: "subnavStudio",
     casework: "subnavCasework",
     statutory: "subnavStatutory",
     pio: "subnavPio",
@@ -1270,6 +2409,7 @@ function switchDashTab(tabId) {
   if (targetBtn) targetBtn.classList.add("active");
   if (targetModule) targetModule.classList.add("active");
 
+  if (tabId === "studio") updateStudioLivePreview();
   if (tabId === "casework") loadCaseQueue();
   if (tabId === "statutory") loadCustomActs();
   if (tabId === "compliance") initSlaPenaltyCalculator();
@@ -2551,7 +3691,13 @@ async function openCaseDetailView(caseId) {
     const bnsMapping = document.getElementById("detailBnsMapping");
     if (bnsMapping) {
       const primaryStatute = caseData.statutory_legal_analysis?.primary_bns_statute;
-      bnsMapping.textContent = primaryStatute ? `${primaryStatute.ipc_section} → ${primaryStatute.bns_section}` : "Section 6(1) RTI Act 2005";
+      if (primaryStatute) {
+        const ipcStr = currentLang === "hi" ? tSection(primaryStatute.ipc_section) : primaryStatute.ipc_section;
+        const bnsStr = currentLang === "hi" ? tSection(primaryStatute.bns_section) : primaryStatute.bns_section;
+        bnsMapping.textContent = `${ipcStr} → ${bnsStr}`;
+      } else {
+        bnsMapping.textContent = currentLang === "hi" ? "धारा 6(1) आरटीआई अधिनियम 2005" : "Section 6(1) RTI Act 2005";
+      }
     }
 
     const penaltyEl = document.getElementById("detailSec20Penalty");
@@ -3545,17 +4691,18 @@ function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("arzi_theme", theme);
   const icon = document.getElementById("themeIcon");
+  const authIcon = document.getElementById("authThemeIcon");
   const btn = document.getElementById("themeToggleBtn");
-  if (icon) {
-    if (theme === "dark") {
-      icon.setAttribute("data-lucide", "sun");
-      if (btn) btn.title = "Switch to Supreme Court Parchment Light Theme";
-    } else {
-      icon.setAttribute("data-lucide", "moon");
-      if (btn) btn.title = "Switch to Executive Dark Theme";
-    }
-    renderLucide();
+  if (theme === "dark") {
+    if (icon) icon.setAttribute("data-lucide", "sun");
+    if (authIcon) authIcon.setAttribute("data-lucide", "sun");
+    if (btn) btn.title = "Switch to Supreme Court Parchment Light Theme";
+  } else {
+    if (icon) icon.setAttribute("data-lucide", "moon");
+    if (authIcon) authIcon.setAttribute("data-lucide", "moon");
+    if (btn) btn.title = "Switch to Executive Dark Theme";
   }
+  renderLucide();
 }
 
 function toggleExecutiveTheme() {
@@ -4303,7 +5450,7 @@ function filterStatutoryMatrix() {
 
   const countEl = document.getElementById("statutoryFilterCount");
   if (countEl) {
-    countEl.textContent = `${matchCount} Provision${matchCount === 1 ? "" : "s"} Active`;
+    countEl.innerHTML = `<span class="i18n-en">${matchCount} Provision${matchCount === 1 ? "" : "s"} Active</span><span class="i18n-sep"> • </span><span class="i18n-hi">${matchCount} धाराएं सक्रिय</span>`;
   }
 }
 

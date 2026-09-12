@@ -8,7 +8,7 @@
 <meta content="An institutional legal operations desk for citizen RTI grievances, IPC to BNS 2023 statutory cross-referencing, public authority discovery and Section 20 compliance tracking." name="description"/>
 <meta content="RTI Act 2005, Bharatiya Nyaya Sanhita, BNS 2023, IPC 1860, Section 20 Penalty, Public Authority, PIO Directory, Railway, Supabase" name="keywords"/>
 <!-- Institutional Google Fonts: Source Serif 4 & Inter & JetBrains Mono -->
-<link href="/style.css?v=20260909.2" rel="stylesheet"/>
+<link href="/style.css?v=20260912.6" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&amp;display=swap" rel="stylesheet"/>
@@ -29,13 +29,13 @@
 <!-- Lucide Line Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 </link></head>
-<body class="lang-en">
+<body class="lang-en auth-mode">
 <div class="app-container">
 <!-- ================================================================= -->
-<!-- 1. COMPACT INSTITUTIONAL HEADER -->
+<!-- 1. COMPACT INSTITUTIONAL HEADER (Revealed only after authentication) -->
 <!-- ================================================================= -->
-<header class="app-header">
-<div class="brand" onclick="showPage('home')">
+<header class="app-header" id="mainAppHeader" style="display: none;">
+<div class="brand" onclick="handleBrandClick()">
 <div class="logo-box">
 <svg fill="none" height="24" viewbox="0 0 48 48" width="24">
 <rect fill="#1E3A8A" height="48" rx="3" width="48"></rect>
@@ -51,30 +51,38 @@
 <span class="title-sub"><span class="i18n-en">Civic Legal Intelligence Desk</span><span class="i18n-sep"> • </span><span class="i18n-hi">नागरिक विधिक सहायता डेस्क</span></span>
 </div>
 </div>
-<!-- Top Primary Site Navigation -->
-<nav class="header-nav">
+<!-- Top Primary Site Navigation (Gated: Hidden until user is authenticated) -->
+<nav class="header-nav" id="headerNav" style="display: none;">
 <button class="nav-link-btn active" id="siteNavHome" onclick="showPage('home')">
 <i data-lucide="home" style="width: 13px; height: 13px;"></i>
 <span><span class="i18n-en">Home</span><span class="i18n-sep"> / </span><span class="i18n-hi">मुख्य पृष्ठ</span></span>
 </button>
-<button class="nav-link-btn" id="siteNavAbout" onclick="showPage('about')">
-<i data-lucide="book-open" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">About</span><span class="i18n-sep"> / </span><span class="i18n-hi">परिचय</span></span>
+<button class="nav-link-btn" id="siteNavDashboard" onclick="showPage('dashboard')">
+<i data-lucide="layout-dashboard" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Dashboard</span><span class="i18n-sep"> / </span><span class="i18n-hi">डैशबोर्ड</span></span>
 </button>
 <button class="nav-link-btn" id="siteNavPillars" onclick="showPage('pillars')">
 <i data-lucide="scale" style="width: 13px; height: 13px;"></i>
 <span><span class="i18n-en">Pillars</span><span class="i18n-sep"> / </span><span class="i18n-hi">कानूनी नियम</span></span>
 </button>
-</nav>
-<!-- Right Header Actions (Dashboard Access Button + Persona + Status) -->
-<div class="header-right-actions">
-<button class="nav-dashboard-btn" id="navDashboardBtn" onclick="showPage('dashboard')">
-<i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i>
-<span><span class="i18n-en">Dashboard</span><span class="i18n-sep"> / </span><span class="i18n-hi">डैशबोर्ड</span></span>
-<i data-lucide="arrow-right" style="width: 13px; height: 13px;"></i>
+<button class="nav-link-btn" id="siteNavAbout" onclick="showPage('about')">
+<i data-lucide="book-open" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">About</span><span class="i18n-sep"> / </span><span class="i18n-hi">परिचय</span></span>
 </button>
-<!-- Language Switcher: English | हिंदी -->
-<div aria-label="Language Selection" class="lang-switch-group" role="group">
+</nav>
+<!-- Right Header Actions (Active Session + Status) -->
+<div class="header-right-actions">
+<!-- Active Role Badge (Displayed when logged in) -->
+<div class="header-role-badge" id="headerRoleBadge" style="display: none;">
+<span class="role-indicator-dot"></span>
+<span id="headerRoleText"><span class="i18n-en">Law Firm Desk</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिवक्ता डेस्क</span></span>
+</div>
+<button class="header-logout-btn" id="headerLogoutBtn" onclick="handleLogout()" style="display: none;" title="Sign Out">
+<i data-lucide="log-out" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Sign Out</span><span class="i18n-sep"> / </span><span class="i18n-hi">लॉग आउट</span></span>
+</button>
+<!-- Language Switcher: English | हिंदी (Sticky & Prominent) -->
+<div aria-label="Language Selection" class="lang-switch-group sticky-lang-toggle" role="group">
 <button class="lang-btn active" id="langEn" onclick="setLanguage('en')" type="button">English</button>
 <button class="lang-btn" id="langHi" onclick="setLanguage('hi')" type="button">हिंदी</button>
 </div>
@@ -94,7 +102,439 @@
 <!-- ================================================================= -->
 <!-- PAGE 1: HOME OVERVIEW & EXECUTIVE COMMAND CENTER -->
 <!-- ================================================================= -->
-<section class="site-page active" id="page-home">
+<!-- ================================================================= -->
+<!-- PAGE 0: DEFAULT LANDING PAGE — CLEAN MODERN AUTHENTICATION FLOW -->
+<!-- ================================================================= -->
+<section class="site-page active" id="page-auth">
+<div class="auth-portal-wrapper">
+<div class="auth-portal-card">
+<!-- Top Right Card Controls (Language & Theme inside card) -->
+<div class="auth-card-top-bar">
+  <div aria-label="Language Selection" class="lang-switch-group" role="group">
+    <button class="lang-btn active" id="authLangEn" onclick="setLanguage('en')" type="button">English</button>
+    <button class="lang-btn" id="authLangHi" onclick="setLanguage('hi')" type="button">हिंदी</button>
+  </div>
+  <button class="theme-toggle-btn" id="authThemeToggle" onclick="toggleExecutiveTheme()" title="Switch Light / Dark Theme" type="button">
+    <i data-lucide="moon" id="authThemeIcon" style="width: 13px; height: 13px;"></i>
+  </button>
+</div>
+<div class="auth-card-header">
+<div class="auth-emblem">
+<svg fill="none" height="36" viewbox="0 0 48 48" width="36">
+<rect fill="#1E3A8A" height="48" rx="6" width="48"></rect>
+<path d="M24 10V38" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3.5"></path>
+<path d="M12 18H36" stroke="#FEF08A" stroke-linecap="round" stroke-width="3"></path>
+<path d="M12 18L7 27H17L12 18Z" fill="rgba(255,255,255,0.15)" stroke="#FFFFFF" stroke-width="2"></path>
+<path d="M36 18L31 27H41L36 18Z" fill="rgba(255,255,255,0.15)" stroke="#FFFFFF" stroke-width="2"></path>
+<path d="M16 38H32" stroke="#FEF08A" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+<h2 class="auth-portal-title">
+<span class="i18n-en">ARZI — Statutory Legal Intelligence Desk</span>
+<span class="i18n-hi">अर्जी — नागरिक विधिक सहायता एवं आरटीआई मंच</span>
+</h2>
+<p class="auth-portal-subtitle">
+<span class="i18n-en">Select institutional role to sign in or register. Navigation tabs will unlock upon verification.</span>
+<span class="i18n-hi">लॉगिन अथवा पंजीकरण हेतु विधिक भूमिका चुनें। प्रमाणीकरण के पश्चात मुख्य पृष्ठ व अन्य सभी टैब उपलब्ध होंगे।</span>
+</p>
+</div>
+
+<!-- Dedicated In-Card Alert Box for Login / Register Feedback -->
+<div class="auth-alert-box" id="authAlertBox">
+<i data-lucide="alert-circle" id="authAlertIcon" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
+<span id="authAlertText"></span>
+</div>
+
+<!-- Dual Role Selection Switcher Tabs -->
+<div class="auth-role-tabs">
+<button class="auth-role-tab active" id="tabRoleLaw" onclick="switchAuthTab('law_firm')" type="button">
+<i data-lucide="scale" style="width: 16px; height: 16px;"></i>
+<div class="auth-tab-text">
+<span class="auth-tab-title">
+<span class="i18n-en">Law Firm / Gov Desk</span>
+<span class="i18n-hi">अधिवक्ता / सरकारी डेस्क</span>
+</span>
+<span class="auth-tab-sub">
+<span class="i18n-en">Legal Notices, RTI Forms & Appeals</span>
+<span class="i18n-hi">विधिक नोटिस, आरटीआई फॉर्म व अपील</span>
+</span>
+</div>
+</button>
+<button class="auth-role-tab" id="tabRoleAdmin" onclick="switchAuthTab('admin')" type="button">
+<i data-lucide="terminal" style="width: 16px; height: 16px;"></i>
+<div class="auth-tab-text">
+<span class="auth-tab-title">
+<span class="i18n-en">Developer (Admin) Desk</span>
+<span class="i18n-hi">डेवलपर (सिस्टम एडमिन)</span>
+</span>
+<span class="auth-tab-sub">
+<span class="i18n-en">Telemetry, Codex & Debugging</span>
+<span class="i18n-hi">टेलीमेट्री, नियम प्रबंधन व डिबगिंग</span>
+</span>
+</div>
+</button>
+</div>
+
+<!-- ================================================================= -->
+<!-- ROLE 1: LAW FIRM / GOV DESK PANEL -->
+<!-- ================================================================= -->
+<div class="auth-form-panel" id="authPanelLaw">
+<!-- Mode Switcher: Sign In vs Register -->
+<div class="auth-mode-switch">
+<button class="auth-mode-btn active" id="btnModeLawLogin" onclick="switchAuthMode('law_firm', 'login')" type="button">
+<i data-lucide="log-in" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Sign In to Law Firm</span><span class="i18n-hi">अधिवक्ता लॉगिन</span></span>
+</button>
+<button class="auth-mode-btn" id="btnModeLawRegister" onclick="switchAuthMode('law_firm', 'register')" type="button">
+<i data-lucide="user-plus" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Register New Firm</span><span class="i18n-hi">नया खाता पंजीकृत करें</span></span>
+</button>
+</div>
+
+<div class="auth-role-banner law">
+<div class="auth-banner-badge">
+<i data-lucide="shield-check" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Verified Legal Practitioner Desk</span><span class="i18n-hi">सत्यापित विधिक परामर्शदाता डेस्क</span></span>
+</div>
+<p class="auth-banner-desc">
+<span class="i18n-en">Enables autonomous drafting of statutory Form-A RTI, Section 19 First Appeals, Section 80 CPC Notices, and geospatial PIO jurisdiction tracking.</span>
+<span class="i18n-hi">नागरिक शिकायतों को कानूनी आरटीआई फॉर्म, धारा 19 प्रथम अपील, धारा 80 सीपीसी नोटिस एवं जन सूचना अधिकारी (PIO) क्षेत्राधिकार मैपिंग में परिवर्तित करता है।</span>
+</p>
+</div>
+
+<!-- Law Firm: LOGIN FORM -->
+<div id="authLawLoginView">
+<form id="formAuthLaw" onsubmit="handleAuthLogin('law_firm', event); return false;">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Desk Category / Practice Role</span>
+<span class="i18n-hi">डेस्क श्रेणी / विधिक भूमिका</span>
+</label>
+<select class="auth-select" id="authLawCategory">
+<option data-en="Advocate &amp; Legal Counsel (High Court / Bar)" data-hi="अधिवक्ता एवं विधिक परामर्शदाता (हाई कोर्ट / बार)" value="advocate">Advocate &amp; Legal Counsel (High Court / Bar)</option>
+<option data-en="Designated Public Authority / PIO Desk" data-hi="नामित जन प्राधिकरण / जन सूचना अधिकारी डेस्क" value="gov_desk">Designated Public Authority / PIO Desk</option>
+<option data-en="Legal Aid Clinic / Citizen Assistance Center" data-hi="विधिक सहायता केंद्र / नागरिक परामर्श केंद्र" value="legal_aid">Legal Aid Clinic / Citizen Assistance Center</option>
+</select>
+</div>
+
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Lawyer Bar ID / Login Email</span>
+<span class="i18n-hi">अधिवक्ता बार आईडी / लॉगिन ईमेल</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. lawyer@arzi.internal or D/1420/2018" data-ph-hi="उदा. lawyer@arzi.internal या D/1420/2018" id="authLawId" placeholder="e.g. lawyer@arzi.internal or D/1420/2018" required="" type="text" value="lawyer@arzi.internal"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Practicing Chambers / Department</span>
+<span class="i18n-hi">चैंबर / विभाग या संगठन</span>
+</label>
+<input class="studio-input" data-ph-en="Chambers of Adv. S. Kalra" data-ph-hi="अधिवक्ता एस. कालरा चैंबर्स" id="authLawChamber" placeholder="Chambers of Adv. S. Kalra" required="" type="text" value="Chambers of Adv. S. Kalra"/>
+</div>
+</div>
+
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Institutional Access PIN / Password</span>
+<span class="i18n-hi">सुरक्षा पिन / पासवर्ड</span>
+</label>
+<div class="auth-password-wrap">
+<input class="studio-input" data-ph-en="••••••••" data-ph-hi="••••••••" id="authLawPin" placeholder="••••••••" required="" type="password" value="arzi2024"/>
+<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('authLawPin', 'iconLawEye')" title="Show/Hide Password" type="button">
+<i data-lucide="eye" id="iconLawEye" style="width: 14px; height: 14px;"></i>
+</button>
+</div>
+</div>
+
+<div class="auth-quick-creds">
+<span style="color: var(--ink-muted); font-size: 11px;">
+<span class="i18n-en">Default Access:</span><span class="i18n-hi">डिफ़ॉल्ट लॉगिन:</span>
+</span>
+<button class="creds-chip" onclick="fillQuickCreds('law_firm', 'lawyer@arzi.internal', 'arzi2024')" title="Autofill default login" type="button">
+<i data-lucide="key" style="width: 11px; height: 11px;"></i>
+<span>lawyer@arzi.internal / arzi2024</span>
+</button>
+<button class="creds-chip" onclick="fillQuickCreds('law_firm', 'D/1420/2018', 'arzi2024')" title="Autofill bar ID login" type="button">
+<i data-lucide="key" style="width: 11px; height: 11px;"></i>
+<span>D/1420/2018 / arzi2024</span>
+</button>
+</div>
+
+<div class="auth-actions-row">
+<button class="btn-auth-submit" id="btnAuthLawSubmit" onclick="handleAuthLogin('law_firm', event)" type="button">
+<i data-lucide="log-in" style="width: 15px; height: 15px;"></i>
+<span><span class="i18n-en">Sign In to Law Firm &amp; Grievance Desk</span><span class="i18n-hi">विधिक एवं शिकायत डेस्क में प्रवेश करें</span></span>
+</button>
+</div>
+
+<div class="auth-switch-prompt">
+<span><span class="i18n-en">Don't have an active Law Firm account?</span><span class="i18n-hi">खाता नहीं है?</span></span>
+<button class="auth-toggle-text-link" onclick="switchAuthMode('law_firm', 'register')" type="button">
+<span class="i18n-en">Register your firm here</span><span class="i18n-hi">यहाँ पंजीकरण करें</span>
+</button>
+</div>
+</form>
+</div>
+
+<!-- Law Firm: REGISTRATION FORM ("if not logged in then register") -->
+<div id="authLawRegisterView" style="display: none;">
+<form id="formAuthLawReg" onsubmit="handleAuthRegister('law_firm', event); return false;">
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Law Firm / Chamber Name *</span>
+<span class="i18n-hi">विधिक चैंबर / फर्म का नाम *</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. Chambers of Adv. Kalra" data-ph-hi="उदा. कालरा एसोसिएट्स" id="regLawChamber" placeholder="e.g. Chambers of Adv. Kalra" required="" type="text"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Bar Council Reg ID / Officer ID *</span>
+<span class="i18n-hi">बार काउंसिल पंजीकरण संख्या *</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. D/2026/104" data-ph-hi="उदा. D/2026/104" id="regLawBarId" placeholder="e.g. D/2026/104" required="" type="text"/>
+</div>
+</div>
+
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Desk Category / Practice Role</span>
+<span class="i18n-hi">डेस्क श्रेणी</span>
+</label>
+<select class="auth-select" id="regLawCategory">
+<option value="advocate">Advocate &amp; Legal Counsel (High Court / Bar)</option>
+<option value="gov_desk">Designated Public Authority / PIO Desk</option>
+<option value="legal_aid">Legal Aid Clinic / Citizen Assistance Center</option>
+</select>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Official Email / Login ID *</span>
+<span class="i18n-hi">आधिकारिक ईमेल / लॉगिन आईडी *</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. advocate@delhibar.org" data-ph-hi="उदा. advocate@delhibar.org" id="regLawEmail" placeholder="e.g. advocate@delhibar.org" required="" type="text"/>
+</div>
+</div>
+
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Create Password *</span>
+<span class="i18n-hi">पासवर्ड बनाएं *</span>
+</label>
+<div class="auth-password-wrap">
+<input class="studio-input" id="regLawPin" minlength="6" placeholder="Min 6 characters" required="" type="password"/>
+<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('regLawPin', 'iconRegLawEye')" title="Show/Hide Password" type="button">
+<i data-lucide="eye" id="iconRegLawEye" style="width: 14px; height: 14px;"></i>
+</button>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Confirm Password *</span>
+<span class="i18n-hi">पासवर्ड पुनः दर्ज करें *</span>
+</label>
+<input class="studio-input" id="regLawPinConfirm" minlength="6" placeholder="Confirm password" required="" type="password"/>
+</div>
+</div>
+
+<div class="auth-actions-row">
+<button class="btn-auth-submit" id="btnAuthLawRegSubmit" onclick="handleAuthRegister('law_firm', event)" type="button">
+<i data-lucide="user-check" style="width: 15px; height: 15px;"></i>
+<span><span class="i18n-en">Complete Registration &amp; Open Desk</span><span class="i18n-hi">पंजीकरण पूर्ण करें व डेस्क खोलें</span></span>
+</button>
+</div>
+
+<div class="auth-switch-prompt">
+<span><span class="i18n-en">Already registered?</span><span class="i18n-hi">पहले से पंजीकृत हैं?</span></span>
+<button class="auth-toggle-text-link" onclick="switchAuthMode('law_firm', 'login')" type="button">
+<span class="i18n-en">Sign in with existing credentials</span><span class="i18n-hi">यहाँ लॉगिन करें</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- ================================================================= -->
+<!-- ROLE 2: DEVELOPER / ADMIN DESK PANEL -->
+<!-- ================================================================= -->
+<div class="auth-form-panel hidden" id="authPanelAdmin">
+<!-- Mode Switcher: Sign In vs Provision / Register -->
+<div class="auth-mode-switch">
+<button class="auth-mode-btn active admin" id="btnModeAdminLogin" onclick="switchAuthMode('admin', 'login')" type="button">
+<i data-lucide="terminal" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Admin Sign In</span><span class="i18n-hi">एडमिन लॉगिन</span></span>
+</button>
+<button class="auth-mode-btn" id="btnModeAdminRegister" onclick="switchAuthMode('admin', 'register')" type="button">
+<i data-lucide="shield-plus" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Provision New Admin</span><span class="i18n-hi">नया एडमिन पंजीकरण</span></span>
+</button>
+</div>
+
+<div class="auth-role-banner admin">
+<div class="auth-banner-badge admin">
+<i data-lucide="terminal" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">System Engineering &amp; Codex Admin</span><span class="i18n-hi">सिस्टम इंजीनियरिंग एवं कानूनी नियम एडमिन</span></span>
+</div>
+<p class="auth-banner-desc">
+<span class="i18n-en">Provides full operational oversight: RAG vector database health, custom statutory acts manager, audit run logs, and execution engine telemetry.</span>
+<span class="i18n-hi">पूर्ण तकनीकी निगरानी: आरएजी वेक्टर डेटाबेस स्थिति, कस्टम कानूनी नियम प्रबंधन, ऑडिट रन लॉग्स एवं निष्पादन टेलीमेट्री।</span>
+</p>
+</div>
+
+<!-- Admin: LOGIN FORM -->
+<div id="authAdminLoginView">
+<form id="formAuthAdmin" onsubmit="handleAuthLogin('admin', event); return false;">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Developer Account / Master ID</span>
+<span class="i18n-hi">डेवलपर उपयोगकर्ता नाम / मास्टर आईडी</span>
+</label>
+<input class="studio-input" data-ph-en="admin@arzi.internal or admin" data-ph-hi="admin@arzi.internal या admin" id="authAdminUser" placeholder="admin@arzi.internal or admin" required="" type="text" value="admin@arzi.internal"/>
+</div>
+
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Master API Token / Root Key</span>
+<span class="i18n-hi">मास्टर सुरक्षा टोकन / रूट कुंजी</span>
+</label>
+<div class="auth-password-wrap">
+<input class="studio-input" data-ph-en="••••••••••••" data-ph-hi="••••••••••••" id="authAdminToken" placeholder="••••••••••••" required="" type="password" value="arzi-root-key"/>
+<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('authAdminToken', 'iconAdminEye')" title="Show/Hide Password" type="button">
+<i data-lucide="eye" id="iconAdminEye" style="width: 14px; height: 14px;"></i>
+</button>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Cluster Environment</span>
+<span class="i18n-hi">क्लस्टर वातावरण</span>
+</label>
+<select class="auth-select" id="authAdminCluster">
+<option data-en="Production Cluster (India-Central)" data-hi="उत्पादन क्लस्टर (भारत-केंद्रीय)" value="production">Production Cluster (India-Central)</option>
+<option data-en="Staging Sandbox (Pre-Release)" data-hi="स्टेजिंग सैंडबॉक्स (परीक्षण)" value="staging">Staging Sandbox (Pre-Release)</option>
+<option data-en="Localhost Debug Daemon (:5000)" data-hi="लोकलहोस्ट डिबग डेमन (:5000)" value="local">Localhost Debug Daemon (:5000)</option>
+</select>
+</div>
+</div>
+
+<div class="auth-quick-creds">
+<span style="color: var(--ink-muted); font-size: 11px;">
+<span class="i18n-en">Default Access:</span><span class="i18n-hi">डिफ़ॉल्ट लॉगिन:</span>
+</span>
+<button class="creds-chip admin" onclick="fillQuickCreds('admin', 'admin@arzi.internal', 'arzi-root-key')" title="Autofill default admin" type="button">
+<i data-lucide="key" style="width: 11px; height: 11px;"></i>
+<span>admin@arzi.internal / arzi-root-key</span>
+</button>
+<button class="creds-chip admin" onclick="fillQuickCreds('admin', 'admin', 'admin123')" title="Autofill root login" type="button">
+<i data-lucide="key" style="width: 11px; height: 11px;"></i>
+<span>admin / admin123</span>
+</button>
+</div>
+
+<div class="auth-actions-row">
+<button class="btn-auth-submit admin" id="btnAuthAdminSubmit" onclick="handleAuthLogin('admin', event)" type="button">
+<i data-lucide="terminal" style="width: 15px; height: 15px;"></i>
+<span><span class="i18n-en">Sign In to Developer &amp; System Console</span><span class="i18n-hi">डेवलपर एवं सिस्टम कंसोल में प्रवेश करें</span></span>
+</button>
+</div>
+
+<div class="auth-switch-prompt">
+<span><span class="i18n-en">Need to provision a new Administrator?</span><span class="i18n-hi">नया एडमिन जोड़ना है?</span></span>
+<button class="auth-toggle-text-link" onclick="switchAuthMode('admin', 'register')" type="button">
+<span class="i18n-en">Register here</span><span class="i18n-hi">यहाँ पंजीकरण करें</span>
+</button>
+</div>
+</form>
+</div>
+
+<!-- Admin: REGISTRATION / PROVISIONING FORM -->
+<div id="authAdminRegisterView" style="display: none;">
+<form id="formAuthAdminReg" onsubmit="handleAuthRegister('admin', event); return false;">
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Administrator Full Name *</span>
+<span class="i18n-hi">व्यवस्थापक का पूरा नाम *</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. Lead Systems Engineer" data-ph-hi="उदा. चीफ आर्किटेक्ट" id="regAdminName" placeholder="e.g. Lead Systems Engineer" required="" type="text"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Admin Username / Email *</span>
+<span class="i18n-hi">एडमिन उपयोगकर्ता नाम / ईमेल *</span>
+</label>
+<input class="studio-input" data-ph-en="e.g. sysadmin@internal" data-ph-hi="उदा. sysadmin@internal" id="regAdminUser" placeholder="e.g. sysadmin@internal" required="" type="text"/>
+</div>
+</div>
+
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Master Authorization Token (Required) *</span>
+<span class="i18n-hi">मास्टर ऑथराइजेशन टोकन (अनिवार्य) *</span>
+</label>
+<input class="studio-input" data-ph-en="Enter arzi-root-key to authorize provisioning" data-ph-hi="arzi-root-key दर्ज करें" id="regAdminAuthKey" placeholder="Enter arzi-root-key to authorize provisioning" required="" type="password"/>
+<span style="font-size: 10.5px; color: var(--ink-muted); margin-top: 3px; display: block;">
+<span class="i18n-en">Hint: Use token <code>arzi-root-key</code> to authorize provisioning.</span>
+<span class="i18n-hi">संकेत: नया एडमिन बनाने हेतु <code>arzi-root-key</code> दर्ज करें।</span>
+</span>
+</div>
+
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Create Admin Password *</span>
+<span class="i18n-hi">पासवर्ड बनाएं *</span>
+</label>
+<div class="auth-password-wrap">
+<input class="studio-input" id="regAdminPin" minlength="6" placeholder="Min 6 characters" required="" type="password"/>
+<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('regAdminPin', 'iconRegAdminEye')" title="Show/Hide Password" type="button">
+<i data-lucide="eye" id="iconRegAdminEye" style="width: 14px; height: 14px;"></i>
+</button>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label">
+<span class="i18n-en">Confirm Password *</span>
+<span class="i18n-hi">पासवर्ड पुनः दर्ज करें *</span>
+</label>
+<input class="studio-input" id="regAdminPinConfirm" minlength="6" placeholder="Confirm password" required="" type="password"/>
+</div>
+</div>
+
+<div class="auth-actions-row">
+<button class="btn-auth-submit admin" id="btnAuthAdminRegSubmit" onclick="handleAuthRegister('admin', event)" type="button">
+<i data-lucide="shield-check" style="width: 15px; height: 15px;"></i>
+<span><span class="i18n-en">Provision Administrator Account &amp; Sign In</span><span class="i18n-hi">एडमिन खाता पंजीकृत करें व प्रवेश करें</span></span>
+</button>
+</div>
+
+<div class="auth-switch-prompt">
+<span><span class="i18n-en">Already have an Administrator account?</span><span class="i18n-hi">पहले से एडमिन खाता है?</span></span>
+<button class="auth-toggle-text-link" onclick="switchAuthMode('admin', 'login')" type="button">
+<span class="i18n-en">Sign in here</span><span class="i18n-hi">यहाँ लॉगिन करें</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Auth Footer Legal Guarantee -->
+<div class="auth-footer-notice">
+<i data-lucide="lock" style="width: 12px; height: 12px; color: var(--gov-navy);"></i>
+<span>
+<span class="i18n-en">Institutional End-to-End Encryption • Compliance with RTI Act 2005 &amp; Digital Personal Data Protection (DPDP) Act 2023</span>
+<span class="i18n-hi">संस्थागत एन्क्रिप्शन • आरटीआई अधिनियम 2005 एवं डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम 2023 के अनुरूप</span>
+</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="site-page" id="page-home">
 <!-- Institutional Editorial Hero Section -->
 <div class="editorial-hero">
 <div class="hero-tagline">
@@ -395,11 +835,11 @@
 </div>
 <div style="padding: 16px; font-size: 12px; color: var(--ink-secondary); line-height: 1.55;">
 <div style="display: flex; flex-direction: column; gap: 6px;">
-<div>• <b><span class="i18n-en">Land Mutation Fraud</span><span class="i18n-sep"> / </span><span class="i18n-hi">जमीन धोखाधड़ी:</span></b> IPC 420 / 218 → <span class="statutory-tag bns">BNS 318(4) &amp; 231</span></div>
-<div>• <b><span class="i18n-en">Ration / Public Breach</span><span class="i18n-sep"> / </span><span class="i18n-hi">राशन गबन:</span></b> IPC 409 / 166A → <span class="statutory-tag bns">BNS 316(5) &amp; 199</span></div>
-<div>• <b><span class="i18n-en">Public Nuisance / Contamination</span><span class="i18n-sep"> / </span><span class="i18n-hi">गंदगी व प्रदूषण:</span></b> IPC 268 / 277 → <span class="statutory-tag bns">BNS 270 &amp; 279</span></div>
+<div>• <b><span class="i18n-en">Land Mutation Fraud</span><span class="i18n-sep"> / </span><span class="i18n-hi">जमीन धोखाधड़ी:</span></b> <span class="i18n-en">IPC 420 / 218 → <span class="statutory-tag bns">BNS 318(4) &amp; 231</span></span><span class="i18n-hi">आईपीसी धारा 420 / 218 → <span class="statutory-tag bns">बीएनएस धारा 318(4) व 231</span></span></div>
+<div>• <b><span class="i18n-en">Ration / Public Breach</span><span class="i18n-sep"> / </span><span class="i18n-hi">राशन गबन:</span></b> <span class="i18n-en">IPC 409 / 166A → <span class="statutory-tag bns">BNS 316(5) &amp; 199</span></span><span class="i18n-hi">आईपीसी धारा 409 / 166A → <span class="statutory-tag bns">बीएनएस धारा 316(5) व 199</span></span></div>
+<div>• <b><span class="i18n-en">Public Nuisance / Contamination</span><span class="i18n-sep"> / </span><span class="i18n-hi">गंदगी व प्रदूषण:</span></b> <span class="i18n-en">IPC 268 / 277 → <span class="statutory-tag bns">BNS 270 &amp; 279</span></span><span class="i18n-hi">आईपीसी धारा 268 / 277 → <span class="statutory-tag bns">बीएनएस धारा 270 व 279</span></span></div>
 </div>
-<div class="legal-source-tag">Substantive Law: Bharatiya Nyaya Sanhita, 2023 (Central Act 45 of 2023)</div>
+<div class="legal-source-tag"><span class="i18n-en">Substantive Law: Bharatiya Nyaya Sanhita, 2023 (Central Act 45 of 2023)</span><span class="i18n-hi">लागू कानून: भारतीय न्याय संहिता, 2023 (केंद्रीय अधिनियम 45 / 2023)</span></div>
 </div>
 </div>
 <!-- Pillar 3 -->
@@ -486,57 +926,57 @@
 <tbody>
 <tr>
 <td><b><span class="i18n-en">Cheating &amp; Dishonest Property Inducement</span><span class="i18n-sep"> • </span><span class="i18n-hi">धोखाधड़ी एवं संपत्ति हड़पना</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 420</span></td>
-<td><span class="statutory-tag bns">BNS Section 318(4)</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 420</span><span class="i18n-hi">आईपीसी धारा 420</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 318(4)</span><span class="i18n-hi">बीएनएस धारा 318(4)</span></span></td>
 <td><span class="i18n-en">Imprisonment up to 7 years + fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">7 वर्ष तक कारावास + जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Non-Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / गैर-जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Criminal Breach of Trust by Public Servant</span><span class="i18n-sep"> • </span><span class="i18n-hi">लोक सेवक द्वारा विश्वासघात (गबन)</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 409</span></td>
-<td><span class="statutory-tag bns">BNS Section 316(5)</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 409</span><span class="i18n-hi">आईपीसी धारा 409</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 316(5)</span><span class="i18n-hi">बीएनएस धारा 316(5)</span></span></td>
 <td><span class="i18n-en">Imprisonment for life or up to 10 years + fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">आजीवन कारावास या 10 वर्ष तक</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Non-Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / गैर-जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Public Servant Framing Incorrect Record</span><span class="i18n-sep"> • </span><span class="i18n-hi">लोक सेवक द्वारा गलत रिकॉर्ड बनाना</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 218</span></td>
-<td><span class="statutory-tag bns">BNS Section 231</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 218</span><span class="i18n-hi">आईपीसी धारा 218</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 231</span><span class="i18n-hi">बीएनएस धारा 231</span></span></td>
 <td><span class="i18n-en">Imprisonment up to 3 years or fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">3 वर्ष तक कारावास या जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Public Servant Disobeying Law Direction</span><span class="i18n-sep"> • </span><span class="i18n-hi">कानूनी निर्देश की सरकारी अवज्ञा</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 166A</span></td>
-<td><span class="statutory-tag bns">BNS Section 199</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 166A</span><span class="i18n-hi">आईपीसी धारा 166A</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 199</span><span class="i18n-hi">बीएनएस धारा 199</span></span></td>
 <td><span class="i18n-en">Rigorous imprisonment up to 2 years + fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">2 वर्ष तक सश्रम कारावास + जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Public Nuisance Affecting General Health</span><span class="i18n-sep"> • </span><span class="i18n-hi">जन स्वास्थ्य को प्रभावित करने वाला उपद्रव</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 268</span></td>
-<td><span class="statutory-tag bns">BNS Section 270</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 268</span><span class="i18n-hi">आईपीसी धारा 268</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 270</span><span class="i18n-hi">बीएनएस धारा 270</span></span></td>
 <td><span class="i18n-en">Fine up to ₹1,000 / Injunction</span><span class="i18n-sep"> • </span><span class="i18n-hi">₹1,000 जुर्माना / निषेधाज्ञा</span></td>
 <td><span class="status-pill under-review"><span class="i18n-en">Non-Cognizable / Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">असंज्ञेय / जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Fouling Water of Public Spring or Reservoir</span><span class="i18n-sep"> • </span><span class="i18n-hi">सार्वजनिक जलाशय को दूषित करना</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 277</span></td>
-<td><span class="statutory-tag bns">BNS Section 279</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 277</span><span class="i18n-hi">आईपीसी धारा 277</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 279</span><span class="i18n-hi">बीएनएस धारा 279</span></span></td>
 <td><span class="i18n-en">Imprisonment up to 3 months or fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">3 माह तक कारावास या जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Disobedience to Order Promulgated by Public Servant</span><span class="i18n-sep"> • </span><span class="i18n-hi">सरकारी आदेश का उल्लंघन</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 188</span></td>
-<td><span class="statutory-tag bns">BNS Section 223</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 188</span><span class="i18n-hi">आईपीसी धारा 188</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 223</span><span class="i18n-hi">बीएनएस धारा 223</span></span></td>
 <td><span class="i18n-en">Imprisonment up to 6 months or fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">6 माह तक कारावास या जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / जमानती</span></span></td>
 </tr>
 <tr>
 <td><b><span class="i18n-en">Forgery of Public Register or Court Record</span><span class="i18n-sep"> • </span><span class="i18n-hi">सरकारी रजिस्टर की जालसाजी</span></b></td>
-<td><span class="statutory-tag ipc">IPC Section 466</span></td>
-<td><span class="statutory-tag bns">BNS Section 338</span></td>
+<td><span class="statutory-tag ipc"><span class="i18n-en">IPC Section 466</span><span class="i18n-hi">आईपीसी धारा 466</span></span></td>
+<td><span class="statutory-tag bns"><span class="i18n-en">BNS Section 338</span><span class="i18n-hi">बीएनएस धारा 338</span></span></td>
 <td><span class="i18n-en">Imprisonment up to 7 years + fine</span><span class="i18n-sep"> • </span><span class="i18n-hi">7 वर्ष तक कारावास + जुर्माना</span></td>
 <td><span class="status-pill approved"><span class="i18n-en">Cognizable / Non-Bailable</span><span class="i18n-sep"> • </span><span class="i18n-hi">संज्ञेय / गैर-जमानती</span></span></td>
 </tr>
@@ -551,29 +991,293 @@
 <section class="site-page" id="page-dashboard">
 <!-- Operations Sub-Navigation Bar -->
 <nav class="desk-subnav-bar">
-<button class="desk-subnav-btn active" id="subnavCasework" onclick="switchDashTab('casework')">
+<button class="desk-subnav-btn active" id="subnavStudio" onclick="switchDashTab('studio')">
+<i data-lucide="file-check" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">01. Document Studio</span><span class="i18n-sep"> / </span><span class="i18n-hi">प्रारूपण स्टूडियो</span></span>
+</button>
+<button class="desk-subnav-btn" id="subnavCasework" onclick="switchDashTab('casework')">
 <i data-lucide="folder-kanban" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">01. Casework</span><span class="i18n-sep"> / </span><span class="i18n-hi">शिकायत डेस्क</span></span>
+<span><span class="i18n-en">02. Casework</span><span class="i18n-sep"> / </span><span class="i18n-hi">शिकायत डेस्क</span></span>
 </button>
 <button class="desk-subnav-btn" id="subnavStatutory" onclick="switchDashTab('statutory')">
 <i data-lucide="book-marked" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">02. Laws</span><span class="i18n-sep"> / </span><span class="i18n-hi">कानून व धाराएं</span></span>
+<span><span class="i18n-en">03. Laws</span><span class="i18n-sep"> / </span><span class="i18n-hi">कानून व धाराएं</span></span>
 </button>
 <button class="desk-subnav-btn" id="subnavPio" onclick="switchDashTab('pio')">
 <i data-lucide="map-pin" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">03. PIO Map</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिकारी मैप</span></span>
+<span><span class="i18n-en">04. PIO Map</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिकारी मैप</span></span>
 </button>
 <button class="desk-subnav-btn" id="subnavCompliance" onclick="switchDashTab('compliance')">
 <i data-lucide="clock" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">04. Calculator</span><span class="i18n-sep"> / </span><span class="i18n-hi">जुर्माना कैलकुलेटर</span></span>
+<span><span class="i18n-en">05. Calculator</span><span class="i18n-sep"> / </span><span class="i18n-hi">जुर्माना कैलकुलेटर</span></span>
 </button>
 <button class="desk-subnav-btn" id="subnavRunlog" onclick="switchDashTab('runlog')">
 <i data-lucide="scroll-text" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">05. Run Log</span><span class="i18n-sep"> / </span><span class="i18n-hi">ऑडिट लॉग</span></span>
+<span><span class="i18n-en">06. Run Log</span><span class="i18n-sep"> / </span><span class="i18n-hi">ऑडिट लॉग</span></span>
 </button>
 </nav>
 <!-- TAB 1: CASEWORK DESK (PRIMARY MULTI-COLUMN) -->
-<div class="dash-module active" id="dashtab-casework">
+<!-- TAB 0: STREAMLINED DOCUMENT STUDIO (PRIMARY SINGLE-COLUMN STEP WIZARD + LIVE PREVIEW) -->
+<div class="dash-module active" id="dashtab-studio">
+<div class="studio-header-strip">
+<div class="studio-header-left">
+<div class="studio-badge">
+<i data-lucide="file-check" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">STREAMLINED STATUTORY DOCUMENT GENERATOR</span><span class="i18n-hi">सरलीकृत विधिक दस्तावेज प्रारूपण केंद्र</span></span>
+</div>
+<h2>
+<span class="i18n-en">Generate Statutory Legal Documents &amp; Notices</span>
+<span class="i18n-hi">कानूनी दस्तावेज, आरटीआई एवं विधिक नोटिस तैयार करें</span>
+</h2>
+<p class="studio-subtitle">
+<span class="i18n-en">Single-column step wizard with real-time live preview for Forms, Appeals, and Statutory Notices.</span>
+<span class="i18n-hi">आरटीआई फॉर्म, धारा 19 अपील एवं धारा 80 कानूनी नोटिस हेतु एकल-कॉलम चरणबद्ध प्रारूपण एवं वास्तविक समय पूर्वावलोकन।</span>
+</p>
+</div>
+
+<!-- Document Type Switcher Pills -->
+<div class="studio-doc-selector">
+<button class="doc-type-pill active" id="docTypePillForm" onclick="setStudioDocType('form')" type="button">
+<i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+<span><span class="i18n-en">01. Form: RTI Application (Sec 6(1))</span><span class="i18n-hi">01. फॉर्म: आरटीआई आवेदन (धारा 6(1))</span></span>
+</button>
+<button class="doc-type-pill" id="docTypePillAppeal" onclick="setStudioDocType('appeal')" type="button">
+<i data-lucide="scale" style="width: 14px; height: 14px;"></i>
+<span><span class="i18n-en">02. Appeal: First Appeal (Sec 19(1))</span><span class="i18n-hi">02. अपील: प्रथम अपील (धारा 19(1))</span></span>
+</button>
+<button class="doc-type-pill" id="docTypePillNotice" onclick="setStudioDocType('notice')" type="button">
+<i data-lucide="alert-octagon" style="width: 14px; height: 14px;"></i>
+<span><span class="i18n-en">03. Notice: Legal Demand (Sec 80 CPC)</span><span class="i18n-hi">03. नोटिस: कानूनी मांग नोटिस (धारा 80 सीपीसी)</span></span>
+</button>
+</div>
+</div>
+
+<!-- 1-Click Quick Preset Template Chips -->
+<div class="studio-presets-row">
+<span class="presets-label">
+<i data-lucide="sparkles" style="width: 12px; height: 12px; color: var(--gov-amber);"></i>
+<span><span class="i18n-en">1-Click Quick Presets:</span><span class="i18n-hi">त्वरित टेम्पलेट:</span></span>
+</span>
+<button class="preset-chip active" id="presetBtnRailway" onclick="loadStudioPreset('railway')" type="button">
+<i data-lucide="train" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Railway Ticket Refund Delay</span><span class="i18n-hi">रेलवे टिकट रिफंड देरी</span></span>
+</button>
+<button class="preset-chip" id="presetBtnRoad" onclick="loadStudioPreset('road')" type="button">
+<i data-lucide="hammer" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Municipal Road Construction Audit</span><span class="i18n-hi">सड़क निर्माण गुणवत्ता जांच</span></span>
+</button>
+<button class="preset-chip" id="presetBtnWater" onclick="loadStudioPreset('water')" type="button">
+<i data-lucide="droplet" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Drinking Water Contamination</span><span class="i18n-hi">पेयजल आपूर्ति व गुणवत्ता</span></span>
+</button>
+<button class="preset-chip" id="presetBtnPolice" onclick="loadStudioPreset('police')" type="button">
+<i data-lucide="shield-alert" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Police FIR Non-Registration</span><span class="i18n-hi">पुलिस स्टेशन गैर-पंजीकरण</span></span>
+</button>
+</div>
+
+<!-- Two-Column Responsive Split Layout -->
+<div class="studio-split-grid">
+<!-- LEFT COLUMN: Single-Column Step-by-Step Layout -->
+<div class="studio-form-col">
+
+<!-- STEP 1: Parties Involved -->
+<div class="studio-step-card">
+<div class="step-card-header">
+<div class="step-num-badge">01</div>
+<div class="step-header-text">
+<h3>
+<span class="i18n-en">Parties Involved (Applicant &amp; Public Authority)</span>
+<span class="i18n-hi">पक्षकार विवरण (आवेदक एवं जन प्राधिकरण)</span>
+</h3>
+<p>
+<span class="i18n-en">Specify citizen seeking relief and designated Public Information Officer (PIO)</span>
+<span class="i18n-hi">राहत चाहने वाले नागरिक एवं नामित जन सूचना अधिकारी का विवरण भरें</span>
+</p>
+</div>
+</div>
+<div class="step-card-body">
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Applicant / Complainant Name *</span><span class="i18n-hi">आवेदक / शिकायतकर्ता का नाम *</span></label>
+<input class="studio-input" data-ph-en="e.g. Shivanshu Pandey" data-ph-hi="उदा. शिवंशु पांडेय" id="stApplicantName" oninput="updateStudioLivePreview()" required="" type="text" value="शिवंशु पांडेय"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Contact Phone / Email *</span><span class="i18n-hi">फोन नंबर / संपर्क विवरण *</span></label>
+<input class="studio-input" data-ph-en="+91 99887 76655" data-ph-hi="+91 99887 76655" id="stApplicantContact" oninput="updateStudioLivePreview()" required="" type="text" value="+91 99887 76655"/>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Full Postal Address with PIN Code *</span><span class="i18n-hi">पूर्ण डाक पता एवं पिन कोड *</span></label>
+<input class="studio-input" data-ph-en="e.g. H-42, Civil Lines, North Delhi - 110054" data-ph-hi="उदा. मकान नं. 42, सिविल लाइन्स, उत्तरी दिल्ली - 110054" id="stApplicantAddress" oninput="updateStudioLivePreview()" required="" type="text" value="मकान नं. 42, सिविल लाइन्स, उत्तरी दिल्ली - 110054"/>
+</div>
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Respondent Public Authority Name *</span><span class="i18n-hi">प्रतिवादी जन प्राधिकरण / विभाग *</span></label>
+<input class="studio-input" data-ph-en="Northern Railway (Commercial Directorate)" data-ph-hi="उत्तर रेलवे (मुख्यालय - नई दिल्ली)" id="stAuthorityName" oninput="updateStudioLivePreview()" required="" type="text" value="उत्तर रेलवे (मुख्यालय - नई दिल्ली)"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Designated PIO / Appellate Officer *</span><span class="i18n-hi">नामित जन सूचना अधिकारी / पदनाम *</span></label>
+<input class="studio-input" data-ph-en="Public Information Officer, Commercial Division" data-ph-hi="जन सूचना अधिकारी, वाणिज्य मंडल" id="stPioDesignation" oninput="updateStudioLivePreview()" required="" type="text" value="जन सूचना अधिकारी, वाणिज्य मंडल"/>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Authority Office Postal Address *</span><span class="i18n-hi">प्राधिकरण का कार्यालय पता *</span></label>
+<input class="studio-input" data-ph-en="Baroda House, Copernicus Marg, New Delhi - 110001" data-ph-hi="बड़ौदा हाउस, कस्तूरबा गांधी मार्ग, नई दिल्ली - 110001" id="stAuthorityAddress" oninput="updateStudioLivePreview()" required="" type="text" value="बड़ौदा हाउस, कस्तूरबा गांधी मार्ग, नई दिल्ली - 110001"/>
+</div>
+</div>
+</div>
+
+<!-- STEP 2: Reference Numbers & Timeline -->
+<div class="studio-step-card">
+<div class="step-card-header">
+<div class="step-num-badge">02</div>
+<div class="step-header-text">
+<h3>
+<span class="i18n-en">Reference Numbers &amp; Timeline</span>
+<span class="i18n-hi">संदर्भ संख्या एवं समय-सीमा</span>
+</h3>
+<p>
+<span class="i18n-en">Docket identifier, incident date, and statutory subject line</span>
+<span class="i18n-hi">केस संदर्भ संख्या, घटना की तिथि एवं संक्षिप्त विषय</span>
+</p>
+</div>
+</div>
+<div class="step-card-body">
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Docket / Reference Number</span><span class="i18n-hi">संदर्भ / केस संख्या</span></label>
+<input class="studio-input" data-ph-en="ARZI-2024-NR-7821" data-ph-hi="ARZI-2024-NR-7821" id="stDocketRef" oninput="updateStudioLivePreview()" type="text" value="ARZI-2024-NR-7821"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Date of Application / Notice *</span><span class="i18n-hi">आवेदन / नोटिस की तिथि *</span></label>
+<input class="studio-input" id="stDocDate" oninput="updateStudioLivePreview()" required="" type="date"/>
+</div>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Subject Line *</span><span class="i18n-hi">संक्षिप्त विषय *</span></label>
+<input class="studio-input" data-ph-en="Application under Section 6(1) regarding non-disbursement of refund on PNR 245-8819283" data-ph-hi="पीएनआर 245-8819283 के लंबित रिफंड एवं देरी के संबंध में आरटीआई अधिनियम की धारा 6(1) के तहत आवेदन" id="stSubjectLine" oninput="updateStudioLivePreview()" required="" type="text" value="पीएनआर 245-8819283 के लंबित रिफंड एवं देरी के संबंध में आरटीआई अधिनियम की धारा 6(1) के तहत आवेदन"/>
+</div>
+</div>
+</div>
+
+<!-- STEP 3: Statutory Grounds & Legal Clauses -->
+<div class="studio-step-card">
+<div class="step-card-header">
+<div class="step-num-badge">03</div>
+<div class="step-header-text">
+<h3>
+<span class="i18n-en">Statutory Grounds &amp; Legal Clauses</span>
+<span class="i18n-hi">विधिक आधार एवं कानूनी धाराएं</span>
+</h3>
+<p>
+<span class="i18n-en">Select applicable statutory section and itemize questions or legal demands</span>
+<span class="i18n-hi">लागू कानूनी धारा चुनें एवं सूचना के बिंदु अथवा विधिक मांगें दर्ज करें</span>
+</p>
+</div>
+</div>
+<div class="step-card-body">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Statutory Legal Provision / Section</span><span class="i18n-hi">लागू कानूनी धारा</span></label>
+<select class="auth-select" id="stLegalSection" onchange="updateStudioLivePreview()">
+<option data-en="RTI Act 2005 - Section 6(1) (Citizen Right to Information)" data-hi="आरटीआई अधिनियम 2005 - धारा 6(1) (सूचना का अधिकार)" value="rti_sec6">RTI Act 2005 - Section 6(1) (Citizen Right to Information)</option>
+<option data-en="RTI Act 2005 - Section 7(1) (Urgent Life &amp; Liberty - 48 Hours)" data-hi="आरटीआई अधिनियम 2005 - धारा 7(1) (जीवन एवं स्वतंत्रता - 48 घंटे)" value="rti_sec7">RTI Act 2005 - Section 7(1) (Urgent Life &amp; Liberty - 48 Hours)</option>
+<option data-en="RTI Act 2005 - Section 19(1) (First Appeal for Deemed Refusal)" data-hi="आरटीआई अधिनियम 2005 - धारा 19(1) (अस्वीकृति के विरुद्ध प्रथम अपील)" value="rti_sec19">RTI Act 2005 - Section 19(1) (First Appeal for Deemed Refusal)</option>
+<option data-en="Code of Civil Procedure 1908 - Section 80 (Statutory Legal Notice)" data-hi="सिविल प्रक्रिया संहिता 1908 - धारा 80 (वैधानिक कानूनी नोटिस)" value="cpc_sec80">Code of Civil Procedure 1908 - Section 80 (Statutory Legal Notice)</option>
+</select>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Information Sought / Specific Demands (Itemized) *</span><span class="i18n-hi">मांगी गई सूचना / विधिक मांगें (क्रमबद्ध बिंदु) *</span></label>
+<textarea class="studio-textarea" id="stDemandsText" oninput="updateStudioLivePreview()" required="" rows="6">1. कृपया पीएनआर 245-8819283 के निरस्तीकरण एवं रिफंड फ़ाइल की प्रमाणित प्रतिलिपि उपलब्ध कराएं।
+2. कृपया बताएं कि 45 दिन बीत जाने के बावजूद रिफंड राशि आवेदक के बैंक खाते में प्रेषित क्यों नहीं की गई।
+3. उक्त देरी हेतु जिम्मेदार अधिकारियों/कर्मचारियों के नाम व पदनाम प्रदान किए जाएं।
+4. कृपया नागरिक चार्टर के अनुसार इस प्रकार की शिकायतों के समाधान की समय-सीमा की प्रमाणित प्रति प्रदान करें।</textarea>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Statutory Penalty Notice Clause (Section 20 RTI / Damages)</span><span class="i18n-hi">धारा 20 आरटीआई जुर्माना चेतावनी / हर्जाना क्लॉज</span></label>
+<input class="studio-input" data-ph-en="Section 20(1) Penalty Notice: ₹250 per day up to ₹25,000 for delay or refusal" data-ph-hi="धारा 20(1) नोटिस: 30 दिन में सूचना न देने पर ₹250 प्रतिदिन की दर से ₹25,000 तक का दण्ड अधिरोपित किया जाएगा।" id="stPenaltyClause" oninput="updateStudioLivePreview()" type="text" value="धारा 20(1) नोटिस: 30 दिन में सूचना न देने पर ₹250 प्रतिदिन की दर से ₹25,000 तक का दण्ड अधिरोपित किया जाएगा।"/>
+</div>
+</div>
+</div>
+
+<!-- STEP 4: Relief Sought & Verification -->
+<div class="studio-step-card">
+<div class="step-card-header">
+<div class="step-num-badge">04</div>
+<div class="step-header-text">
+<h3>
+<span class="i18n-en">Relief Sought &amp; Verification</span>
+<span class="i18n-hi">मांगी गई राहत एवं सत्यापन</span>
+</h3>
+<p>
+<span class="i18n-en">Remedy requested, statutory fee particulars, and declaration</span>
+<span class="i18n-hi">प्रार्थना/राहत, आवेदन शुल्क विवरण एवं विधिक सत्यापन</span>
+</p>
+</div>
+</div>
+<div class="step-card-body">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Relief / Remedy Demanded *</span><span class="i18n-hi">मांगी गई राहत / प्रार्थना *</span></label>
+<input class="studio-input" data-ph-en="Immediate supply of certified records within statutory 30-day timeline and release of lawful refund." data-ph-hi="निर्धारित 30 दिनों के भीतर प्रमाणित अभिलेख प्रदान किए जाएं एवं देय रिफंड राशि अविलंब जारी की जाए।" id="stReliefDemanded" oninput="updateStudioLivePreview()" required="" type="text" value="निर्धारित 30 दिनों के भीतर प्रमाणित अभिलेख प्रदान किए जाएं एवं देय रिफंड राशि अविलंब जारी की जाए।"/>
+</div>
+<div class="form-row-2col">
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Statutory Fee Particulars</span><span class="i18n-hi">आवेदन शुल्क विवरण</span></label>
+<input class="studio-input" data-ph-en="₹10/- paid via Indian Postal Order (IPO) No. 42G 918273" data-ph-hi="₹10/- भारतीय पोस्टल ऑर्डर (IPO) सं. 42G 918273 द्वारा संलग्न" id="stFeeParticulars" oninput="updateStudioLivePreview()" type="text" value="₹10/- भारतीय पोस्टल ऑर्डर (IPO) सं. 42G 918273 द्वारा संलग्न"/>
+</div>
+<div class="form-group-gov">
+<label class="form-label"><span class="i18n-en">Advocate / Signatory Name</span><span class="i18n-hi">हस्ताक्षरकर्ता का नाम</span></label>
+<input class="studio-input" data-ph-en="Shivanshu Pandey (Applicant / Advocate)" data-ph-hi="शिवंशु पांडेय (आवेदक / अधिवक्ता)" id="stSignatoryName" oninput="updateStudioLivePreview()" required="" type="text" value="शिवंशु पांडेय (आवेदक)"/>
+</div>
+</div>
+<div class="verification-box">
+<input checked="" id="stVerifyCheck" onchange="updateStudioLivePreview()" style="margin-top: 3px;" type="checkbox"/>
+<label for="stVerifyCheck" style="font-size: 11.5px; color: var(--ink-secondary); line-height: 1.4;">
+<span class="i18n-en"><b>Statutory Declaration:</b> I hereby declare that the particulars stated above are true, complete, and correct to the best of my personal knowledge and official records.</span>
+<span class="i18n-hi"><b>विधिक घोषणा:</b> मैं प्रमाणित करता/करती हूँ कि ऊपर दिए गए समस्त तथ्य मेरे ज्ञान एवं उपलब्ध अभिलेखों के अनुसार पूर्णतः सत्य एवं सही हैं।</span>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- RIGHT COLUMN: Sticky Real-Time Live Preview Pane -->
+<div class="studio-preview-col">
+<div class="sticky-preview-wrapper">
+<!-- Preview Actions Header -->
+<div class="preview-actions-bar">
+<div class="preview-live-pill">
+<span class="pulse-dot"></span>
+<span><span class="i18n-en">LIVE PREVIEW</span><span class="i18n-hi">वास्तविक समय पूर्वावलोकन</span></span>
+</div>
+<div class="preview-btn-group">
+<button class="btn-preview-act" onclick="copyStudioDocText()" title="Copy Formatted Legal Text" type="button">
+<i data-lucide="copy" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Copy</span><span class="i18n-hi">कॉपी</span></span>
+</button>
+<button class="btn-preview-act" onclick="downloadStudioDocPdf()" title="Print / Download PDF" type="button">
+<i data-lucide="download" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">PDF</span><span class="i18n-hi">प्रिंट / पीडीएफ</span></span>
+</button>
+<button class="btn-preview-act primary" onclick="saveStudioDocToQueue()" title="Save into Active Case Queue" type="button">
+<i data-lucide="save" style="width: 12px; height: 12px;"></i>
+<span><span class="i18n-en">Save Case</span><span class="i18n-hi">सहेजें</span></span>
+</button>
+</div>
+</div>
+
+<!-- Official Parchment Legal Document Card -->
+<div class="parchment-doc-view" id="studioLivePreviewDoc">
+<!-- Dynamic Live Content rendered by updateStudioLivePreview() in app.js -->
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="dash-module" id="dashtab-casework">
 <div class="desk-split-layout">
 <!-- Left Column: Case Ingestion & Queue -->
 <div>
@@ -1706,8 +2410,8 @@
 </div>
 </div>
 </div>
-<!-- Institutional Footer -->
-<footer class="institutional-footer">
+<!-- Institutional Footer (Revealed only after authentication) -->
+<footer class="institutional-footer" id="mainAppFooter" style="display: none;">
 <div>
 <span data-i18n="footer_brand">ARZI — Civic RTI &amp; Statutory Legal Intelligence Platform • National Legal Tech Standard</span>
 </div>
@@ -1718,6 +2422,6 @@
 </div>
 </footer>
 
-<script src="/app.js?v=20260912.2"></script>
+<script src="/app.js?v=20260912.6"></script>
 </body>
 </html>
