@@ -24,18 +24,18 @@
     }
   </script>
 <!-- Leaflet.js Interactive OpenStreetMap -->
-<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+<link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
 <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <!-- Lucide Line Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
-</link></head>
-<body class="lang-en auth-mode">
+</head>
+<body class="lang-en">
 <div class="app-container">
 <!-- ================================================================= -->
-<!-- 1. COMPACT INSTITUTIONAL HEADER (Revealed only after authentication) -->
+<!-- 1. COMPACT INSTITUTIONAL HEADER -->
 <!-- ================================================================= -->
-<header class="app-header" id="mainAppHeader" style="display: none;">
-<div class="brand" onclick="handleBrandClick()">
+<header class="app-header">
+<div class="brand" onclick="showPage('home')">
 <div class="logo-box">
 <svg fill="none" height="24" viewbox="0 0 48 48" width="24">
 <rect fill="#1E3A8A" height="48" rx="3" width="48"></rect>
@@ -51,38 +51,30 @@
 <span class="title-sub"><span class="i18n-en">Civic Legal Intelligence Desk</span><span class="i18n-sep"> • </span><span class="i18n-hi">नागरिक विधिक सहायता डेस्क</span></span>
 </div>
 </div>
-<!-- Top Primary Site Navigation (Gated: Hidden until user is authenticated) -->
-<nav class="header-nav" id="headerNav" style="display: none;">
+<!-- Top Primary Site Navigation -->
+<nav class="header-nav">
 <button class="nav-link-btn active" id="siteNavHome" onclick="showPage('home')">
 <i data-lucide="home" style="width: 13px; height: 13px;"></i>
 <span><span class="i18n-en">Home</span><span class="i18n-sep"> / </span><span class="i18n-hi">मुख्य पृष्ठ</span></span>
-</button>
-<button class="nav-link-btn" id="siteNavDashboard" onclick="showPage('dashboard')">
-<i data-lucide="layout-dashboard" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Dashboard</span><span class="i18n-sep"> / </span><span class="i18n-hi">डैशबोर्ड</span></span>
-</button>
-<button class="nav-link-btn" id="siteNavPillars" onclick="showPage('pillars')">
-<i data-lucide="scale" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Pillars</span><span class="i18n-sep"> / </span><span class="i18n-hi">कानूनी नियम</span></span>
 </button>
 <button class="nav-link-btn" id="siteNavAbout" onclick="showPage('about')">
 <i data-lucide="book-open" style="width: 13px; height: 13px;"></i>
 <span><span class="i18n-en">About</span><span class="i18n-sep"> / </span><span class="i18n-hi">परिचय</span></span>
 </button>
-</nav>
-<!-- Right Header Actions (Active Session + Status) -->
-<div class="header-right-actions">
-<!-- Active Role Badge (Displayed when logged in) -->
-<div class="header-role-badge" id="headerRoleBadge" style="display: none;">
-<span class="role-indicator-dot"></span>
-<span id="headerRoleText"><span class="i18n-en">Law Firm Desk</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिवक्ता डेस्क</span></span>
-</div>
-<button class="header-logout-btn" id="headerLogoutBtn" onclick="handleLogout()" style="display: none;" title="Sign Out">
-<i data-lucide="log-out" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Sign Out</span><span class="i18n-sep"> / </span><span class="i18n-hi">लॉग आउट</span></span>
+<button class="nav-link-btn" id="siteNavPillars" onclick="showPage('pillars')">
+<i data-lucide="scale" style="width: 13px; height: 13px;"></i>
+<span><span class="i18n-en">Pillars</span><span class="i18n-sep"> / </span><span class="i18n-hi">कानूनी नियम</span></span>
 </button>
-<!-- Language Switcher: English | हिंदी (Sticky & Prominent) -->
-<div aria-label="Language Selection" class="lang-switch-group sticky-lang-toggle" role="group">
+</nav>
+<!-- Right Header Actions (Dashboard Access Button + Persona + Status) -->
+<div class="header-right-actions">
+<button class="nav-dashboard-btn" id="navDashboardBtn" onclick="showPage('dashboard')">
+<i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i>
+<span><span class="i18n-en">Dashboard</span><span class="i18n-sep"> / </span><span class="i18n-hi">डैशबोर्ड</span></span>
+<i data-lucide="arrow-right" style="width: 13px; height: 13px;"></i>
+</button>
+<!-- Language Switcher: English | हिंदी -->
+<div aria-label="Language Selection" class="lang-switch-group" role="group">
 <button class="lang-btn active" id="langEn" onclick="setLanguage('en')" type="button">English</button>
 <button class="lang-btn" id="langHi" onclick="setLanguage('hi')" type="button">हिंदी</button>
 </div>
@@ -97,444 +89,9 @@
 </div>
 </header>
 <!-- ================================================================= -->
-<!-- PAGE 1: HOME OVERVIEW PAGE -->
-<!-- ================================================================= -->
-<!-- ================================================================= -->
 <!-- PAGE 1: HOME OVERVIEW & EXECUTIVE COMMAND CENTER -->
 <!-- ================================================================= -->
-<!-- ================================================================= -->
-<!-- PAGE 0: DEFAULT LANDING PAGE — CLEAN MODERN AUTHENTICATION FLOW -->
-<!-- ================================================================= -->
-<section class="site-page active" id="page-auth">
-<div class="auth-portal-wrapper">
-<div class="auth-portal-card">
-<!-- Top Right Card Controls (Language & Theme inside card) -->
-<div class="auth-card-top-bar">
-  <div aria-label="Language Selection" class="lang-switch-group" role="group">
-    <button class="lang-btn active" id="authLangEn" onclick="setLanguage('en')" type="button">English</button>
-    <button class="lang-btn" id="authLangHi" onclick="setLanguage('hi')" type="button">हिंदी</button>
-  </div>
-  <button class="theme-toggle-btn" id="authThemeToggle" onclick="toggleExecutiveTheme()" title="Switch Light / Dark Theme" type="button">
-    <i data-lucide="moon" id="authThemeIcon" style="width: 13px; height: 13px;"></i>
-  </button>
-</div>
-<div class="auth-card-header">
-<div class="auth-emblem">
-<svg fill="none" height="36" viewbox="0 0 48 48" width="36">
-<rect fill="#1E3A8A" height="48" rx="6" width="48"></rect>
-<path d="M24 10V38" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3.5"></path>
-<path d="M12 18H36" stroke="#FEF08A" stroke-linecap="round" stroke-width="3"></path>
-<path d="M12 18L7 27H17L12 18Z" fill="rgba(255,255,255,0.15)" stroke="#FFFFFF" stroke-width="2"></path>
-<path d="M36 18L31 27H41L36 18Z" fill="rgba(255,255,255,0.15)" stroke="#FFFFFF" stroke-width="2"></path>
-<path d="M16 38H32" stroke="#FEF08A" stroke-linecap="round" stroke-width="3"></path>
-</svg>
-</div>
-<h2 class="auth-portal-title">
-<span class="i18n-en">ARZI — Statutory Legal Intelligence Desk</span>
-<span class="i18n-hi">अर्जी — नागरिक विधिक सहायता एवं आरटीआई मंच</span>
-</h2>
-<p class="auth-portal-subtitle">
-<span class="i18n-en">Select institutional role to sign in or register. Navigation tabs will unlock upon verification.</span>
-<span class="i18n-hi">लॉगिन अथवा पंजीकरण हेतु विधिक भूमिका चुनें। प्रमाणीकरण के पश्चात मुख्य पृष्ठ व अन्य सभी टैब उपलब्ध होंगे।</span>
-</p>
-</div>
-
-<!-- Dedicated In-Card Alert Box for Login / Register Feedback -->
-<div class="auth-alert-box" id="authAlertBox">
-<i data-lucide="alert-circle" id="authAlertIcon" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
-<span id="authAlertText"></span>
-</div>
-
-<!-- Dual Role Selection Switcher Tabs -->
-<div class="auth-role-tabs">
-<button class="auth-role-tab active" id="tabRoleLaw" onclick="switchAuthTab('law_firm')" type="button">
-<i data-lucide="scale" style="width: 16px; height: 16px;"></i>
-<div class="auth-tab-text">
-<span class="auth-tab-title">
-<span class="i18n-en">Law Firm / Gov Desk</span>
-<span class="i18n-hi">अधिवक्ता / सरकारी डेस्क</span>
-</span>
-<span class="auth-tab-sub">
-<span class="i18n-en">Legal Notices, RTI Forms & Appeals</span>
-<span class="i18n-hi">विधिक नोटिस, आरटीआई फॉर्म व अपील</span>
-</span>
-</div>
-</button>
-<button class="auth-role-tab" id="tabRoleAdmin" onclick="switchAuthTab('admin')" type="button">
-<i data-lucide="terminal" style="width: 16px; height: 16px;"></i>
-<div class="auth-tab-text">
-<span class="auth-tab-title">
-<span class="i18n-en">Developer (Admin) Desk</span>
-<span class="i18n-hi">डेवलपर (सिस्टम एडमिन)</span>
-</span>
-<span class="auth-tab-sub">
-<span class="i18n-en">Telemetry, Codex & Debugging</span>
-<span class="i18n-hi">टेलीमेट्री, नियम प्रबंधन व डिबगिंग</span>
-</span>
-</div>
-</button>
-</div>
-
-<!-- ================================================================= -->
-<!-- ROLE 1: LAW FIRM / GOV DESK PANEL -->
-<!-- ================================================================= -->
-<div class="auth-form-panel" id="authPanelLaw">
-<!-- Mode Switcher: Sign In vs Register -->
-<div class="auth-mode-switch">
-<button class="auth-mode-btn active" id="btnModeLawLogin" onclick="switchAuthMode('law_firm', 'login')" type="button">
-<i data-lucide="log-in" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Sign In to Law Firm</span><span class="i18n-hi">अधिवक्ता लॉगिन</span></span>
-</button>
-<button class="auth-mode-btn" id="btnModeLawRegister" onclick="switchAuthMode('law_firm', 'register')" type="button">
-<i data-lucide="user-plus" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Register New Firm</span><span class="i18n-hi">नया खाता पंजीकृत करें</span></span>
-</button>
-</div>
-
-<div class="auth-role-banner law">
-<div class="auth-banner-badge">
-<i data-lucide="shield-check" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Verified Legal Practitioner Desk</span><span class="i18n-hi">सत्यापित विधिक परामर्शदाता डेस्क</span></span>
-</div>
-<p class="auth-banner-desc">
-<span class="i18n-en">Enables autonomous drafting of statutory Form-A RTI, Section 19 First Appeals, Section 80 CPC Notices, and geospatial PIO jurisdiction tracking.</span>
-<span class="i18n-hi">नागरिक शिकायतों को कानूनी आरटीआई फॉर्म, धारा 19 प्रथम अपील, धारा 80 सीपीसी नोटिस एवं जन सूचना अधिकारी (PIO) क्षेत्राधिकार मैपिंग में परिवर्तित करता है।</span>
-</p>
-</div>
-
-<!-- Law Firm: LOGIN FORM -->
-<div id="authLawLoginView">
-<form id="formAuthLaw" onsubmit="handleAuthLogin('law_firm', event); return false;">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Desk Category / Practice Role</span>
-<span class="i18n-hi">डेस्क श्रेणी / विधिक भूमिका</span>
-</label>
-<select class="auth-select" id="authLawCategory">
-<option data-en="Advocate &amp; Legal Counsel (High Court / Bar)" data-hi="अधिवक्ता एवं विधिक परामर्शदाता (हाई कोर्ट / बार)" value="advocate">Advocate &amp; Legal Counsel (High Court / Bar)</option>
-<option data-en="Designated Public Authority / PIO Desk" data-hi="नामित जन प्राधिकरण / जन सूचना अधिकारी डेस्क" value="gov_desk">Designated Public Authority / PIO Desk</option>
-<option data-en="Legal Aid Clinic / Citizen Assistance Center" data-hi="विधिक सहायता केंद्र / नागरिक परामर्श केंद्र" value="legal_aid">Legal Aid Clinic / Citizen Assistance Center</option>
-</select>
-</div>
-
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Lawyer Bar ID / Login Email</span>
-<span class="i18n-hi">अधिवक्ता बार आईडी / लॉगिन ईमेल</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. lawyer@arzi.internal or D/1420/2018" data-ph-hi="उदा. lawyer@arzi.internal या D/1420/2018" id="authLawId" placeholder="e.g. lawyer@arzi.internal or D/1420/2018" required="" type="text" value="lawyer@arzi.internal"/>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Practicing Chambers / Department</span>
-<span class="i18n-hi">चैंबर / विभाग या संगठन</span>
-</label>
-<input class="studio-input" data-ph-en="Chambers of Adv. S. Kalra" data-ph-hi="अधिवक्ता एस. कालरा चैंबर्स" id="authLawChamber" placeholder="Chambers of Adv. S. Kalra" required="" type="text" value="Chambers of Adv. S. Kalra"/>
-</div>
-</div>
-
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Institutional Access PIN / Password</span>
-<span class="i18n-hi">सुरक्षा पिन / पासवर्ड</span>
-</label>
-<div class="auth-password-wrap">
-<input class="studio-input" data-ph-en="••••••••" data-ph-hi="••••••••" id="authLawPin" placeholder="••••••••" required="" type="password" value="arzi2024"/>
-<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('authLawPin', 'iconLawEye')" title="Show/Hide Password" type="button">
-<i data-lucide="eye" id="iconLawEye" style="width: 14px; height: 14px;"></i>
-</button>
-</div>
-</div>
-
-<div class="auth-quick-creds">
-<span style="color: var(--ink-muted); font-size: 11px;">
-<span class="i18n-en">Default Access:</span><span class="i18n-hi">डिफ़ॉल्ट लॉगिन:</span>
-</span>
-<button class="creds-chip" onclick="fillQuickCreds('law_firm', 'lawyer@arzi.internal', 'arzi2024')" title="Autofill default login" type="button">
-<i data-lucide="key" style="width: 11px; height: 11px;"></i>
-<span>lawyer@arzi.internal / arzi2024</span>
-</button>
-<button class="creds-chip" onclick="fillQuickCreds('law_firm', 'D/1420/2018', 'arzi2024')" title="Autofill bar ID login" type="button">
-<i data-lucide="key" style="width: 11px; height: 11px;"></i>
-<span>D/1420/2018 / arzi2024</span>
-</button>
-</div>
-
-<div class="auth-actions-row">
-<button class="btn-auth-submit" id="btnAuthLawSubmit" onclick="handleAuthLogin('law_firm', event)" type="button">
-<i data-lucide="log-in" style="width: 15px; height: 15px;"></i>
-<span><span class="i18n-en">Sign In to Law Firm &amp; Grievance Desk</span><span class="i18n-hi">विधिक एवं शिकायत डेस्क में प्रवेश करें</span></span>
-</button>
-</div>
-
-<div class="auth-switch-prompt">
-<span><span class="i18n-en">Don't have an active Law Firm account?</span><span class="i18n-hi">खाता नहीं है?</span></span>
-<button class="auth-toggle-text-link" onclick="switchAuthMode('law_firm', 'register')" type="button">
-<span class="i18n-en">Register your firm here</span><span class="i18n-hi">यहाँ पंजीकरण करें</span>
-</button>
-</div>
-</form>
-</div>
-
-<!-- Law Firm: REGISTRATION FORM ("if not logged in then register") -->
-<div id="authLawRegisterView" style="display: none;">
-<form id="formAuthLawReg" onsubmit="handleAuthRegister('law_firm', event); return false;">
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Law Firm / Chamber Name *</span>
-<span class="i18n-hi">विधिक चैंबर / फर्म का नाम *</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. Chambers of Adv. Kalra" data-ph-hi="उदा. कालरा एसोसिएट्स" id="regLawChamber" placeholder="e.g. Chambers of Adv. Kalra" required="" type="text"/>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Bar Council Reg ID / Officer ID *</span>
-<span class="i18n-hi">बार काउंसिल पंजीकरण संख्या *</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. D/2026/104" data-ph-hi="उदा. D/2026/104" id="regLawBarId" placeholder="e.g. D/2026/104" required="" type="text"/>
-</div>
-</div>
-
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Desk Category / Practice Role</span>
-<span class="i18n-hi">डेस्क श्रेणी</span>
-</label>
-<select class="auth-select" id="regLawCategory">
-<option value="advocate">Advocate &amp; Legal Counsel (High Court / Bar)</option>
-<option value="gov_desk">Designated Public Authority / PIO Desk</option>
-<option value="legal_aid">Legal Aid Clinic / Citizen Assistance Center</option>
-</select>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Official Email / Login ID *</span>
-<span class="i18n-hi">आधिकारिक ईमेल / लॉगिन आईडी *</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. advocate@delhibar.org" data-ph-hi="उदा. advocate@delhibar.org" id="regLawEmail" placeholder="e.g. advocate@delhibar.org" required="" type="text"/>
-</div>
-</div>
-
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Create Password *</span>
-<span class="i18n-hi">पासवर्ड बनाएं *</span>
-</label>
-<div class="auth-password-wrap">
-<input class="studio-input" id="regLawPin" minlength="6" placeholder="Min 6 characters" required="" type="password"/>
-<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('regLawPin', 'iconRegLawEye')" title="Show/Hide Password" type="button">
-<i data-lucide="eye" id="iconRegLawEye" style="width: 14px; height: 14px;"></i>
-</button>
-</div>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Confirm Password *</span>
-<span class="i18n-hi">पासवर्ड पुनः दर्ज करें *</span>
-</label>
-<input class="studio-input" id="regLawPinConfirm" minlength="6" placeholder="Confirm password" required="" type="password"/>
-</div>
-</div>
-
-<div class="auth-actions-row">
-<button class="btn-auth-submit" id="btnAuthLawRegSubmit" onclick="handleAuthRegister('law_firm', event)" type="button">
-<i data-lucide="user-check" style="width: 15px; height: 15px;"></i>
-<span><span class="i18n-en">Complete Registration &amp; Open Desk</span><span class="i18n-hi">पंजीकरण पूर्ण करें व डेस्क खोलें</span></span>
-</button>
-</div>
-
-<div class="auth-switch-prompt">
-<span><span class="i18n-en">Already registered?</span><span class="i18n-hi">पहले से पंजीकृत हैं?</span></span>
-<button class="auth-toggle-text-link" onclick="switchAuthMode('law_firm', 'login')" type="button">
-<span class="i18n-en">Sign in with existing credentials</span><span class="i18n-hi">यहाँ लॉगिन करें</span>
-</button>
-</div>
-</form>
-</div>
-</div>
-
-<!-- ================================================================= -->
-<!-- ROLE 2: DEVELOPER / ADMIN DESK PANEL -->
-<!-- ================================================================= -->
-<div class="auth-form-panel hidden" id="authPanelAdmin">
-<!-- Mode Switcher: Sign In vs Provision / Register -->
-<div class="auth-mode-switch">
-<button class="auth-mode-btn active admin" id="btnModeAdminLogin" onclick="switchAuthMode('admin', 'login')" type="button">
-<i data-lucide="terminal" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Admin Sign In</span><span class="i18n-hi">एडमिन लॉगिन</span></span>
-</button>
-<button class="auth-mode-btn" id="btnModeAdminRegister" onclick="switchAuthMode('admin', 'register')" type="button">
-<i data-lucide="shield-plus" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Provision New Admin</span><span class="i18n-hi">नया एडमिन पंजीकरण</span></span>
-</button>
-</div>
-
-<div class="auth-role-banner admin">
-<div class="auth-banner-badge admin">
-<i data-lucide="terminal" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">System Engineering &amp; Codex Admin</span><span class="i18n-hi">सिस्टम इंजीनियरिंग एवं कानूनी नियम एडमिन</span></span>
-</div>
-<p class="auth-banner-desc">
-<span class="i18n-en">Provides full operational oversight: RAG vector database health, custom statutory acts manager, audit run logs, and execution engine telemetry.</span>
-<span class="i18n-hi">पूर्ण तकनीकी निगरानी: आरएजी वेक्टर डेटाबेस स्थिति, कस्टम कानूनी नियम प्रबंधन, ऑडिट रन लॉग्स एवं निष्पादन टेलीमेट्री।</span>
-</p>
-</div>
-
-<!-- Admin: LOGIN FORM -->
-<div id="authAdminLoginView">
-<form id="formAuthAdmin" onsubmit="handleAuthLogin('admin', event); return false;">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Developer Account / Master ID</span>
-<span class="i18n-hi">डेवलपर उपयोगकर्ता नाम / मास्टर आईडी</span>
-</label>
-<input class="studio-input" data-ph-en="admin@arzi.internal or admin" data-ph-hi="admin@arzi.internal या admin" id="authAdminUser" placeholder="admin@arzi.internal or admin" required="" type="text" value="admin@arzi.internal"/>
-</div>
-
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Master API Token / Root Key</span>
-<span class="i18n-hi">मास्टर सुरक्षा टोकन / रूट कुंजी</span>
-</label>
-<div class="auth-password-wrap">
-<input class="studio-input" data-ph-en="••••••••••••" data-ph-hi="••••••••••••" id="authAdminToken" placeholder="••••••••••••" required="" type="password" value="arzi-root-key"/>
-<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('authAdminToken', 'iconAdminEye')" title="Show/Hide Password" type="button">
-<i data-lucide="eye" id="iconAdminEye" style="width: 14px; height: 14px;"></i>
-</button>
-</div>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Cluster Environment</span>
-<span class="i18n-hi">क्लस्टर वातावरण</span>
-</label>
-<select class="auth-select" id="authAdminCluster">
-<option data-en="Production Cluster (India-Central)" data-hi="उत्पादन क्लस्टर (भारत-केंद्रीय)" value="production">Production Cluster (India-Central)</option>
-<option data-en="Staging Sandbox (Pre-Release)" data-hi="स्टेजिंग सैंडबॉक्स (परीक्षण)" value="staging">Staging Sandbox (Pre-Release)</option>
-<option data-en="Localhost Debug Daemon (:5000)" data-hi="लोकलहोस्ट डिबग डेमन (:5000)" value="local">Localhost Debug Daemon (:5000)</option>
-</select>
-</div>
-</div>
-
-<div class="auth-quick-creds">
-<span style="color: var(--ink-muted); font-size: 11px;">
-<span class="i18n-en">Default Access:</span><span class="i18n-hi">डिफ़ॉल्ट लॉगिन:</span>
-</span>
-<button class="creds-chip admin" onclick="fillQuickCreds('admin', 'admin@arzi.internal', 'arzi-root-key')" title="Autofill default admin" type="button">
-<i data-lucide="key" style="width: 11px; height: 11px;"></i>
-<span>admin@arzi.internal / arzi-root-key</span>
-</button>
-<button class="creds-chip admin" onclick="fillQuickCreds('admin', 'admin', 'admin123')" title="Autofill root login" type="button">
-<i data-lucide="key" style="width: 11px; height: 11px;"></i>
-<span>admin / admin123</span>
-</button>
-</div>
-
-<div class="auth-actions-row">
-<button class="btn-auth-submit admin" id="btnAuthAdminSubmit" onclick="handleAuthLogin('admin', event)" type="button">
-<i data-lucide="terminal" style="width: 15px; height: 15px;"></i>
-<span><span class="i18n-en">Sign In to Developer &amp; System Console</span><span class="i18n-hi">डेवलपर एवं सिस्टम कंसोल में प्रवेश करें</span></span>
-</button>
-</div>
-
-<div class="auth-switch-prompt">
-<span><span class="i18n-en">Need to provision a new Administrator?</span><span class="i18n-hi">नया एडमिन जोड़ना है?</span></span>
-<button class="auth-toggle-text-link" onclick="switchAuthMode('admin', 'register')" type="button">
-<span class="i18n-en">Register here</span><span class="i18n-hi">यहाँ पंजीकरण करें</span>
-</button>
-</div>
-</form>
-</div>
-
-<!-- Admin: REGISTRATION / PROVISIONING FORM -->
-<div id="authAdminRegisterView" style="display: none;">
-<form id="formAuthAdminReg" onsubmit="handleAuthRegister('admin', event); return false;">
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Administrator Full Name *</span>
-<span class="i18n-hi">व्यवस्थापक का पूरा नाम *</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. Lead Systems Engineer" data-ph-hi="उदा. चीफ आर्किटेक्ट" id="regAdminName" placeholder="e.g. Lead Systems Engineer" required="" type="text"/>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Admin Username / Email *</span>
-<span class="i18n-hi">एडमिन उपयोगकर्ता नाम / ईमेल *</span>
-</label>
-<input class="studio-input" data-ph-en="e.g. sysadmin@internal" data-ph-hi="उदा. sysadmin@internal" id="regAdminUser" placeholder="e.g. sysadmin@internal" required="" type="text"/>
-</div>
-</div>
-
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Master Authorization Token (Required) *</span>
-<span class="i18n-hi">मास्टर ऑथराइजेशन टोकन (अनिवार्य) *</span>
-</label>
-<input class="studio-input" data-ph-en="Enter arzi-root-key to authorize provisioning" data-ph-hi="arzi-root-key दर्ज करें" id="regAdminAuthKey" placeholder="Enter arzi-root-key to authorize provisioning" required="" type="password"/>
-<span style="font-size: 10.5px; color: var(--ink-muted); margin-top: 3px; display: block;">
-<span class="i18n-en">Hint: Use token <code>arzi-root-key</code> to authorize provisioning.</span>
-<span class="i18n-hi">संकेत: नया एडमिन बनाने हेतु <code>arzi-root-key</code> दर्ज करें।</span>
-</span>
-</div>
-
-<div class="form-row-2col">
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Create Admin Password *</span>
-<span class="i18n-hi">पासवर्ड बनाएं *</span>
-</label>
-<div class="auth-password-wrap">
-<input class="studio-input" id="regAdminPin" minlength="6" placeholder="Min 6 characters" required="" type="password"/>
-<button class="btn-pwd-toggle" onclick="togglePasswordVisibility('regAdminPin', 'iconRegAdminEye')" title="Show/Hide Password" type="button">
-<i data-lucide="eye" id="iconRegAdminEye" style="width: 14px; height: 14px;"></i>
-</button>
-</div>
-</div>
-<div class="form-group-gov">
-<label class="form-label">
-<span class="i18n-en">Confirm Password *</span>
-<span class="i18n-hi">पासवर्ड पुनः दर्ज करें *</span>
-</label>
-<input class="studio-input" id="regAdminPinConfirm" minlength="6" placeholder="Confirm password" required="" type="password"/>
-</div>
-</div>
-
-<div class="auth-actions-row">
-<button class="btn-auth-submit admin" id="btnAuthAdminRegSubmit" onclick="handleAuthRegister('admin', event)" type="button">
-<i data-lucide="shield-check" style="width: 15px; height: 15px;"></i>
-<span><span class="i18n-en">Provision Administrator Account &amp; Sign In</span><span class="i18n-hi">एडमिन खाता पंजीकृत करें व प्रवेश करें</span></span>
-</button>
-</div>
-
-<div class="auth-switch-prompt">
-<span><span class="i18n-en">Already have an Administrator account?</span><span class="i18n-hi">पहले से एडमिन खाता है?</span></span>
-<button class="auth-toggle-text-link" onclick="switchAuthMode('admin', 'login')" type="button">
-<span class="i18n-en">Sign in here</span><span class="i18n-hi">यहाँ लॉगिन करें</span>
-</button>
-</div>
-</form>
-</div>
-</div>
-
-<!-- Auth Footer Legal Guarantee -->
-<div class="auth-footer-notice">
-<i data-lucide="lock" style="width: 12px; height: 12px; color: var(--gov-navy);"></i>
-<span>
-<span class="i18n-en">Institutional End-to-End Encryption • Compliance with RTI Act 2005 &amp; Digital Personal Data Protection (DPDP) Act 2023</span>
-<span class="i18n-hi">संस्थागत एन्क्रिप्शन • आरटीआई अधिनियम 2005 एवं डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम 2023 के अनुरूप</span>
-</span>
-</div>
-</div>
-</div>
-</section>
-
-<section class="site-page" id="page-home">
+<section class="site-page active" id="page-home">
 <!-- Institutional Editorial Hero Section -->
 <div class="editorial-hero">
 <div class="hero-tagline">

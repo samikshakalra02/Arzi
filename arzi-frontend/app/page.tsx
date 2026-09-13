@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("intake");
   const [killSwitchActive, setKillSwitchActive] = useState(false);
   const [killMessage, setKillMessage] = useState("");
   const [cases, setCases] = useState<any[]>([]);
@@ -12,26 +12,6 @@ export default function Home() {
   const [selectedCase, setSelectedCase] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [lang, setLang] = useState<"en" | "hi">("en");
-
-  // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [sessionUser, setSessionUser] = useState<any>(null);
-  const [authRole, setAuthRole] = useState<"law_firm" | "admin">("law_firm");
-  const [authMode, setAuthMode] = useState<"login" | "register">("login");
-  const [authError, setAuthError] = useState("");
-
-  // Login inputs
-  const [authId, setAuthId] = useState("lawyer@arzi.internal");
-  const [authPin, setAuthPin] = useState("arzi2024");
-  const [showPassword, setShowPassword] = useState(false);
-
-  // Register inputs
-  const [regName, setRegName] = useState("");
-  const [regId, setRegId] = useState("");
-  const [regEmail, setRegEmail] = useState("");
-  const [regPin, setRegPin] = useState("");
-  const [regPinConfirm, setRegPinConfirm] = useState("");
-  const [regToken, setRegToken] = useState("");
 
   // Form State
   const [name, setName] = useState("");
@@ -46,128 +26,11 @@ export default function Home() {
 
   const t = (enText: string, hiText: string) => (lang === "hi" ? hiText : enText);
 
+
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("arzi_user_session");
-      if (raw) {
-        const s = JSON.parse(raw);
-        if (s && s.role) {
-          setIsAuthenticated(true);
-          setSessionUser(s);
-          setActiveTab("home");
-        }
-      }
-    } catch (e) {}
     fetchQueue(searchQuery);
     fetchRunLogs();
   }, []);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError("");
-    const enteredId = authId.trim().toLowerCase();
-    const enteredPass = authPin.trim();
-
-    const defaultLaw = [
-      { id: "lawyer@arzi.internal", pass: "arzi2024", name: "Chambers of Adv. S. Kalra" },
-      { id: "d/1420/2018", pass: "arzi2024", name: "Adv. Shivanshu Pandey" }
-    ];
-    const defaultAdmin = [
-      { id: "admin@arzi.internal", pass: "arzi-root-key", name: "Lead Systems Engineer" },
-      { id: "admin", pass: "admin123", name: "Root Administrator" }
-    ];
-
-    let registered: any[] = [];
-    try {
-      const rawReg = localStorage.getItem("arzi_registered_accounts");
-      if (rawReg) {
-        const parsed = JSON.parse(rawReg);
-        registered = parsed[authRole] || [];
-      }
-    } catch (e) {}
-
-    const pool = authRole === "law_firm" ? [...defaultLaw, ...registered] : [...defaultAdmin, ...registered];
-    const match = pool.find(
-      (a: any) =>
-        (a.id?.toLowerCase() === enteredId || a.barId?.toLowerCase() === enteredId) &&
-        a.pass === enteredPass
-    );
-
-    if (match) {
-      const s = {
-        role: authRole,
-        user: match.id,
-        name: match.name || (authRole === "admin" ? "Developer Admin" : "Advocate Counsel"),
-        loginTime: new Date().toISOString()
-      };
-      localStorage.setItem("arzi_user_session", JSON.stringify(s));
-      setIsAuthenticated(true);
-      setSessionUser(s);
-      setActiveTab("home");
-    } else {
-      setAuthError(
-        lang === "hi"
-          ? `अमान्य क्रेडेंशियल्स! कृपया सही आईडी और पासवर्ड दर्ज करें अथवा नया खाता पंजीकृत करें।`
-          : `Invalid ${authRole === "admin" ? "Admin" : "Law Firm"} ID or password. Please verify or register.`
-      );
-    }
-  };
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError("");
-
-    if (regPin.length < 6) {
-      setAuthError("Password must be at least 6 characters.");
-      return;
-    }
-    if (regPin !== regPinConfirm) {
-      setAuthError("Passwords do not match.");
-      return;
-    }
-
-    if (authRole === "admin") {
-      if (regToken.trim() !== "arzi-root-key" && regToken.trim() !== "admin2026") {
-        setAuthError("Invalid Master Authorization Token. Use 'arzi-root-key'.");
-        return;
-      }
-    }
-
-    const newAcc = {
-      id: regEmail.trim(),
-      barId: regId.trim(),
-      pass: regPin.trim(),
-      name: regName.trim(),
-      role: authRole
-    };
-
-    try {
-      let currentReg: any = { law_firm: [], admin: [] };
-      const rawReg = localStorage.getItem("arzi_registered_accounts");
-      if (rawReg) currentReg = JSON.parse(rawReg);
-      if (!currentReg[authRole]) currentReg[authRole] = [];
-      currentReg[authRole].push(newAcc);
-      localStorage.setItem("arzi_registered_accounts", JSON.stringify(currentReg));
-    } catch (e) {}
-
-    const s = {
-      role: authRole,
-      user: newAcc.id,
-      name: newAcc.name,
-      loginTime: new Date().toISOString()
-    };
-    localStorage.setItem("arzi_user_session", JSON.stringify(s));
-    setIsAuthenticated(true);
-    setSessionUser(s);
-    setActiveTab("home");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("arzi_user_session");
-    setIsAuthenticated(false);
-    setSessionUser(null);
-    setAuthError("");
-  };
 
   const fetchQueue = async (query = "") => {
     try {
@@ -301,452 +164,74 @@ export default function Home() {
         </div>
       )}
 
-      {/* Pre-login Gate: When not authenticated, ONLY show Login & Registration Portal */}
-      {!isAuthenticated ? (
-        <div style={{ maxWidth: "680px", margin: "40px auto", background: "#FFF", border: "3px solid #1E242B", boxShadow: "8px 8px 0 #1E242B", padding: "32px" }}>
-          <div style={{ textAlign: "center", marginBottom: "24px" }}>
-            <div style={{ display: "inline-block", background: "#D94E28", color: "#FFF", fontWeight: "bold", fontSize: "28px", padding: "8px 20px", border: "2px solid #1E242B", marginBottom: "12px" }}>
-              ARZI
-            </div>
-            <h1 style={{ fontSize: "22px", margin: "8px 0 4px 0" }}>
-              {t("Statutory Legal Intelligence Desk", "नागरिक विधिक सहायता एवं आरटीआई मंच")}
-            </h1>
-            <p style={{ color: "#555", fontSize: "13px", margin: 0 }}>
-              {t("Select institutional role to sign in or register. Navigation tabs will unlock upon verification.", "लॉगिन अथवा पंजीकरण हेतु विधिक भूमिका चुनें। प्रमाणीकरण के पश्चात मुख्य पृष्ठ व अन्य सभी टैब उपलब्ध होंगे।")}
-            </p>
+      {/* Header */}
+      <header className="header-responsive" style={{
+        background: "#FFF", border: "2px solid #1E242B", boxShadow: "4px 4px 0 #1E242B",
+        padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div style={{ background: "#D94E28", color: "#FFF", fontWeight: "bold", fontSize: "24px", padding: "6px 16px", border: "2px solid #1E242B" }}>
+            {t("ARZI", "अर्जी")}
           </div>
-
-          {authError && (
-            <div style={{ background: "#FEE2E2", border: "2px solid #EF4444", color: "#991B1B", padding: "10px 14px", fontWeight: "bold", fontSize: "13px", marginBottom: "16px" }}>
-              ⚠️ {authError}
-            </div>
-          )}
-
-          {/* Role selector */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "20px" }}>
-            <button
-              type="button"
-              onClick={() => { setAuthRole("law_firm"); setAuthError(""); setAuthId("lawyer@arzi.internal"); setAuthPin("arzi2024"); }}
-              style={{
-                padding: "12px", border: "2px solid #1E242B", fontWeight: "bold", cursor: "pointer",
-                background: authRole === "law_firm" ? "#1E242B" : "#FFF",
-                color: authRole === "law_firm" ? "#FFF" : "#1E242B",
-                boxShadow: authRole === "law_firm" ? "4px 4px 0 #D94E28" : "none"
-              }}
-            >
-              ⚖️ {t("Law Firm Desk", "अधिवक्ता डेस्क")}
-            </button>
-            <button
-              type="button"
-              onClick={() => { setAuthRole("admin"); setAuthError(""); setAuthId("admin@arzi.internal"); setAuthPin("arzi-root-key"); }}
-              style={{
-                padding: "12px", border: "2px solid #1E242B", fontWeight: "bold", cursor: "pointer",
-                background: authRole === "admin" ? "#1E242B" : "#FFF",
-                color: authRole === "admin" ? "#FFF" : "#1E242B",
-                boxShadow: authRole === "admin" ? "4px 4px 0 #D94E28" : "none"
-              }}
-            >
-              🛠️ {t("Developer Admin", "सिस्टम एडमिन")}
-            </button>
+          <div>
+            <div style={{ fontWeight: "bold", fontSize: "18px" }}>{t("CIVIC RTI LEGAL FILING DESK", "नागरिक आरटीआई विधिक सहायता डेस्क")}</div>
+            <div style={{ fontFamily: "monospace", fontSize: "12px", color: "#555" }}>{t("Flask Engine + Banaras / Varanasi Multi-Domain Routing", "फ्लास्क इंजन + वाराणसी एवं अखिल भारतीय अधिकारी मैपिंग")}</div>
           </div>
-
-          {/* Mode toggle (Sign In vs Register) */}
-          <div style={{ display: "flex", border: "2px solid #1E242B", marginBottom: "20px" }}>
-            <button
-              type="button"
-              onClick={() => { setAuthMode("login"); setAuthError(""); }}
-              style={{
-                flex: 1, padding: "8px", fontWeight: "bold", border: "none", cursor: "pointer",
-                background: authMode === "login" ? "#D94E28" : "#FFF",
-                color: authMode === "login" ? "#FFF" : "#1E242B"
-              }}
-            >
-              {t("Sign In", "लॉगिन")}
-            </button>
-            <button
-              type="button"
-              onClick={() => { setAuthMode("register"); setAuthError(""); }}
-              style={{
-                flex: 1, padding: "8px", fontWeight: "bold", border: "none", borderLeft: "2px solid #1E242B", cursor: "pointer",
-                background: authMode === "register" ? "#D94E28" : "#FFF",
-                color: authMode === "register" ? "#FFF" : "#1E242B"
-              }}
-            >
-              {t("Register New Account", "नया खाता पंजीकृत करें")}
-            </button>
-          </div>
-
-          {authMode === "login" ? (
-            <form onSubmit={handleLogin}>
-              <div style={{ marginBottom: "14px" }}>
-                <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                  {authRole === "admin" ? t("ADMIN USERNAME / ID *", "एडमिन यूजरनेम *") : t("LAWYER BAR ID / EMAIL *", "बार आईडी या ईमेल *")}
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={authId}
-                  onChange={e => setAuthId(e.target.value)}
-                  style={{ width: "100%", padding: "10px", border: "2px solid #1E242B", fontSize: "14px" }}
-                  placeholder={authRole === "admin" ? "admin@arzi.internal" : "lawyer@arzi.internal or D/1420/2018"}
-                />
-              </div>
-
-              <div style={{ marginBottom: "14px" }}>
-                <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                  {authRole === "admin" ? t("MASTER SECURITY TOKEN / PASSWORD *", "मास्टर सुरक्षा पासवर्ड *") : t("ACCESS PIN / PASSWORD *", "पासवर्ड *")}
-                </label>
-                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    required
-                    value={authPin}
-                    onChange={e => setAuthPin(e.target.value)}
-                    style={{ width: "100%", padding: "10px", paddingRight: "40px", border: "2px solid #1E242B", fontSize: "14px" }}
-                    placeholder="••••••••"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{ position: "absolute", right: "8px", background: "none", border: "none", cursor: "pointer", fontSize: "14px" }}
-                  >
-                    {showPassword ? "🙈" : "👁️"}
-                  </button>
-                </div>
-              </div>
-
-              {/* Quick default hints */}
-              <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap", fontSize: "11px" }}>
-                <span style={{ color: "#666" }}>{t("Quick Fill:", "त्वरित चयन:")}</span>
-                {authRole === "law_firm" ? (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => { setAuthId("lawyer@arzi.internal"); setAuthPin("arzi2024"); }}
-                      style={{ background: "#F3F4F6", border: "1px solid #1E242B", padding: "2px 8px", cursor: "pointer", fontFamily: "monospace" }}
-                    >
-                      lawyer@arzi.internal / arzi2024
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setAuthId("D/1420/2018"); setAuthPin("arzi2024"); }}
-                      style={{ background: "#F3F4F6", border: "1px solid #1E242B", padding: "2px 8px", cursor: "pointer", fontFamily: "monospace" }}
-                    >
-                      D/1420/2018 / arzi2024
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => { setAuthId("admin@arzi.internal"); setAuthPin("arzi-root-key"); }}
-                      style={{ background: "#F3F4F6", border: "1px solid #1E242B", padding: "2px 8px", cursor: "pointer", fontFamily: "monospace" }}
-                    >
-                      admin@arzi.internal / arzi-root-key
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setAuthId("admin"); setAuthPin("admin123"); }}
-                      style={{ background: "#F3F4F6", border: "1px solid #1E242B", padding: "2px 8px", cursor: "pointer", fontFamily: "monospace" }}
-                    >
-                      admin / admin123
-                    </button>
-                  </>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                style={{
-                  width: "100%", padding: "12px", background: "#1E242B", color: "#FFF",
-                  fontWeight: "bold", border: "2px solid #1E242B", cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                {authRole === "admin" ? t("Sign In as Administrator", "एडमिन के रूप में लॉगिन करें") : t("Sign In to Law Firm Desk", "अधिवक्ता डेस्क में प्रवेश करें")}
-              </button>
-
-              <div style={{ textAlign: "center", marginTop: "14px", fontSize: "12px", color: "#666" }}>
-                {t("Don't have an account?", "खाता नहीं है?")}{" "}
-                <button
-                  type="button"
-                  onClick={() => setAuthMode("register")}
-                  style={{ background: "none", border: "none", color: "#D94E28", fontWeight: "bold", cursor: "pointer", textDecoration: "underline" }}
-                >
-                  {t("Register here", "यहाँ पंजीकरण करें")}
-                </button>
-              </div>
-            </form>
-          ) : (
-            <form onSubmit={handleRegister}>
-              <div style={{ marginBottom: "12px" }}>
-                <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                  {authRole === "admin" ? t("ADMIN FULL NAME *", "पूरा नाम *") : t("CHAMBER / FIRM NAME *", "फर्म / चैंबर का नाम *")}
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={regName}
-                  onChange={e => setRegName(e.target.value)}
-                  style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                  placeholder={authRole === "admin" ? "Lead Systems Engineer" : "Chambers of Adv. Kalra"}
-                />
-              </div>
-
-              {authRole === "law_firm" && (
-                <div style={{ marginBottom: "12px" }}>
-                  <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                    {t("BAR COUNCIL REG NO / ADVOCATE ID *", "बार काउंसिल पंजीकरण संख्या *")}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={regId}
-                    onChange={e => setRegId(e.target.value)}
-                    style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                    placeholder="e.g. D/2026/104"
-                  />
-                </div>
-              )}
-
-              {authRole === "admin" && (
-                <div style={{ marginBottom: "12px" }}>
-                  <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                    {t("MASTER AUTHORIZATION TOKEN (Required) *", "मास्टर ऑथराइजेशन टोकन (अनिवार्य) *")}
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={regToken}
-                    onChange={e => setRegToken(e.target.value)}
-                    style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                    placeholder="Enter arzi-root-key"
-                  />
-                  <span style={{ fontSize: "11px", color: "#666" }}>Hint: Use <code>arzi-root-key</code></span>
-                </div>
-              )}
-
-              <div style={{ marginBottom: "12px" }}>
-                <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                  {t("OFFICIAL EMAIL / LOGIN ID *", "ईमेल / लॉगिन आईडी *")}
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={regEmail}
-                  onChange={e => setRegEmail(e.target.value)}
-                  style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                  placeholder={authRole === "admin" ? "admin@arzi.internal" : "advocate@delhibar.org"}
-                />
-              </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
-                <div>
-                  <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                    {t("CREATE PASSWORD *", "पासवर्ड बनाएं *")}
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    minLength={6}
-                    value={regPin}
-                    onChange={e => setRegPin(e.target.value)}
-                    style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                    placeholder="Min 6 chars"
-                  />
-                </div>
-                <div>
-                  <label style={{ display: "block", fontWeight: "bold", fontSize: "12px", fontFamily: "monospace", marginBottom: "4px" }}>
-                    {t("CONFIRM PASSWORD *", "पुष्टि करें *")}
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    minLength={6}
-                    value={regPinConfirm}
-                    onChange={e => setRegPinConfirm(e.target.value)}
-                    style={{ width: "100%", padding: "8px", border: "2px solid #1E242B" }}
-                    placeholder="Re-enter password"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                style={{
-                  width: "100%", padding: "12px", background: "#D94E28", color: "#FFF",
-                  fontWeight: "bold", border: "2px solid #1E242B", cursor: "pointer", fontSize: "14px"
-                }}
-              >
-                {t("Complete Registration & Enter Desk", "पंजीकरण पूर्ण करें व डैशबोर्ड में प्रवेश करें")}
-              </button>
-
-              <div style={{ textAlign: "center", marginTop: "14px", fontSize: "12px", color: "#666" }}>
-                {t("Already registered?", "पहले से पंजीकृत हैं?")}{" "}
-                <button
-                  type="button"
-                  onClick={() => setAuthMode("login")}
-                  style={{ background: "none", border: "none", color: "#1E242B", fontWeight: "bold", cursor: "pointer", textDecoration: "underline" }}
-                >
-                  {t("Sign in here", "यहाँ लॉगिन करें")}
-                </button>
-              </div>
-            </form>
-          )}
         </div>
-      ) : (
-        <>
-          {/* Header (Visible once logged in) */}
-          <header className="header-responsive" style={{
-            background: "#FFF", border: "2px solid #1E242B", boxShadow: "4px 4px 0 #1E242B",
-            padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px"
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <div
-                onClick={() => setActiveTab("home")}
-                style={{ background: "#D94E28", color: "#FFF", fontWeight: "bold", fontSize: "24px", padding: "6px 16px", border: "2px solid #1E242B", cursor: "pointer" }}
-              >
-                {t("ARZI", "अर्जी")}
-              </div>
-              <div>
-                <div style={{ fontWeight: "bold", fontSize: "18px" }}>{t("CIVIC RTI LEGAL FILING DESK", "नागरिक आरटीआई विधिक सहायता डेस्क")}</div>
-                <div style={{ fontFamily: "monospace", fontSize: "12px", color: "#555" }}>{t("Flask Engine + Banaras / Varanasi Multi-Domain Routing", "फ्लास्क इंजन + वाराणसी एवं अखिल भारतीय अधिकारी मैपिंग")}</div>
-              </div>
-            </div>
 
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              {/* User Session Badge */}
-              <div style={{ background: "#EFF6FF", border: "2px solid #1E242B", padding: "4px 10px", fontSize: "12px", fontWeight: "bold", display: "flex", alignItems: "center", gap: "6px" }}>
-                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10B981", display: "inline-block" }}></span>
-                <span>{sessionUser?.name || sessionUser?.user || "Authenticated User"}</span>
-              </div>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {/* Language Switcher */}
+          <div style={{ display: "inline-flex", border: "2px solid #1E242B" }}>
+            <button
+              onClick={() => setLang("en")}
+              style={{
+                padding: "6px 12px", fontWeight: "bold", border: "none", cursor: "pointer",
+                background: lang === "en" ? "#1E242B" : "#FFF", color: lang === "en" ? "#FFF" : "#1E242B"
+              }}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang("hi")}
+              style={{
+                padding: "6px 12px", fontWeight: "bold", border: "none", cursor: "pointer",
+                background: lang === "hi" ? "#1E242B" : "#FFF", color: lang === "hi" ? "#FFF" : "#1E242B"
+              }}
+            >
+              हिंदी
+            </button>
+          </div>
 
-              {/* Sign Out Button */}
-              <button
-                onClick={handleLogout}
-                style={{ background: "#FFF", border: "2px solid #1E242B", padding: "6px 12px", cursor: "pointer", fontWeight: "bold", fontSize: "12px" }}
-              >
-                {t("Sign Out", "लॉग आउट")}
-              </button>
+          <button 
+            onClick={() => toggleKillSwitchSim(true)}
+            style={{ background: "#FFF", border: "2px solid #1E242B", padding: "6px 12px", cursor: "pointer", fontWeight: "bold", fontSize: "11px" }}
+          >
+            {t("SIMULATE BREACH", "सिमुलेशन")}
+          </button>
+        </div>
+      </header>
 
-              {/* Language Switcher */}
-              <div style={{ display: "inline-flex", border: "2px solid #1E242B" }}>
-                <button
-                  onClick={() => setLang("en")}
-                  style={{
-                    padding: "6px 12px", fontWeight: "bold", border: "none", cursor: "pointer",
-                    background: lang === "en" ? "#1E242B" : "#FFF", color: lang === "en" ? "#FFF" : "#1E242B"
-                  }}
-                >
-                  EN
-                </button>
-                <button
-                  onClick={() => setLang("hi")}
-                  style={{
-                    padding: "6px 12px", fontWeight: "bold", border: "none", cursor: "pointer",
-                    background: lang === "hi" ? "#1E242B" : "#FFF", color: lang === "hi" ? "#FFF" : "#1E242B"
-                  }}
-                >
-                  हिंदी
-                </button>
-              </div>
-
-              <button 
-                onClick={() => toggleKillSwitchSim(true)}
-                style={{ background: "#FFF", border: "2px solid #1E242B", padding: "6px 12px", cursor: "pointer", fontWeight: "bold", fontSize: "11px" }}
-              >
-                {t("SIMULATE BREACH", "सिमुलेशन")}
-              </button>
-            </div>
-          </header>
-
-          {/* Navigation Tabs (Unlocked Post-Login) */}
-          <nav className="nav-responsive" style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
-            {[
-              { id: "home", en: "00. HOME OVERVIEW", hi: "00. मुख्य पृष्ठ" },
-              { id: "intake", en: "01. INTAKE PORTAL", hi: "01. शिकायत पोर्टल" },
-              { id: "queue", en: `02. COMMAND CENTER (${counts.inbox})`, hi: `02. सक्रिय मामले (${counts.inbox})` },
-              { id: "workspace", en: `03. LEGAL WORKSPACE (${selectedCase ? selectedCase.case_id : 'SELECT'})`, hi: `03. केस विवरण (${selectedCase ? selectedCase.case_id : 'चुनें'})` },
-              { id: "runlog", en: "04. PROOF RUN LOG", hi: "04. ऑडिट रन लॉग" }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  padding: "10px 16px", fontWeight: "bold", border: "2px solid #1E242B",
-                  background: activeTab === tab.id ? "#1E242B" : "#FFF",
-                  color: activeTab === tab.id ? "#FFF" : "#1E242B",
-                  boxShadow: activeTab === tab.id ? "4px 4px 0 #D94E28" : "2px 2px 0 #1E242B",
-                  cursor: "pointer", fontSize: "12px"
-                }}
-              >
-                {lang === "hi" ? tab.hi : tab.en}
-              </button>
-            ))}
-          </nav>
-
-          {/* Home Tab Overview */}
-          {activeTab === "home" && (
-            <div style={{ background: "#FFF", border: "2px solid #1E242B", boxShadow: "4px 4px 0 #1E242B", padding: "32px", marginBottom: "24px" }}>
-              <div style={{ display: "inline-block", background: "#EFF6FF", border: "1px solid #BFDBFE", padding: "4px 12px", fontSize: "12px", fontWeight: "bold", color: "#1E3A8A", marginBottom: "12px" }}>
-                🏛️ {t("AUTONOMOUS CIVIC RTI DESK", "स्वचालित नागरिक आरटीआई एवं विधिक सहायता")}
-              </div>
-              <h1 style={{ fontSize: "28px", margin: "0 0 12px 0" }}>
-                {t("Democratizing Indian Public Law", "जन-कानून का सरलीकरण")} • <span style={{ color: "#D94E28" }}>{t("Autonomous Statutory Intelligence", "सटीक विधिक प्रणाली")}</span>
-              </h1>
-              <p style={{ fontSize: "15px", color: "#4A5568", maxWidth: "800px", lineHeight: "1.6", marginBottom: "24px" }}>
-                {t(
-                  "Transform citizen grievances into enforceable RTI applications & First Appeals. Automatically map IPC 1860 to Bharatiya Nyaya Sanhita (BNS 2023), discover your designated Public Information Officer, and enforce statutory deadlines.",
-                  "अपनी नागरिक समस्याओं को कानूनी रूप से मान्य आरटीआई व प्रथम अपील में बदलें। बीएनएस 2023 की धाराएं जांचें, संबंधित जन सूचना अधिकारी (PIO) खोजें और 30 दिन में समाधान पाएं।"
-                )}
-              </p>
-
-              {/* Metrics strip */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", marginBottom: "28px" }}>
-                <div style={{ border: "2px solid #1E242B", padding: "16px", background: "#F8FAFC" }}>
-                  <div style={{ fontSize: "12px", fontWeight: "bold", color: "#64748B" }}>{t("Active Cases", "सक्रिय मामले")}</div>
-                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#1E242B" }}>{counts.inbox}</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>{t("Pending Review", "समीक्षाधीन")}</div>
-                </div>
-                <div style={{ border: "2px solid #1E242B", padding: "16px", background: "#F8FAFC" }}>
-                  <div style={{ fontSize: "12px", fontWeight: "bold", color: "#64748B" }}>{t("Avg PIO Distance", "औसत दूरी")}</div>
-                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#1E3A8A" }}>1.2 km</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>{t("Geodesic Proximity", "निकटतम अधिकारी")}</div>
-                </div>
-                <div style={{ border: "2px solid #1E242B", padding: "16px", background: "#F8FAFC" }}>
-                  <div style={{ fontSize: "12px", fontWeight: "bold", color: "#64748B" }}>{t("Sec 20 Penalty", "धारा 20 जुर्माना")}</div>
-                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#D94E28" }}>₹28,750+</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>{t("₹250/Day Mandatory", "₹250 प्रतिदिन")}</div>
-                </div>
-                <div style={{ border: "2px solid #1E242B", padding: "16px", background: "#F8FAFC" }}>
-                  <div style={{ fontSize: "12px", fontWeight: "bold", color: "#64748B" }}>{t("Total Dockets", "कुल मामले")}</div>
-                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#1E242B" }}>{counts.total}</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>{t("Recorded Grievances", "दर्ज मामले")}</div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                <button
-                  onClick={() => setActiveTab("intake")}
-                  style={{ background: "#D94E28", color: "#FFF", border: "2px solid #1E242B", padding: "12px 24px", fontWeight: "bold", cursor: "pointer" }}
-                >
-                  📝 {t("File Citizen Grievance (Intake)", "शिकायत दर्ज करें")}
-                </button>
-                <button
-                  onClick={() => setActiveTab("queue")}
-                  style={{ background: "#FFF", color: "#1E242B", border: "2px solid #1E242B", padding: "12px 24px", fontWeight: "bold", cursor: "pointer" }}
-                >
-                  📂 {t("View Active Cases (Command Center)", "सक्रिय मामले देखें")}
-                </button>
-                <button
-                  onClick={() => setActiveTab("runlog")}
-                  style={{ background: "#FFF", color: "#1E242B", border: "2px solid #1E242B", padding: "12px 24px", fontWeight: "bold", cursor: "pointer" }}
-                >
-                  📜 {t("Audit Run Log", "ऑडिट रन लॉग")}
-                </button>
-              </div>
-            </div>
-          )}
+      {/* Nav */}
+      <nav className="nav-responsive" style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
+        {["intake", "queue", "workspace", "runlog"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              padding: "10px 16px", fontWeight: "bold", border: "2px solid #1E242B",
+              background: activeTab === tab ? "#1E242B" : "#FFF",
+              color: activeTab === tab ? "#FFF" : "#1E242B",
+              boxShadow: activeTab === tab ? "4px 4px 0 #1E242B" : "2px 2px 0 #1E242B",
+              cursor: "pointer", fontSize: "12px"
+            }}
+          >
+            {tab === "intake" && (lang === "hi" ? "01. शिकायत पोर्टल" : "01. INTAKE PORTAL")}
+            {tab === "queue" && (lang === "hi" ? `02. सक्रिय मामले (${counts.inbox})` : `02. COMMAND CENTER (${counts.inbox})`)}
+            {tab === "workspace" && (lang === "hi" ? `03. केस विवरण (${selectedCase ? selectedCase.case_id : 'चुनें'})` : `03. LEGAL WORKSPACE (${selectedCase ? selectedCase.case_id : 'SELECT'})`)}
+            {tab === "runlog" && (lang === "hi" ? "04. ऑडिट रन लॉग" : "04. PROOF RUN LOG")}
+          </button>
+        ))}
+      </nav>
 
       {/* Content */}
       {activeTab === "intake" && (
@@ -1043,8 +528,6 @@ export default function Home() {
             </tbody>
           </table></div>
         </div>
-      )}
-        </>
       )}
     </div>
   );
