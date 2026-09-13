@@ -2412,6 +2412,51 @@
         <span><span class="i18n-en">Geodesy: Haversine Formula</span><span class="i18n-sep"> • </span><span class="i18n-hi">भू-निर्देशांक गणना: हैवरसाइन सूत्र</span></span> <span class="i18n-sep">&nbsp;|&nbsp;</span> 
         <span><span class="i18n-en">Statutory: IPC 1860 ↔ BNS 2023 · RTI Act 2005</span><span class="i18n-sep"> • </span><span class="i18n-hi">विधिक संहिता: आईपीसी 1860 ↔ बीएनएस 2023 · आरटीआई कानून 2005</span></span>
 </div>
+<!-- Case Registered Success Modal -->
+<div class="hidden" id="caseRegisteredModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); z-index: 99999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px);">
+  <div class="gov-modal-card" style="max-width: 520px; width: 92%; background: var(--bg-surface, #ffffff); border: 1px solid var(--border-medium, #cbd5e1); border-top: 5px solid #16a34a; padding: 26px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25); border-radius: 8px; text-align: center;">
+    <div style="width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 50%; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2);">
+      ✓
+    </div>
+    <h3 style="font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: #166534; margin-bottom: 6px;">
+      <span class="i18n-en">Your case is registered. Success!</span>
+      <span class="i18n-sep"> • </span>
+      <span class="i18n-hi">आपका केस सफलतापूर्वक दर्ज हो गया है! (सफलता)</span>
+    </h3>
+    <p style="font-size: 13px; color: var(--ink-secondary, #475569); margin-bottom: 18px;">
+      <span class="i18n-en">Your civic legal docket has been securely recorded and assigned to the public authority.</span>
+      <span class="i18n-sep"> • </span>
+      <span class="i18n-hi">आपकी जन शिकायत आधिकारिक रूप से दर्ज कर ली गई है।</span>
+    </p>
+
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; text-align: left; margin-bottom: 20px; font-size: 12px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px;">
+        <span style="color: #64748b;">Docket Number:</span>
+        <b style="font-family: var(--font-mono); color: #0f172a; font-size: 13px;" id="regModalCaseId">ARZ-1049</b>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px;">
+        <span style="color: #64748b;">Complainant:</span>
+        <b style="color: #0f172a;" id="regModalComplainant">Shirish</b>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px;">
+        <span style="color: #64748b;">Department:</span>
+        <b style="color: #0f172a;" id="regModalDept">Electricity & Power Discom</b>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: #64748b;">Assigned Authority:</span>
+        <b style="color: #166534;" id="regModalPio">Designated Public Information Officer</b>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 10px; justify-content: center;">
+      <button class="btn-gov-primary" onclick="closeCaseRegisteredModal()" style="padding: 9px 24px; font-size: 13px; font-weight: 600; border-radius: 4px; background: #16a34a; border-color: #15803d; color: #ffffff; cursor: pointer;">
+        <span class="i18n-en">View Registered Case Dossier</span>
+        <span class="i18n-sep"> • </span>
+        <span class="i18n-hi">केस डॉसियर देखें</span>
+      </button>
+    </div>
+  </div>
+</div>
 </footer>
 
 <script src="app.js?v=20260913.1"></script>

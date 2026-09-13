@@ -74,6 +74,16 @@ def create_app():
             response.headers["Expires"] = "0"
         return response
 
+    # Global exception handler to guarantee JSON responses (never HTML 500 error pages)
+    @app.errorhandler(Exception)
+    def handle_global_exception(e):
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "error": "Internal Server Error",
+            "message": f"Server error: {str(e)}"
+        }), 500
+
     return app
 
 app = create_app()
