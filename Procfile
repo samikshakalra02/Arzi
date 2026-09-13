@@ -1,1 +1,1 @@
-web: gunicorn flask_backend.app:app
+web: gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 flask_backend.app:app

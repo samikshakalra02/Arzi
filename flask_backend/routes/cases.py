@@ -59,37 +59,44 @@ def create_intake():
     generate IPC/BNS statutory analysis, and create a case entry in NEEDS_REVIEW status.
     If an existing case exists for the same ref_no, updates in-place to prevent duplicates.
     """
-    data = request.get_json() or {}
-    grievance = data.get("raw_grievance", "").strip()
-    complainant = data.get("complainant", {})
-    pincode = data.get("pincode") or complainant.get("pincode") or complainant.get("pin")
+    try:
+        data = request.get_json() or {}
+        grievance = data.get("raw_grievance", "").strip()
+        complainant = data.get("complainant", {})
+        pincode = data.get("pincode") or complainant.get("pincode") or complainant.get("pin")
 
-    if not grievance or not complainant.get("name"):
-        return jsonify({"error": "Bad Request", "message": "raw_grievance and complainant.name are required"}), 400
+        if not grievance or not complainant.get("name"):
+            return jsonify({"error": "Bad Request", "message": "raw_grievance and complainant.name are required"}), 400
 
-    lang = data.get("lang") or complainant.get("language") or "en"
-    if lang not in ("en", "hi"):
-        lang = "en"
+        lang_val = data.get("lang") or complainant.get("language") or "en"
+        lang = "hi" if str(lang_val).strip().lower() in ("hi", "hindi") else "en"
 
-    analysis = rti_engine.analyze_and_structure(
-        grievance_text=grievance,
-        complainant_info=complainant,
-        requested_dept=data.get("department"),
-        ref_no=data.get("application_ref_no"),
-        submission_date=data.get("original_submission_date"),
-        urgent_override=data.get("is_urgent"),
-        pincode=pincode,
-        lang=lang
-    )
+        analysis = rti_engine.analyze_and_structure(
+            grievance_text=grievance,
+            complainant_info=complainant,
+            requested_dept=data.get("department"),
+            ref_no=data.get("application_ref_no"),
+            submission_date=data.get("original_submission_date"),
+            urgent_override=data.get("is_urgent"),
+            pincode=pincode,
+            lang=lang
+        )
 
-    case_payload = {
-        "complainant": complainant,
-        "raw_grievance": grievance,
-        **analysis
-    }
+        case_payload = {
+            "complainant": complainant,
+            "raw_grievance": grievance,
+            **analysis
+        }
 
-    new_case = db_store.add_case(case_payload)
-    return jsonify({"status": "created", "case": new_case}), 201
+        new_case = db_store.add_case(case_payload)
+        return jsonify({"status": "created", "case": new_case}), 201
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "error": "Internal Server Error",
+            "message": f"Error registering intake: {str(e)}"
+        }), 500
 
 @cases_bp.route("", methods=["GET"])
 def list_cases():

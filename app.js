@@ -3164,8 +3164,14 @@ async function submitIntake(event) {
       body: JSON.stringify({ complainant, raw_grievance, application_ref_no, original_submission_date, is_urgent, pincode, lang: currentLang })
     });
 
-    const data = await res.json();
-    if (res.ok) {
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (parseErr) {
+      console.warn("Intake response was not JSON:", parseErr);
+    }
+
+    if (res.ok && data && data.case) {
       document.getElementById("intakeForm").reset();
       const pBadge = document.getElementById("pincodeJurisdictionBadge");
       if (pBadge) { pBadge.style.display = "none"; pBadge.innerHTML = ""; }
@@ -3198,11 +3204,12 @@ async function submitIntake(event) {
       loadCaseQueue();
       loadRunLogs();
     } else {
-      alert(`Error: ${data.message || "Failed to create case"}`);
+      const errMsg = (data && data.message) ? data.message : `Server returned status ${res.status}. Failed to create case.`;
+      alert(`Error: ${errMsg}`);
     }
   } catch (err) {
     console.error("Intake error:", err);
-    alert("Connection error submitting intake.");
+    alert(`Connection error submitting intake: ${err.message || "Network offline"}`);
   }
 }
 
