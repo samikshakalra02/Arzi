@@ -460,6 +460,19 @@ class GeospatialLocator:
     public authorities by 6-digit Postal PIN codes.
     """
 
+    @staticmethod
+    def departments_match(dept1: str, dept2: str) -> bool:
+        """Resilient semantic domain/department matching accounting for acronyms, ampersands, and commas."""
+        d1 = (dept1 or "").strip().lower()
+        d2 = (dept2 or "").strip().lower()
+        if not d1 or not d2:
+            return False
+        if d1 == d2 or d1 in d2 or d2 in d1:
+            return True
+        w1 = set(re.findall(r'[a-z0-9]+', d1)) - {"and", "of", "the", "for", "in", "to", "affairs"}
+        w2 = set(re.findall(r'[a-z0-9]+', d2)) - {"and", "of", "the", "for", "in", "to", "affairs"}
+        return bool(w1 & w2)
+
     def haversine_distance(self, lat1: float, lon1: float, lat2: float, lon2: float) -> float:
         """Computes Great-Circle Distance between two coordinates in Kilometers."""
         R = 6371.0  # Earth radius in kilometers
@@ -514,7 +527,7 @@ class GeospatialLocator:
                 dist = self.haversine_distance(user_lat, user_lon, auth["latitude"], auth["longitude"])
                 dist_str = f"{int(dist * 1000)} meters away" if dist < 1.0 else f"{dist} km away"
                 p_dept = auth.get("department", "").strip().lower()
-                is_domain_match = bool(c_dept and ((p_dept == c_dept) or (c_dept in p_dept) or (p_dept in c_dept)))
+                is_domain_match = self.departments_match(c_dept, p_dept)
 
                 item = {
                     "id": auth["id"],
@@ -546,7 +559,7 @@ class GeospatialLocator:
             dist = self.haversine_distance(user_lat, user_lon, p["latitude"], p["longitude"])
             dist_str = f"{int(dist * 1000)} meters away" if dist < 1.0 else f"{dist} km away"
             p_dept = p.get("department", "").strip().lower()
-            is_domain_match = bool(c_dept and ((p_dept == c_dept) or (c_dept in p_dept) or (p_dept in c_dept)))
+            is_domain_match = self.departments_match(c_dept, p_dept)
 
             item = {
                 "id": p.get("id"),
@@ -593,7 +606,7 @@ class GeospatialLocator:
                 from flask_backend.models.store import db_store
                 for p in db_store.pio_directory:
                     p_dept = p.get("department", "").strip().lower()
-                    if (p_dept == c_dept) or (c_dept in p_dept) or (p_dept in c_dept):
+                    if self.departments_match(c_dept, p_dept):
                         dist = self.haversine_distance(user_lat, user_lon, p["latitude"], p["longitude"])
                         dist_str = f"{int(dist * 1000)} meters away" if dist < 1.0 else f"{dist} km away"
                         assigned_candidate = {
@@ -622,7 +635,12 @@ class GeospatialLocator:
             except Exception:
                 pass
             if not assigned_candidate:
-                assigned_candidate = nearby_area_candidates[0] if nearby_area_candidates else all_candidates[0]
+                # Prioritize candidate with domain match across all candidates before geographic fallback
+                domain_fallback = [c for c in all_candidates if self.departments_match(c_dept, c.get("department", ""))]
+                if domain_fallback:
+                    assigned_candidate = domain_fallback[0]
+                else:
+                    assigned_candidate = nearby_area_candidates[0] if nearby_area_candidates else all_candidates[0]
 
         # Tag is_assigned flag
         assigned_id = assigned_candidate.get("id")

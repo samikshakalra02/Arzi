@@ -119,17 +119,30 @@ class RTIEngine:
         predicted_domain = classification["domain"]
         confidence_pct = classification["confidence"]
         ml_reason = classification["reason"]
+        canonical_dept = classification.get("canonical_department") or classification.get("department", predicted_domain)
 
         matched_pio_base = None
+        # 1. Match canonical department first
         for pio in db_store.pio_directory:
-            if pio.get("department", "").lower() == predicted_domain.lower():
+            p_dept = pio.get("department", "")
+            if p_dept.lower() == canonical_dept.lower():
                 matched_pio_base = pio
                 break
 
+        # 2. Match raw predicted domain
         if not matched_pio_base:
             for pio in db_store.pio_directory:
-                dept = pio.get("department", "").lower()
-                if any(word.strip() in dept for word in predicted_domain.lower().split("&")):
+                p_dept = pio.get("department", "")
+                if p_dept.lower() == predicted_domain.lower():
+                    matched_pio_base = pio
+                    break
+
+        # 3. Resilient word token intersection
+        if not matched_pio_base:
+            target_words = set(re.findall(r'[a-z0-9]+', (canonical_dept or predicted_domain).lower())) - {"and", "of", "the", "for"}
+            for pio in db_store.pio_directory:
+                dept_words = set(re.findall(r'[a-z0-9]+', pio.get("department", "").lower())) - {"and", "of", "the", "for"}
+                if target_words & dept_words:
                     matched_pio_base = pio
                     break
 
@@ -613,7 +626,10 @@ class RTIEngine:
             q.append("3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?")
 
         dept_lower = dept_category.lower()
-        if "revenue" in dept_lower or "land" in dept_lower or "zameen" in text_lower or "khasra" in text_lower or "mutation" in text_lower or "7/12" in text_lower or "satbara" in text_lower or "bhoomi" in text_lower or "patta" in text_lower or "khatauni" in text_lower:
+        if any(w in text_lower for w in ["canteen", "mess", "rotten", "taste", "food quality", "unhygienic food", "stale", "fssai", "adulteration", "food poisoning", "cafeteria", "noxious food"]):
+            q.append(f"4. FOOD SAFETY & HYGIENE AUDIT COMPLIANCE: Under Section 26 and Section 31 of the Food Safety and Standards Act (FSSA) 2006, please furnish certified true copies of the latest food safety inspection reports, periodic hygiene audit certificates, and valid FSSAI license/registration certificate issued to the concerned canteen/mess catering establishment in {locality}.")
+            q.append(f"5. LABORATORY SAMPLE TESTING & ACTION TAKEN: Under Section 2(f) and Section 6(1) of the RTI Act, please disclose certified copies of all periodic food and potable water sample laboratory testing/microbiological analysis reports conducted over the last 12 months for the aforesaid establishment, along with certified copies of the daily raw material procurement inspection register and records of any punitive action taken against the catering contractor regarding substandard or rotten food.")
+        elif "revenue" in dept_lower or "land" in dept_lower or "zameen" in text_lower or "khasra" in text_lower or "mutation" in text_lower or "7/12" in text_lower or "satbara" in text_lower or "bhoomi" in text_lower or "patta" in text_lower or "khatauni" in text_lower:
             if land_codex:
                 land_act = land_codex.get("primary_land_act") or land_codex.get("substantive_act") or "State Land Revenue Act"
                 mut_sec = land_codex.get("mutation_statutory_section") or land_codex.get("mutation_section") or "applicable mutation provisions"

@@ -448,6 +448,95 @@ class DataStore:
             }
             self.cases[c47_id] = c47
 
+            # Seed 4: Food Quality / Canteen Case ARZ-1048
+            c48_id = "ARZ-1048"
+            c48_raw = "food quality of govt canteen is pathetic. taste not good nd food was rotten"
+            c48_complainant = {
+                "name": "Virender Gupta",
+                "contact": "+91-9810234567",
+                "address": "Kalkaji, South Delhi, Delhi",
+                "pincode": "110019",
+                "language": "Hindi / English"
+            }
+            c48_geo = geo_locator.get_area_and_domain_pios("Food & Civil Supplies", "Kalkaji, South Delhi, Delhi", narrative=c48_raw, pincode="110019")
+            c48_pio = c48_geo["assigned_pio"]
+            c48_legal = legal_engine.analyze_legal_standing(
+                grievance_text=c48_raw,
+                department="Food & Civil Supplies",
+                days_overdue=14
+            )
+            c48 = {
+                "case_id": c48_id,
+                "complainant": c48_complainant,
+                "raw_grievance": c48_raw,
+                "category": "Food & Civil Supplies",
+                "department": "Food & Civil Supplies",
+                "application_ref_no": "DISCOM-PWR-44910",
+                "original_submission_date": "28-Feb-2026",
+                "pincode": "110019",
+                "district": "South Delhi",
+                "state": "Delhi",
+                "suggested_pio": c48_pio,
+                "assigned_pio": c48_pio,
+                "nearby_area_pios": c48_geo.get("nearby_area_pios", []),
+                "suggested_faa": c48_pio.get("faa"),
+                "geospatial_meta": {
+                    "distance_km": c48_pio.get("distance_km", 1.5),
+                    "distance_label": c48_pio.get("distance_label", "1.5 km away"),
+                    "room_no": c48_pio.get("room_no", "Room 04, Food Safety & Civil Supplies Block"),
+                    "user_coords": {"latitude": 28.5355, "longitude": 77.2732},
+                    "pio_coords": {"latitude": c48_pio.get("latitude", 28.5355), "longitude": c48_pio.get("longitude", 77.2732)},
+                    "nearby_pios": c48_geo.get("nearby_area_pios", [])
+                },
+                "statutory_legal_analysis": c48_legal,
+                "confidence": {
+                    "overall": 97,
+                    "department_confidence": 98,
+                    "jurisdiction_confidence": 98,
+                    "location_matched": True,
+                    "user_locality": "South Delhi, Delhi (110019)",
+                    "draft_confidence": 95,
+                    "risk_level": "LOW",
+                    "evidence_gaps": [],
+                    "case_merit_score": c48_legal.get("case_merit_score", 95),
+                    "win_probability": c48_legal.get("win_probability", "VERY HIGH (95%+)")
+                },
+                "status": "NEEDS_REVIEW",
+                "priority": "HIGH",
+                "sla_days_remaining": 30,
+                "due_date": (now + timedelta(days=30)).strftime("%Y-%m-%d"),
+                "created_at": (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"),
+                "updated_at": (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"),
+                "draft_rti": {
+                    "application_subject": "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: DISCOM-PWR-44910) (Submitted: 28-Feb-2026) in South Delhi, Delhi (110019) regarding Food & Civil Supplies",
+                    "questions": [
+                        "1. Please provide the daily progress report and certified file movement register regarding the original grievance application (Ref No: DISCOM-PWR-44910) submitted on 28-Feb-2026 by Virender Gupta residing in South Delhi, Delhi (110019), a copy whereof is annexed herewith as Annexure-A.",
+                        "2. Please specify the names, designations, and official contact details of all dealing officers/staff members at the South Delhi, Delhi (110019) division office with whom this matter remained pending beyond the 30-day statutory limit.",
+                        "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
+                        "4. FOOD SAFETY & HYGIENE AUDIT COMPLIANCE: Under Section 26 and Section 31 of the Food Safety and Standards Act (FSSA) 2006, please furnish certified true copies of the latest food safety inspection reports, periodic hygiene audit certificates, and valid FSSAI license/registration certificate issued to the concerned canteen/mess catering establishment in South Delhi, Delhi (110019).",
+                        "5. LABORATORY SAMPLE TESTING & ACTION TAKEN: Under Section 2(f) and Section 6(1) of the RTI Act, please disclose certified copies of all periodic food and potable water sample laboratory testing/microbiological analysis reports conducted over the last 12 months for the aforesaid establishment, along with certified copies of the daily raw material procurement inspection register and records of any punitive action taken against the catering contractor regarding substandard or rotten food.",
+                        "6. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, inspection reports, and official orders recorded on file regarding the processing and current disposal status of the aforesaid grievance application."
+                    ],
+                    "fees_paid": "Rs. 10 Indian Postal Order attached under Rule 3 of Central RTI Rules 2012.",
+                    "version": 1
+                },
+                "update_history": [
+                    {
+                        "timestamp": (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"),
+                        "update_type": "INTAKE_REGISTERED",
+                        "actor": "Adv. S. Kalra (Legal Counsel)",
+                        "field_changed": "Status",
+                        "old_value": "NONE",
+                        "new_value": "NEEDS_REVIEW",
+                        "remarks": "Registered civic grievance regarding food quality & canteen hygiene under FSSA 2006."
+                    }
+                ],
+                "reviewer": "Adv. S. Kalra",
+                "approval_notes": "Awaiting final PIO dispatch verification.",
+                "dispatch_info": None
+            }
+            self.cases[c48_id] = c48
+
             # Seed Run Logs
             self.add_run_log(
                 event_type="INTAKE_RECEIVED",
@@ -494,8 +583,10 @@ class DataStore:
                 old_name = existing_case["complainant"].get("name")
                 new_name = case_data["complainant"].get("name")
 
-                existing_case["complainant"] = case_data["complainant"]
-                existing_case["raw_grievance"] = case_data["raw_grievance"]
+                # Update all freshly analyzed fields from case_data (category, department, pio, questions, etc.)
+                for k, v in case_data.items():
+                    if k not in ("case_id", "created_at", "update_history"):
+                        existing_case[k] = v
                 existing_case["updated_at"] = now_str[:19]
 
                 history_entry = {
@@ -521,7 +612,7 @@ class DataStore:
                 return existing_case
 
             # Strictly unique Case ID
-            existing_nums = [1047]
+            existing_nums = [1048]
             for cid in self.cases.keys():
                 if cid.startswith("ARZ-"):
                     try:

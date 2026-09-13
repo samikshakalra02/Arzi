@@ -584,27 +584,33 @@ class PincodeJurisdictionResolver:
             }
         }
 
-        # 2. Food & Civil Supplies / PDS Authority
+        # 2. Food & Civil Supplies / Food Safety Authority
         food_authority = {
             "id": f"IN-FOOD-{pincode}",
             "city": district,
             "district": district,
             "state": state,
             "department": "Food & Civil Supplies",
-            "pio_name": "District Supply Officer (DSO)",
-            "designation": "Public Information Officer & District Supply Officer",
-            "office_address": f"Office of the District Supply Officer, Food & Civil Supplies Complex, {district}, {state} - {pincode}",
-            "room_no": "Room 04, DSO Block",
+            "pio_name": "Designated Officer (Food Safety & Civil Supplies)",
+            "designation": "Designated Officer (Food Safety) & District Supply Officer (DSO)",
+            "office_address": f"Office of the Designated Officer (Food Safety) & District Supply Officer, Food Safety & Civil Supplies Complex, {district}, {state} - {pincode}",
+            "room_no": "Room 04, Food Safety & Civil Supplies Block",
             "email": f"dso.{dist_clean.lower()}@pds.gov.in",
             "phone": "+91-500-200200",
             "latitude": round(lat - 0.015, 4),
             "longitude": round(lon + 0.011, 4),
             "faa": {
-                "faa_name": "Deputy Commissioner (Food)",
-                "designation": "First Appellate Authority (Food & Civil Supplies)",
+                "faa_name": "Additional District Magistrate / Joint Commissioner (Food Safety)",
+                "designation": "First Appellate Authority (Food Safety & Civil Supplies)",
                 "office_address": f"Divisional Commissioner Office, {district}",
                 "email": f"dc.food.{dist_clean.lower()}@pds.gov.in",
                 "phone": "+91-500-200201"
+            },
+            "statutory_jurisdiction": {
+                "substantive_act": "Food Safety and Standards Act, 2006 (FSSA) & Essential Commodities Act, 1955",
+                "key_sections": "Section 26 (Responsibilities of Food Business Operators), Section 31 (Licensing), Section 59 (Unsafe Food)",
+                "digital_portal": "FoSCoS - Food Safety Compliance System (foscos.fssai.gov.in)",
+                "state_rti_portal": codex.get("rti_portal_url", "https://rtionline.gov.in")
             }
         }
 
@@ -831,13 +837,24 @@ class PincodeJurisdictionResolver:
         ]
 
         # Select target domain PIO
-        matched = land_authority
+        matched = None
         target_lower = (target_domain or "").lower()
         for a in all_authorities:
             a_dept = a["department"].lower()
             if a_dept == target_lower or a_dept in target_lower or target_lower in a_dept:
                 matched = a
                 break
+
+        if not matched:
+            t_words = set(re.findall(r'[a-z0-9]+', target_lower)) - {"and", "of", "the", "for", "in", "to", "affairs"}
+            for a in all_authorities:
+                a_words = set(re.findall(r'[a-z0-9]+', a["department"].lower())) - {"and", "of", "the", "for", "in", "to", "affairs"}
+                if t_words & a_words:
+                    matched = a
+                    break
+
+        if not matched:
+            matched = land_authority
 
         return {
             "assigned_pio": matched,

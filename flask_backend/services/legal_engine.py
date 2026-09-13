@@ -22,17 +22,36 @@ IPC_BNS_STATUTORY_REGISTRY = [
     },
     {
         "domain": "Food & Civil Supplies",
-        "infraction": "Public Distribution System (PDS) Diversion & Essential Commodities Black Marketing",
-        "ipc_sections": ["IPC Section 409 (Criminal Breach of Trust by Public Servant)", "IPC Section 420 (Cheating)", "IPC Section 166A (Public Servant disobeying law)"],
-        "bns_sections": ["BNS Section 316(5) (Criminal Breach of Trust by Public Servant/Dealer)", "BNS Section 318(4) (Cheating)", "BNS Section 199 (Public Servant disobeying direction under law)"],
-        "allied_acts": ["Essential Commodities Act 1955 (Sec 3 & 7)", "National Food Security Act 2013 (Sec 14, 15 & 16)", "Targeted Public Distribution System Control Order 2015"],
-        "punishment": "Imprisonment for Life or up to 10 years + Fine (Non-bailable under Sec 409/316(5))",
-        "legal_grounds": [
-            "Illegitimate denial or delay in issuance of NFSA/BPL ration cards to eligible below-poverty-line beneficiaries.",
-            "Unlawful siphoning and black-marketing of subsidized food grains allocated by Central/State Govts.",
-            "Violation of NFSA 2013 statutory timelines and non-maintenance of PDS electronic point-of-sale logs."
+        "infraction": "PDS Diversion, Food Adulteration & Substandard/Noxious Food Quality Dereliction",
+        "ipc_sections": [
+            "IPC Section 272 (Adulteration of food or drink intended for sale)",
+            "IPC Section 273 (Sale of noxious food or drink)",
+            "IPC Section 409 (Criminal Breach of Trust by Public Servant/Contractor)",
+            "IPC Section 420 (Cheating)",
+            "IPC Section 166A (Public Servant disobeying law)"
         ],
-        "keywords": ["ration", "rashan", "food", "khadya", "grain", "bpl", "ration card", "pds", "fair price shop", "dealer", "quota", "fps"]
+        "bns_sections": [
+            "BNS Section 274 (Adulteration of food or drink intended for sale)",
+            "BNS Section 275 (Sale of noxious food or drink)",
+            "BNS Section 316(5) (Criminal Breach of Trust by Public Servant/Dealer/Contractor)",
+            "BNS Section 318(4) (Cheating)",
+            "BNS Section 199 (Public Servant disobeying direction under law)"
+        ],
+        "allied_acts": [
+            "Food Safety and Standards Act 2006 (Sec 26, 31, 50, 59)",
+            "Consumer Protection Act 2019 (Sec 2(47), 84, 85)",
+            "Essential Commodities Act 1955 (Sec 3 & 7)",
+            "National Food Security Act 2013 (Sec 14, 15 & 16)",
+            "Targeted Public Distribution System Control Order 2015"
+        ],
+        "punishment": "Imprisonment for Life or up to 10 years + Fine up to Rs. 10 Lakhs (Non-bailable under Sec 409/316(5) and FSSA Sec 59)",
+        "legal_grounds": [
+            "Sale, service, or distribution of noxious, stale, or rotten food unfit for human consumption violating Section 26 & Section 59 of Food Safety and Standards Act 2006.",
+            "Dereliction of duty by institutional canteen authority and food safety inspectors to enforce mandatory FSSAI hygiene standards.",
+            "Illegitimate denial or delay in issuance of NFSA/BPL ration cards or black-marketing of subsidized food grains.",
+            "Breach of fundamental Right to Safe Food and Public Health under Article 21 of the Constitution of India."
+        ],
+        "keywords": ["ration", "rashan", "food", "khadya", "grain", "bpl", "ration card", "pds", "fair price shop", "dealer", "quota", "fps", "canteen", "rotten", "taste", "mess", "stale", "food safety", "fssai", "adulteration", "cafeteria", "unhygienic", "food poisoning"]
     },
     {
         "domain": "Municipal Public Works & Drainage",

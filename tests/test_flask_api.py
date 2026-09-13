@@ -448,4 +448,50 @@ def test_all_india_land_intake_routing(client):
     q_mh_joined = " ".join(case_mh["draft_rti"]["questions"])
     assert "Maharashtra Land Revenue Code" in q_mh_joined
 
+def test_food_quality_canteen_ml_classification_and_officer_routing(client):
+    """Test that food quality grievances are accurately classified under Food & Civil Supplies and routed to Food Safety officer."""
+    payload = {
+        "complainant": {
+            "name": "Virender Gupta",
+            "contact": "+91-9810234567",
+            "address": "Kalkaji, South Delhi, Delhi",
+            "pincode": "110019"
+        },
+        "raw_grievance": "food quality of govt canteen is pathetic. taste not good nd food was rotten",
+        "application_ref_no": "TEST-FOOD-44910",
+        "original_submission_date": "28-Feb-2026"
+    }
+    res = client.post("/api/v1/cases/intake", json=payload)
+    assert res.status_code == 201
+    data = res.get_json()
+    case = data["case"]
+
+    # Verify ML domain & department classification
+    assert case["category"] == "Food & Civil Supplies"
+    assert case["department"] == "Food & Civil Supplies"
+    assert "Revenue" not in case["department"]
+    assert "Land" not in case["department"]
+
+    # Verify designated officer is Food Safety & Civil Supplies, not SDM/Tehsildar Land officer
+    pio = case["suggested_pio"]
+    assert "Food Safety" in pio["pio_name"] or "Food Safety" in pio["designation"] or "Food" in pio["department"]
+    assert "Revenue" not in pio["department"]
+    assert "Tehsildar" not in pio["designation"]
+    assert "Food Safety & Civil Supplies" in pio["office_address"] or "Food" in pio["office_address"]
+
+    # Verify drafted questions contain Food Safety Act & sample testing
+    questions_text = " ".join(case["draft_rti"]["questions"])
+    assert "Food Safety and Standards Act" in questions_text or "FSSA" in questions_text
+    assert "canteen" in questions_text or "catering" in questions_text
+
+    # Verify seeded case ARZ-1048
+    c48_res = client.get("/api/v1/cases")
+    assert c48_res.status_code == 200
+    all_cases = c48_res.get_json()["cases"]
+    c48 = next((c for c in all_cases if c.get("case_id") == "ARZ-1048"), None)
+    assert c48 is not None
+    assert c48["category"] == "Food & Civil Supplies"
+    assert "Food Safety" in c48["suggested_pio"]["pio_name"] or "Food Safety" in c48["suggested_pio"]["designation"]
+
+
 

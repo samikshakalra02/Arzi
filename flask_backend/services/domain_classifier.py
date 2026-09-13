@@ -24,6 +24,23 @@ class DomainClassifierService:
         "Environment & Pollution Control"
     ]
 
+    DOMAIN_TO_DEPARTMENT = {
+        "Food, Civil Supplies & Consumer Affairs": "Food & Civil Supplies",
+        "Food & Civil Supplies": "Food & Civil Supplies",
+        "Municipal Public Works & Sanitation": "Municipal Public Works & Drainage",
+        "Municipal Public Works & Drainage": "Municipal Public Works & Drainage",
+        "Police, Criminal Justice & BNSS": "Police & Law Enforcement",
+        "Police & Law Enforcement": "Police & Law Enforcement",
+        "Revenue & Land Records": "Revenue & Land Records",
+        "Water Supply & Jal Board": "Water Supply & Jal Board",
+        "Electricity & Power Discom": "Electricity & Power Discom",
+        "Health & Family Welfare": "Health & Family Welfare",
+        "Higher Education & Student Welfare": "Higher Education & Student Welfare",
+        "Transport, Highways & Motor Vehicles / RTO": "Transport, Highways & Motor Vehicles / RTO",
+        "Labour, Employment, Pension & Social Security": "Labour, Employment, Pension & Social Security",
+        "Environment & Pollution Control": "Environment & Pollution Control"
+    }
+
     DOMAIN_KEYWORDS = {
         "Revenue & Land Records": [
             "land", "zameen", "khasra", "khatauni", "mutation", "daakhil kharij",
@@ -33,10 +50,18 @@ class DomainClassifierService:
             "bhoomi", "tehsil office", "sub-divisional magistrate land"
         ],
         "Food, Civil Supplies & Consumer Affairs": [
-            "ration", "rashan", "food grain", "khadya", "grain", "bpl", "bpl card",
-            "ration card", "pds shop", "fair price shop", "fps dealer", "wheat quota",
-            "rice quota", "sugar quota", "antodaya", "aay card", "quota", "dealer",
-            "black marketing of grain", "civil supplies", "defective goods", "consumer dispute"
+            "food", "food quality", "canteen", "govt canteen", "government canteen",
+            "taste", "bad taste", "rotten", "rotten food", "stale", "stale food", "spoiled",
+            "mess", "hostel mess", "cafeteria", "pantry", "unhygienic food", "inedible",
+            "substandard food", "food safety", "fssai", "food safety officer", "food inspector",
+            "food adulteration", "adulteration", "milawat", "food poisoning", "mid day meal",
+            "midday meal", "kitchen hygiene", "hotel food", "restaurant food", "food contamination",
+            "packaged food", "food sample", "noxious food", "khana", "bhojan", "kharab khana",
+            "bassi khana", "sadha khana", "khadya suraksha", "ration", "rashan", "food grain",
+            "khadya", "grain", "bpl", "bpl card", "ration card", "pds shop", "fair price shop",
+            "fps dealer", "wheat quota", "rice quota", "sugar quota", "antodaya", "aay card",
+            "quota", "dealer", "black marketing of grain", "civil supplies", "defective goods",
+            "consumer dispute", "consumer complaint", "consumer protection"
         ],
         "Municipal Public Works & Sanitation": [
             "drainage", "waterlogging", "sewer line", "gutter", "monsoon overflow",
@@ -104,10 +129,10 @@ class DomainClassifierService:
     def __init__(self):
         self.vectorizer = TfidfVectorizer(
             ngram_range=(1, 3),
-            max_features=12000,
+            max_features=15000,
             sublinear_tf=True
         )
-        self.classifier = LogisticRegression(C=8.0, max_iter=400)
+        self.classifier = LogisticRegression(C=8.0, max_iter=500)
         self.is_trained = False
         self._train_initial_model()
 
@@ -125,9 +150,24 @@ class DomainClassifierService:
                 "Lekhpal is demanding bribe for issuing certified copy of jamabandi and land title deed.",
                 "Illegal encroachment on private land parcel by land mafia, revenue court hearing adjourned repeatedly.",
                 "Need certified copies of khasra khatauni and land registry papers from tehsil sub-registrar office.",
-                "Dakhil kharij application pending beyond statutory time limit prescribed in Land Revenue Act."
+                "Dakhil kharij application pending beyond statutory time limit prescribed in Land Revenue Act.",
+                "Dispute regarding ancestral agricultural land boundary demarcation and katcheri mutation record omission."
             ],
             "Food, Civil Supplies & Consumer Affairs": [
+                "food quality of govt canteen is pathetic, taste not good nd food was rotten.",
+                "Food quality of govt canteen is pathetic. taste not good nd food was rotten",
+                "Government office canteen food quality is terrible, food was rotten, stale and completely inedible.",
+                "Canteen food quality is pathetic and unhygienic with terrible taste, rotten vegetables and insects in meal.",
+                "Unhygienic food being served in the office cafeteria with insects and foul smell, causing food poisoning.",
+                "Hostel mess contractor is providing substandard and inedible rotten food, bad taste and spoiled ingredients.",
+                "Government school mid day meal contained worms and rotten food grains, children suffered food poisoning.",
+                "Hospital canteen food is stale, foul smelling, rotten and prepared in filthy conditions violating FSSAI regulations.",
+                "Canteen contractor serving substandard rotten meals, spoiled vegetables and expired ingredients to staff.",
+                "Found dead insects and fungal mold in the meal served at ministry canteen, food safety inspector taking no action.",
+                "Complaint regarding severe food poisoning, nausea and unhygienic rotten food served at railway station canteen.",
+                "Local sweet shop and dairy selling adulterated synthetic milk, fake mawa, and rotten sweets violating food safety standards.",
+                "Packaged food sold past expiry date with tampered labels, retailer refused consumer refund under Consumer Protection Act.",
+                "Food safety officer not inspecting commercial eateries and government canteens serving contaminated and noxious food.",
                 "My family BPL ration card application submitted at Ward 4 supply office is pending without food grain distribution.",
                 "Fair price shop ration dealer is refusing to give grain to BPL card holders and selling in black market.",
                 "Ration dealer black marketing wheat and rice quota, demanding thumb impression without giving grains.",
@@ -211,13 +251,16 @@ class DomainClassifierService:
 
     def classify_grievance(self, grievance_text: str, user_locality: str = "") -> dict:
         """
-        Predicts the public domain, confidence score (0-100), and explanation keywords.
+        Predicts the public domain, confidence score (0-100), explanation keywords,
+        and canonical department name for public authority routing.
         Combines statistical TF-IDF classification with keyword presence validation.
         """
         text = grievance_text.strip()
         if not text:
             return {
                 "domain": "Revenue & Land Records",
+                "department": "Revenue & Land Records",
+                "canonical_department": "Revenue & Land Records",
                 "confidence": 50,
                 "reason": "Defaulted due to empty text input",
                 "matched_keywords": []
@@ -236,10 +279,10 @@ class DomainClassifierService:
                 kw_low = kw.lower()
                 # Whole word match carries higher weight
                 if re.search(r'\b' + re.escape(kw_low) + r'\b', text_lower):
-                    score += 25
+                    score += 30
                     matched.append(kw)
                 elif kw_low in text_lower:
-                    score += 12
+                    score += 15
                     matched.append(kw)
 
             keyword_scores[domain] = score
@@ -254,19 +297,19 @@ class DomainClassifierService:
         for cls, prob in zip(ml_classes, ml_probs):
             ml_scores[cls] = float(prob)
 
-        # 3. Hybrid scoring: Combine ML probability (70%) + Keyword density (30%)
+        # 3. Hybrid scoring: Combine ML probability (55%) + Keyword density (45%)
         final_scores = {}
         for domain in self.DOMAINS:
             ml_prob = ml_scores.get(domain, 0.0)
             kw_score = keyword_scores.get(domain, 0)
-            # Normalize kw_score to [0, 1] range (cap at 100)
+            # Normalize kw_score to [0, 1] range (cap at 60)
             kw_norm = min(1.0, kw_score / 60.0)
 
-            # Combined score
+            # Combined score with keyword prioritization
             if kw_score > 0:
-                combined = (ml_prob * 0.55) + (kw_norm * 0.45)
+                combined = (ml_prob * 0.50) + (kw_norm * 0.50)
             else:
-                combined = ml_prob * 0.70
+                combined = ml_prob * 0.65
 
             final_scores[domain] = combined
 
@@ -276,9 +319,9 @@ class DomainClassifierService:
         # Calculate confidence percentage (min 70%, up to 99%)
         matched_words = domain_matched_words.get(top_domain, [])
         if len(matched_words) >= 3:
-            conf_pct = min(99, int(75 + (top_score * 24)))
+            conf_pct = min(99, int(80 + (top_score * 19)))
         elif len(matched_words) >= 1:
-            conf_pct = min(96, int(70 + (top_score * 25)))
+            conf_pct = min(96, int(75 + (top_score * 20)))
         else:
             conf_pct = max(60, int(top_score * 85))
 
@@ -287,8 +330,12 @@ class DomainClassifierService:
         else:
             reason = f"ML statistical NLP classification based on public administration corpus ({conf_pct}% probability)"
 
+        canonical_dept = self.DOMAIN_TO_DEPARTMENT.get(top_domain, top_domain)
+
         return {
             "domain": top_domain,
+            "department": canonical_dept,
+            "canonical_department": canonical_dept,
             "confidence": conf_pct,
             "reason": reason,
             "matched_keywords": matched_words
