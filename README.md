@@ -9,7 +9,8 @@
 [![Python](https://img.shields.io/badge/backend-Flask-black)](#tech-stack)
 [![Database](https://img.shields.io/badge/database-Supabase%20%2F%20Postgres-3ecf8e)](#tech-stack)
 
-🔗 **Live App:** [arzi-rti-filedesk.up.railway.app](https://arzi-rti-filedesk.up.railway.app/)
+🔗 **Live App (Railway):** [arzi-rti-filedesk.up.railway.app](https://arzi-rti-filedesk.up.railway.app/)  
+🌐 **GitHub Pages (Live Portal):** [https://samikshakalra02.github.io/Arzi/](https://samikshakalra02.github.io/Arzi/)  
 📦 **Repository:** [github.com/samikshakalra02/Arzi](https://github.com/samikshakalra02/Arzi)
 
 ---
