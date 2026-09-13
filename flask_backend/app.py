@@ -60,6 +60,11 @@ def create_app():
     def index():
         if os.path.exists(os.path.join(app.static_folder, "index.html")):
             return send_from_directory(app.static_folder, "index.html")
+        return jsonify({"status": "ARZI API Running"}), 200
+
+    @app.route("/favicon.ico")
+    def favicon():
+        return "", 204
     # Prevent aggressive browser caching of frontend static assets
     @app.after_request
     def add_no_cache_header(response):

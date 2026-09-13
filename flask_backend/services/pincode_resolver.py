@@ -406,7 +406,7 @@ class PincodeJurisdictionResolver:
         url = f"https://api.postalpincode.in/pincode/{pincode}"
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "ARZI-Civic-Intelligence/2.0"})
-            with urllib.request.urlopen(req, timeout=3.5) as response:
+            with urllib.request.urlopen(req, timeout=1.5) as response:
                 if response.status == 200:
                     payload = json.loads(response.read().decode("utf-8"))
                     if payload and isinstance(payload, list) and payload[0].get("Status") == "Success":
