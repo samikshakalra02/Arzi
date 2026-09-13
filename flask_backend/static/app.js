@@ -286,7 +286,19 @@ const DEPARTMENTS_I18N = {
   "Environment & Pollution Control": "पर्यावरण एवं प्रदूषण नियंत्रण",
   "Public Works Department (PWD)": "लोक निर्माण विभाग (पीडब्ल्यूडी)",
   "Social Welfare & Women Child Development": "समाज कल्याण एवं महिला बाल विकास",
-  "Public Authority": "सक्षम लोक प्राधिकारी"
+  "Public Authority": "सक्षम लोक प्राधिकारी",
+  "Consumer Protection & Essential Services": "उपभोक्ता संरक्षण एवं आवश्यक सेवाएं",
+  "Police & Criminal Justice": "पुलिस एवं आपराधिक न्याय",
+  "Police, Criminal Justice & BNSS": "पुलिस एवं आपराधिक न्याय",
+  "Food, Civil Supplies & Consumer Affairs": "खाद्य, नागरिक आपूर्ति एवं उपभोक्ता मामले",
+  "Municipal Works": "नगर निगम एवं लोक निर्माण",
+  "Municipal Public Works & Sanitation": "नगर निगम लोक निर्माण एवं स्वच्छता",
+  "Electricity Discom": "बिजली एवं डिस्कॉम",
+  "Higher Education": "उच्च शिक्षा",
+  "Transport & RTO": "परिवहन एवं आरटीओ",
+  "Pension & Labour": "श्रम एवं पेंशन",
+  "Labour, Employment, Pension & Social Security": "श्रम, रोजगार, पेंशन एवं सामाजिक सुरक्षा",
+  "Environment & Pollution": "पर्यावरण एवं प्रदूषण"
 };
 
 const STATUS_I18N = {
@@ -901,7 +913,14 @@ function tAddress(addr) {
 function tDept(dept) {
   if (!dept) return "";
   if (currentLang !== "hi") return dept;
-  return DEPARTMENTS_I18N[dept] || dept;
+  if (DEPARTMENTS_I18N[dept]) return DEPARTMENTS_I18N[dept];
+  if (typeof CUSTOM_ACTS_I18N !== "undefined" && CUSTOM_ACTS_I18N[dept]) return CUSTOM_ACTS_I18N[dept];
+  for (let k in DEPARTMENTS_I18N) {
+    if (dept.toLowerCase() === k.toLowerCase()) {
+      return DEPARTMENTS_I18N[k];
+    }
+  }
+  return dept;
 }
 
 function tInfraction(infr) {
@@ -1665,6 +1684,13 @@ function setLanguage(lang) {
     revInp.value = (lang === "hi"
       ? "अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)"
       : "Adv. S. Kalra (Bar Council / Legal Counsel)");
+  }
+
+  const customAuthor = document.getElementById("customActAuthor");
+  if (customAuthor) {
+    customAuthor.value = (lang === "hi"
+      ? "अधिवक्ता एस. कालरा"
+      : "Adv. S. Kalra");
   }
 
   const intakeTog = document.getElementById("intakeToggleText");
@@ -5105,7 +5131,10 @@ async function loadCustomActs() {
 
     container.innerHTML = "";
     if (acts.length === 0) {
-      container.innerHTML = `<div style="grid-column: 1 / -1; color: var(--text-muted); font-size: 12px; padding: 16px;">No custom acts registered yet. Use the form above to add an Act.</div>`;
+      const emptyMsg = currentLang === "hi"
+        ? "अभी कोई कस्टम कानून पंजीकृत नहीं है। नया कानून जोड़ने के लिए ऊपर दिए गए फॉर्म का उपयोग करें।"
+        : "No custom acts registered yet. Use the form above to add an Act.";
+      container.innerHTML = `<div style="grid-column: 1 / -1; color: var(--text-muted); font-size: 12px; padding: 16px;">${emptyMsg}</div>`;
       return;
     }
 
@@ -5116,13 +5145,16 @@ async function loadCustomActs() {
 
       const title = tCustomAct(act.act_title);
       const sec = tCustomAct(act.section);
-      const domain = tDept(act.domain) || tCustomAct(act.domain);
+      const domain = (currentLang === "hi")
+        ? (CUSTOM_ACTS_I18N[act.domain] || DEPARTMENTS_I18N[act.domain] || tCustomAct(act.domain) || tDept(act.domain) || act.domain)
+        : act.domain;
       const grounds = tCustomAct(act.statutory_grounds);
       const relief = tCustomAct(act.punishment_or_relief);
       const author = tReviewer(act.added_by) || tCustomAct(act.added_by);
       const scopeLabel = currentLang === "hi" ? "दायरा / राहत:" : "Scope:";
       const regByLabel = currentLang === "hi" ? "पंजीकरणकर्ता:" : "Registered by:";
       const linkBtnText = currentLang === "hi" ? "केस से जोड़ें" : "Link to Case";
+      const deleteTitle = currentLang === "hi" ? "हटाएं" : "Delete";
 
       card.innerHTML = `
         <div>
@@ -5150,7 +5182,7 @@ async function loadCustomActs() {
             <i data-lucide="link"></i>
             <span>${linkBtnText}</span>
           </button>
-          <button class="btn btn-sm btn-outline framer-button" style="color: var(--color-rose); border-color: #FECDD3;" onclick="deleteCustomAct('${act.act_id}')">
+          <button class="btn btn-sm btn-outline framer-button" style="color: var(--color-rose); border-color: #FECDD3;" onclick="deleteCustomAct('${act.act_id}')" title="${deleteTitle}">
             <i data-lucide="trash-2"></i>
           </button>
         </div>
