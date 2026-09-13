@@ -234,24 +234,67 @@ class LegalIntelligenceEngine:
             "landmark_precedents": precedents
         }
 
-    def generate_first_appeal_draft(self, case: dict) -> dict:
+    def generate_first_appeal_draft(self, case: dict, lang: str = "en") -> dict:
         """
-        Drafts a formal First Appeal Memorandum under Section 19(1) of the RTI Act 2005
-        addressed to the designated First Appellate Authority (FAA).
-        Supports 48-Hour Urgent Life & Liberty fast-track under Section 7(1) Proviso.
+        Drafts a formal Section 19(1) First Appeal memorandum under the RTI Act 2005.
+        Generates in authentic legal parlance (Hindi if lang == 'hi', English otherwise).
         """
         complainant = case.get("complainant", {})
         pio = case.get("suggested_pio", {})
-        faa = case.get("suggested_faa", {}) or {
+        faa = case.get("suggested_faa", {}) or pio.get("faa", {}) or {
             "faa_name": "First Appellate Authority (Senior Officer)",
-            "designation": f"Additional District Magistrate / Joint Secretary ({case.get('department', 'Public Authority')})",
-            "office_address": pio.get("office_address", "District Collectorate Complex")
+            "designation": "Additional District Magistrate / Joint Secretary",
+            "office_address": pio.get("office_address", "Collectorate Complex")
         }
         case_id = case.get("case_id", "ARZ-1046")
         ref_no = case.get("application_ref_no", "N/A")
         sub_date = case.get("original_submission_date", "N/A")
         today_date = datetime.now().strftime("%d-%b-%Y")
         is_urgent = bool(case.get("is_life_liberty") or case.get("statutory_sla_hours") == 48)
+        is_hi = (lang == "hi")
+
+        if is_hi:
+            if is_urgent:
+                subject = f"*** अति-आवश्यक प्रथम अपील (48-HOUR LIFE & LIBERTY EMERGENCY): सूचना का अधिकार अधिनियम 2005 की धारा 19(1) सपठित धारा 7(1) परंतुक (48 घंटे जीवन व स्वतंत्रता आपातकाल) - जन सूचना अधिकारी द्वारा केस {case_id} में सूचना न देने (डीम्ड रिफ्यूजल) के विरुद्ध ***"
+                grounds = [
+                    f"1. अपीलार्थी ने आरटीआई अधिनियम 2005 की धारा 7(1) के परंतुक के अधीन व्यक्ति के जीवन एवं व्यक्तिगत स्वतंत्रता से संबंधित आवश्यक लोक अभिलेखों हेतु त्वरित आरटीआई आवेदन (केस सं: {case_id}, संदर्भ: {ref_no}) दिनांक {sub_date} को प्रस्तुत किया था।",
+                    f"2. आवेदन प्राप्ति के 48 घंटे से अधिक का समय व्यतीत हो चुका है, किन्तु नामित जन सूचना अधिकारी ({pio.get('pio_name', 'जन सूचना अधिकारी')}) अनिवार्य 48-घंटे की वैधानिक समयसीमा में सूचना प्रदान करने में पूर्णतः विफल रहे हैं।",
+                    "3. आरटीआई अधिनियम 2005 की धारा 7(2) के अंतर्गत, 48 घंटे में निर्णय न देना आवेदन की तत्काल 'स्वतः अस्वीकृति' (Deemed Refusal) मानी जाती है।",
+                    "4. इस अति-महत्वपूर्ण सूचना से वंचित रखा जाना अपूरणीय क्षति का आसन्न खतरा उत्पन्न करता है और भारत के संविधान के अनुच्छेद 21 (Article 21 Constitution of India) के तहत प्रदत्त जीवन के मौलिक अधिकार का उल्लंघन है।",
+                    "5. आरटीआई अधिनियम की धारा 7(6) के अंतर्गत, विधिक समयसीमा बीतने के कारण अपीलार्थी अब सभी मांगी गई प्रमाणित सूचनाएं पूर्णतः निःशुल्क (FREE OF COST) प्राप्त करने का विधिक हकदार है।",
+                    "6. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार दोषी जन सूचना अधिकारी धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माने के भागीदार बन चुके हैं।"
+                ]
+                prayers = [
+                    "क) नामित जन सूचना अधिकारी को निर्देशित किया जाए कि वह 24 घंटे के भीतर मांगी गई सभी आपातकालीन पत्रावलियों की प्रमाणित प्रतियां अपीलार्थी को निःशुल्क उपलब्ध कराएं।",
+                    "ख) प्रथम अपीलीय प्राधिकारी के समक्ष 48 घंटे के भीतर तत्काल व्यक्तिगत सुनवाई आयोजित की जाए।",
+                    "ग) दोषी अधिकारी के विरुद्ध धारा 20(1) के तहत जुर्माना कार्यवाही एवं धारा 20(2) के तहत अनुशासनात्मक कार्यवाही की संस्तुति की जाए।"
+                ]
+            else:
+                subject = f"सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत जन सूचना अधिकारी द्वारा केस {case_id} में निर्धारित समयसीमा में सूचना न देने / स्वतः अस्वीकृति (Deemed Refusal) के विरुद्ध प्रथम अपील"
+                grounds = [
+                    f"1. अपीलार्थी ने धारा 6(1) के अंतर्गत प्रमाणित लोक अभिलेखों की प्राप्ति हेतु मूल आरटीआई आवेदन (केस सं: {case_id}, संदर्भ: {ref_no}) दिनांक {sub_date} को विधिवत प्रस्तुत किया था।",
+                    f"2. आवेदन जमा किए जाने के 30 दिन से अधिक का समय बीत चुका है, किन्तु नामित जन सूचना अधिकारी ({pio.get('pio_name', 'जन सूचना अधिकारी')}) धारा 7(1) के अंतर्गत 30-दिवसीय वैधानिक समयसीमा में सूचना उपलब्ध कराने में विफल रहे हैं।",
+                    "3. आरटीआई अधिनियम 2005 की धारा 7(2) के अंतर्गत, 30 दिनों में कोई निर्णय न देना आवेदन की विधिक 'स्वतः अस्वीकृति' (Deemed Refusal) है।",
+                    "4. धारा 7(6) के अनुसार निर्धारित 30 दिन बीत जाने के उपरांत अपीलार्थी बिना किसी अतिरिक्त प्रलेखन शुल्क के समस्त वांछित प्रमाणित सूचनाएं निःशुल्क (FREE OF COST) प्राप्त करने का हकदार है।",
+                    "5. मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार समयसीमा उल्लंघन हेतु जन सूचना अधिकारी पर धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना देय है।"
+                ]
+                prayers = [
+                    "क) नामित जन सूचना अधिकारी को आदेशित किया जाए कि वह 7 दिनों के भीतर सभी वांछित अभिलेखों की प्रमाणित प्रतियां अपीलार्थी को निःशुल्क उपलब्ध कराएं।",
+                    "ख) प्रथम अपीलीय प्राधिकारी के समक्ष अपीलार्थी को व्यक्तिगत सुनवाई का अवसर प्रदान किया जाए।",
+                    "ग) दोषी अधिकारी के विरुद्ध विभागीय अनुशासनात्मक कार्यवाही एवं धारा 20(1) के तहत जुर्माने की कार्यवाही प्रारंभ की जाए।"
+                ]
+
+            return {
+                "appeal_type": "अति-आवश्यक प्रथम अपील (URGENT FIRST APPEAL / धारा 19(1) व 7(1) परंतुक)" if is_urgent else "प्रथम अपील (FIRST APPEAL / धारा 19(1) आरटीआई अधिनियम 2005)",
+                "appeal_id": f"APP-19-{case_id}",
+                "appeal_date": today_date,
+                "target_faa": faa,
+                "subject": subject,
+                "is_life_liberty": is_urgent,
+                "grounds_of_appeal": grounds,
+                "prayers_sought": prayers,
+                "statutory_act": "सूचना का अधिकार अधिनियम 2005 (धारा 19(1) सपठित धारा 7(1) परंतुक व धारा 7(6))" if is_urgent else "सूचना का अधिकार अधिनियम 2005 (धारा 19(1) सपठित धारा 7(1) व 7(6))"
+            }
 
         if is_urgent:
             subject = f"*** URGENT FIRST APPEAL UNDER SECTION 19(1) READ WITH PROVISO TO SECTION 7(1) RTI ACT 2005 - 48-HOUR LIFE & LIBERTY EMERGENCY *** - AGAINST DEEMED REFUSAL BY PIO IN CASE {case_id}"
@@ -295,30 +338,50 @@ class LegalIntelligenceEngine:
             "statutory_act": "Right to Information Act 2005 (Section 19(1) read with Proviso to Section 7(1) & Section 7(6))" if is_urgent else "Right to Information Act 2005 (Section 19(1) read with Section 7(1) & 7(6))"
         }
 
-    def generate_legal_notice_draft(self, case: dict, legal_analysis: dict) -> dict:
+    def generate_legal_notice_draft(self, case: dict, legal_analysis: dict, lang: str = "en") -> dict:
         """
         Drafts a formal Advocate Legal Notice for Public Servants Dereliction under IPC/BNS.
+        Generates in authentic legal parlance (Hindi if lang == 'hi', English otherwise).
         """
         complainant = case.get("complainant", {})
         pio = case.get("suggested_pio", {})
         today_date = datetime.now().strftime("%d-%b-%Y")
         case_id = case.get("case_id", "ARZ-1046")
+        is_hi = (lang == "hi")
 
         ipc_str = ", ".join(legal_analysis.get("ipc_sections", []))
         bns_str = ", ".join(legal_analysis.get("bns_sections", []))
 
-        notice_body = (
-            f"LEGAL NOTICE UNDER SECTION 80 CPC & SECTIONS OF IPC/BNS\n"
-            f"To: {pio.get('pio_name')} ({pio.get('designation')}), {pio.get('office_address')}\n\n"
-            f"Under instructions and on behalf of our client, {complainant.get('name')} (Residing at {complainant.get('address')}), "
-            f"we hereby serve you this formal Statutory Legal Notice regarding gross administrative dereliction and delay in processing "
-            f"Grievance Ref: {case.get('application_ref_no', 'N/A')}.\n\n"
-            f"STATUTORY CHARGES INVOKED:\n"
-            f"• Indian Penal Code (1860): {ipc_str}\n"
-            f"• Bharatiya Nyaya Sanhita (2023): {bns_str}\n\n"
-            f"You are called upon to rectify the dereliction and provide certified status within 15 days of receipt of this notice, "
-            f"failing which our client shall initiate appropriate Criminal and Writ proceedings under Article 226 of the Constitution of India."
-        )
+        if is_hi:
+            notice_body = (
+                f"विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)\n"
+                f"रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित\n\n"
+                f"सेवा में:\n"
+                f"{pio.get('pio_name', 'नामित जन सूचना अधिकारी')} ({pio.get('designation', 'सक्षम प्राधिकारी')}),\n"
+                f"कार्यालय: {pio.get('office_address', 'जिला कचेहरी परिसर')}\n\n"
+                f"अपने मुवक्किल {complainant.get('name', 'नागरिक आवेदक')} (निवासी: {complainant.get('address', 'स्थानीय पता')}) के विधिक अनुदेशों के अधीन एवं उनकी ओर से, "
+                f"हम आपको नागरिक शिकायत (संदर्भ संख्या: {case.get('application_ref_no', 'N/A')}) के निस्तारण में की गई घोर प्रशासनिक उपेक्षा, विधिक कर्तव्यों की अवहेलना "
+                f"एवं समयसीमा उल्लंघन के संबंध में यह औपचारिक सांविधिक विधिक नोटिस प्रेषित कर रहे हैं।\n\n"
+                f"आरोपित कानूनी धाराएं (STATUTORY CHARGES INVOKED):\n"
+                f"• भारतीय दंड संहिता (1860): {ipc_str}\n"
+                f"• भारतीय न्याय संहिता (2023): {bns_str}\n\n"
+                f"आपको एतद्द्वारा सूचित किया जाता है कि इस नोटिस की प्राप्ति के 15 दिनों के भीतर उक्त विधिक विफलता का निवारण करें एवं अद्यतन स्थिति की प्रमाणित प्रतिलिपि उपलब्ध कराएं। "
+                f"निर्धारित 15 दिनों में समाधान न होने की दशा में हमारे मुवक्किल आपके विरुद्ध सक्षम न्यायालय में दांडिक अभियोजन एवं भारत के संविधान के अनुच्छेद 226 के अंतर्गत माननीय उच्च न्यायालय में रिट याचिका दायर करेंगे, "
+                f"जिसका संपूर्ण हर्जा-खर्चा एवं विधिक दायित्व आपका व्यक्तिगत होगा।"
+            )
+        else:
+            notice_body = (
+                f"LEGAL NOTICE UNDER SECTION 80 CPC & SECTIONS OF IPC/BNS\n"
+                f"To: {pio.get('pio_name')} ({pio.get('designation')}), {pio.get('office_address')}\n\n"
+                f"Under instructions and on behalf of our client, {complainant.get('name')} (Residing at {complainant.get('address')}), "
+                f"we hereby serve you this formal Statutory Legal Notice regarding gross administrative dereliction and delay in processing "
+                f"Grievance Ref: {case.get('application_ref_no', 'N/A')}.\n\n"
+                f"STATUTORY CHARGES INVOKED:\n"
+                f"• Indian Penal Code (1860): {ipc_str}\n"
+                f"• Bharatiya Nyaya Sanhita (2023): {bns_str}\n\n"
+                f"You are called upon to rectify the dereliction and provide certified status within 15 days of receipt of this notice, "
+                f"failing which our client shall initiate appropriate Criminal and Writ proceedings under Article 226 of the Constitution of India."
+            )
 
         return {
             "notice_id": f"LNOT-{case_id}",

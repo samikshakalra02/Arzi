@@ -517,6 +517,154 @@ const PEOPLE_AND_OFFICES_I18N = {
   "Delhi Land Reforms Act, 1954": "दिल्ली भूमि सुधार अधिनियम, 1954"
 };
 
+const SEED_CASES_EN = {
+  "ARZ-1048": {
+    raw_grievance: "Food quality of govt canteen is pathetic. Taste not good and food was rotten. Complaint submitted at Kalkaji division.",
+    draft_subject: "Application under Section 6(1) of RTI Act 2005 regarding public canteen hygiene and food safety inspection in South Delhi under FSSA 2006",
+    questions: [
+      "1. Please provide certified copies of daily progress report and file movement register regarding grievance application (Ref: DISCOM-PWR-44910) submitted on 28-Feb-2026.",
+      "2. Please disclose names and designations of dealing food safety officers who held the complaint beyond 30-day statutory SLA.",
+      "3. What is the prescribed Citizen Charter timeline for resolving food hygiene complaints?",
+      "4. Please provide certified copies of latest Food Safety Inspection Reports and valid FSSAI License under Sections 26/31 FSSA 2006.",
+      "5. Please provide certified details of water and food sample laboratory test results collected over the last 12 months under Section 2(f) RTI Act 2005.",
+      "6. Please provide certified copies of all notings, correspondence, and final orders issued by competent authority."
+    ],
+    fees_paid: "Rs. 10 Indian Postal Order enclosed under Rule 3 of RTI Rules 2012.",
+    appeal_subject: "FIRST APPEAL UNDER SECTION 19(1) OF RTI ACT 2005 AGAINST DEEMED REFUSAL IN CASE ARZ-1048",
+    appeal_grounds: [
+      "1. The Respondent PIO failed to furnish requested information within statutory 30-day timeline under Section 7(1).",
+      "2. Failure of PIO constitutes Deemed Refusal under Section 7(2) of RTI Act 2005.",
+      "3. Appellant is entitled to receive records FREE OF COST under Section 7(6).",
+      "4. Delinquent PIO has incurred personal statutory penalty liability of Rs. 250 per day under Section 20(1) (Manohar v. State of Maharashtra AIR 2013 SC 681)."
+    ],
+    appeal_prayers: [
+      "1. Direct the PIO to provide certified copies of records FREE OF CHARGE within 7 days.",
+      "2. Grant personal hearing to Appellant before the First Appellate Authority.",
+      "3. Recommend initiation of Section 20(1) penalty proceedings against the defaulting officer."
+    ],
+    legal_notice: `LEGAL NOTICE UNDER SECTION 80 CPC READ WITH IPC & BNS
+To: Designated Public Information Officer (Food Safety / Civil Supplies), Kalkaji / Varanasi
+
+Under instructions and on behalf of our client Virendra Gupta (Residing at Kalkaji, South Delhi), notice is hereby served regarding gross administrative dereliction and delay in processing grievance Ref: DISCOM-PWR-44910.
+
+STATUTORY CHARGES INVOKED:
+• Indian Penal Code (1860): Section 166 (Public Servant Disobeying Law), Section 409 (Criminal Breach of Trust)
+• Bharatiya Nyaya Sanhita (2023): Section 198 (Public Servant Disobedience), Section 316(5) (Breach of Trust)
+
+You are called upon to rectify the dereliction and provide certified status within 15 days of receipt of this notice, failing which our client shall initiate criminal prosecution and Writ proceedings under Article 226 of the Constitution of India.
+
+Sincerely,
+Adv. S. Kalra (Bar Council / Legal Counsel)`
+  },
+
+  "ARZ-1042": {
+    raw_grievance: "My family BPL ration card application (Ref RC-88492) was submitted 6 months ago at Ward 4 supply office. We still have not received ration card or grain. Ration dealer refuses to show stock register.",
+    draft_subject: "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: RC-88492, Submitted: 15-Feb-2026) in Ward 4, Civil Lines regarding Food & Civil Supplies",
+    questions: [
+      "1. Please provide the daily progress report and certified file movement register regarding the grievance application (Ref: RC-88492) submitted by Sunita Devi on 15-Feb-2026.",
+      "2. Please specify the names, designations, and official contact details of all dealing officers/staff in Ward 4 Civil Lines office who held this file beyond statutory limits.",
+      "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
+      "4. Please disclose the month-wise stock position and BPL entitlement distribution register copies for the fair price shop servicing Ward 4.",
+      "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, and inspection reports concerning this grievance."
+    ],
+    fees_paid: "Rs. 10 Indian Postal Order (IPO No: 45F-992011, Dated: 15-Feb-2026, Issued by GPO Delhi) enclosed under Rule 3 of RTI Rules 2012.",
+    appeal_subject: "FIRST APPEAL UNDER SECTION 19(1) OF RTI ACT 2005 AGAINST DEEMED REFUSAL IN CASE ARZ-1042",
+    appeal_grounds: [
+      "1. The Respondent PIO failed to furnish requested information within mandatory 30-day statutory SLA under Section 7(1).",
+      "2. Failure of PIO constitutes Deemed Refusal under Section 7(2) of RTI Act 2005.",
+      "3. Appellant is entitled to receive records FREE OF COST under Section 7(6).",
+      "4. Delinquent PIO has incurred personal statutory penalty liability of Rs. 250 per day under Section 20(1) (Manohar v. State of Maharashtra AIR 2013 SC 681)."
+    ],
+    appeal_prayers: [
+      "1. Direct the PIO to provide certified copies of records FREE OF CHARGE within 7 days.",
+      "2. Grant personal hearing to Appellant before the First Appellate Authority.",
+      "3. Recommend initiation of Section 20(1) penalty proceedings against the defaulting officer."
+    ],
+    legal_notice: `LEGAL NOTICE UNDER SECTION 80 CPC READ WITH IPC & BNS
+To: Public Information Officer & Assistant Commissioner, Ward 4 Civil Lines, New Delhi
+
+Under instructions and on behalf of our client Sunita Devi (Residing at Ward 4, Civil Lines, New Delhi), notice is hereby served regarding gross administrative dereliction and delay in processing grievance Ref: RC-88492.
+
+STATUTORY CHARGES INVOKED:
+• Indian Penal Code (1860): Section 166 (Public Servant Disobeying Law), Section 409 (Criminal Breach of Trust)
+• Bharatiya Nyaya Sanhita (2023): Section 198 (Public Servant Disobedience), Section 316(5) (Breach of Trust)
+
+You are called upon to rectify the dereliction and provide certified status within 15 days of receipt of this notice, failing which our client shall initiate criminal prosecution and Writ proceedings under Article 226 of the Constitution of India.
+
+Sincerely,
+Adv. S. Kalra (Bar Council / Legal Counsel)`
+  },
+
+  "ARZ-1046": {
+    raw_grievance: "My land mutation khasra 45/12 application (Ref LND-88301) submitted on 10-Jan-2026 at Tehsil office Mehrauli is pending. Patwari is not updating land record registry.",
+    draft_subject: "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: LND-88301, Submitted: 10-Jan-2026) in Mehrauli regarding Revenue & Land Records",
+    questions: [
+      "1. Please provide the daily progress report and certified file movement register regarding the land mutation application (Khasra 45/12, Ref: LND-88301) submitted on 10-Jan-2026 at Mehrauli Tehsil.",
+      "2. Please specify the names, designations, and official contact details of all dealing officers, including Patwari and Revenue Inspector, who held this file beyond 30 days.",
+      "3. What is the prescribed timeline as per the Citizen Charter and Delhi Land Reforms Act for passing land mutation orders?",
+      "4. Please disclose certified copies of Khasra/Khatauni mutations, field inspection reports, and any objections lodged on record.",
+      "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, and orders issued by the Tehsildar."
+    ],
+    fees_paid: "Rs. 10 Indian Postal Order (IPO No: 45F-LND992, Dated: 10-Jan-2026, Issued at PO Mehrauli) enclosed under Rule 3 of RTI Rules 2012.",
+    appeal_subject: "FIRST APPEAL UNDER SECTION 19(1) OF RTI ACT 2005 AGAINST DEEMED REFUSAL IN CASE ARZ-1046",
+    appeal_grounds: [
+      "1. The Respondent PIO failed to furnish requested information within mandatory 30-day statutory SLA under Section 7(1).",
+      "2. Failure of PIO constitutes Deemed Refusal under Section 7(2) of RTI Act 2005.",
+      "3. Appellant is entitled to receive records FREE OF COST under Section 7(6).",
+      "4. Delinquent PIO has incurred personal statutory penalty liability of Rs. 250 per day under Section 20(1) (Manohar v. State of Maharashtra AIR 2013 SC 681)."
+    ],
+    appeal_prayers: [
+      "1. Direct the PIO to provide certified copies of records FREE OF CHARGE within 7 days.",
+      "2. Grant personal hearing to Appellant before the First Appellate Authority.",
+      "3. Recommend initiation of Section 20(1) penalty proceedings against the defaulting officer."
+    ],
+    legal_notice: `LEGAL NOTICE UNDER SECTION 80 CPC READ WITH IPC & BNS
+To: Tehsildar & Designated PIO, Tehsil Complex Mehrauli, Sector 4, Mehrauli, New Delhi
+
+Under instructions and on behalf of our client Shivanshu Pandey (Residing at Sector 4, Mehrauli, New Delhi), notice is hereby served regarding gross administrative dereliction and delay in processing land mutation grievance Ref: LND-88301.
+
+STATUTORY CHARGES INVOKED:
+• Indian Penal Code (1860): Section 166 (Public Servant Disobeying Law), Section 409 (Criminal Breach of Trust)
+• Bharatiya Nyaya Sanhita (2023): Section 198 (Public Servant Disobedience), Section 316(5) (Breach of Trust)
+
+You are called upon to rectify the dereliction and provide certified status within 15 days of receipt of this notice, failing which our client shall initiate criminal prosecution and Writ proceedings under Article 226 of the Constitution of India.
+
+Sincerely,
+Adv. S. Kalra (Bar Council / Legal Counsel)`
+  },
+
+  "ARZ-1047": {
+    raw_grievance: "My land mutation khasra 45/12 application (Ref LND-88301) submitted on 10-Jan-2026 at Tehsil office Mehrauli is pending. (Merged duplicate with ARZ-1046)",
+    draft_subject: "Application under Section 6(1) of RTI Act 2005 seeking status on land mutation in Mehrauli Tehsil regarding Revenue & Land Records (Consolidated Dossier)",
+    questions: [
+      "1. Please provide the certified daily progress report and file movement details regarding the land mutation application (Khasra 45/12).",
+      "2. Please disclose certified copies of all field inspection reports and file notings recorded on this land mutation file."
+    ],
+    fees_paid: "Rs. 10 Indian Postal Order enclosed under Rule 3 of RTI Rules 2012.",
+    appeal_subject: "FIRST APPEAL UNDER SECTION 19(1) OF RTI ACT 2005 AGAINST DEEMED REFUSAL IN CASE ARZ-1047",
+    appeal_grounds: [
+      "1. 30-day statutory SLA has elapsed without response from PIO, constituting Deemed Refusal under Section 7(2).",
+      "2. Under Section 7(6), the Appellant is entitled to receive records FREE OF COST."
+    ],
+    appeal_prayers: [
+      "1. Direct the PIO to furnish certified records FREE OF CHARGE immediately.",
+      "2. Recommend penalty proceedings under Section 20(1) against the defaulting officer."
+    ],
+    legal_notice: `LEGAL NOTICE UNDER SECTION 80 CPC READ WITH IPC & BNS
+To: Naib Tehsildar & Designated PIO, Tehsil Complex Mehrauli, New Delhi
+
+Under instructions from our client Shivanshu Pandey, notice is hereby served regarding gross administrative delay in land mutation application Khasra 45/12.
+
+STATUTORY CHARGES INVOKED:
+• IPC Section 166 / BNS Section 198, Delhi Land Reforms Act 1954
+
+You are called upon to rectify the dereliction and provide certified status within 15 days, failing which legal proceedings will be initiated.
+
+Sincerely,
+Adv. S. Kalra (Bar Council / Legal Counsel)`
+  }
+};
+
 const SEED_CASES_I18N = {
   "ARZ-1048": {
     raw_grievance: "25 फीट रोड, एसजीएम नगर, फरीदाबाद में मुख्य नाली टूटी हुई है और मानसून में भीषण जलभराव व दुर्गंध फैलती है। नगर निगम द्वारा निविदा पास होने के बावजूद कोई कार्य नहीं कराया गया है। ठेकेदार और अधिकारियों की मिलीभगत से फंड का गबन किया गया है।",
@@ -527,16 +675,40 @@ const SEED_CASES_I18N = {
       "3. निर्माण कार्य पूर्ण न होने के बावजूद भुगतान जारी करने वाले संबंधित अधिशासी अभियंता एवं कनिष्ठ अभियंता का नाम व पदनाम बताएं।",
       "4. क्या उक्त नाली अवरोध एवं घटिया निर्माण के विरुद्ध नगर निगम द्वारा कोई जांच समिति गठित की गई है? यदि हां, तो जांच आख्या उपलब्ध कराएं।"
     ],
-    fees_paid: "आरटीआई नियमावली 2012 के नियम 3 के तहत ₹10 का पोस्टल ऑर्डर विहित शुल्क के रूप में संलग्न है।",
-    appeal_subject: "केस ARZ-1048 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील",
+    fees_paid: "सूचना का अधिकार नियमावली 2012 के नियम 3 के तहत ₹10 का भारतीय पोस्टल ऑर्डर विहित शुल्क के रूप में संलग्न है।",
+    appeal_subject: "केस ARZ-1048 में प्रथम अपीलीय प्राधिकारी के समक्ष आरटीआई अधिनियम की धारा 19(1) के तहत प्रथम अपील (डीम्ड रिफ्यूजल)",
     appeal_grounds: [
-      "1. सक्षम जन सूचना अधिकारी द्वारा 30-दिवसीय अनिवार्य समयसीमा में सूचना प्रदान नहीं की गई।",
-      "2. धारा 7(2) के तहत सूचना न देना स्वतः अस्वीकृति (Deemed Refusal) है।"
+      "1. सक्षम जन सूचना अधिकारी द्वारा धारा 7(1) के तहत 30-दिवसीय अनिवार्य विधिक समयसीमा में सूचना प्रदान नहीं की गई।",
+      "2. अधिनियम की धारा 7(2) के अनुसार 30 दिनों में कोई निर्णय न देना आवेदन की स्वतः अस्वीकृति (Deemed Refusal) है।",
+      "3. धारा 7(6) के अनुसार विधिक समयसीमा बीत जाने के उपरांत अपीलार्थी बिना किसी अतिरिक्त शुल्क के समस्त वांछित प्रमाणित सूचनाएं निःशुल्क प्राप्त करने का हकदार है।",
+      "4. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार दोषी जन सूचना अधिकारी पर धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना अधिरोपित किया जाना चाहिए।"
     ],
     appeal_prayers: [
-      "1. जन सूचना अधिकारी को निर्देश दिया जाए कि वह समस्त वांछित अभिलेख निःशुल्क उपलब्ध कराएं।",
-      "2. धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना लगाया जाए।"
-    ]
+      "1. जन सूचना अधिकारी को आदेशित किया जाए कि वह 25 फीट रोड नाली निर्माण व फंड से संबंधित समस्त वांछित अभिलेख निःशुल्क उपलब्ध कराएं।",
+      "2. प्रथम अपीलीय प्राधिकारी के समक्ष अपीलार्थी को व्यक्तिगत सुनवाई का अवसर प्रदान किया जाए।",
+      "3. धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना एवं धारा 20(2) के तहत अनुशासनात्मक कार्यवाही की संस्तुति की जाए।"
+    ],
+    legal_notice: `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)
+रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित
+
+सेवा में:
+अधिशासी अभियंता / सक्षम जन सूचना अधिकारी,
+कार्यालय: नगर निगम मुख्यालय, बीके चौक, एनआईटी फरीदाबाद, हरियाणा - 121001
+
+विषय: 25 फीट रोड, एसजीएम नगर, फरीदाबाद में टूटी मुख्य नाली, जलभराव एवं निविदा फंड के गबन के संबंध में विधिक नोटिस।
+
+अपने मुवक्किल श्री रोहित वर्मा (निवासी: मकान सं. 112, एसजीएम नगर, 25 फीट रोड, फरीदाबाद) के विधिक अनुदेशों के अधीन एवं उनकी ओर से, हम आपको नागरिक शिकायत (केस सं: ARZ-1048) के निस्तारण में की गई घोर प्रशासनिक लापरवाही एवं विधिक कर्तव्यों की अवहेलना के संबंध में यह औपचारिक विधिक नोटिस प्रेषित कर रहे हैं।
+
+आरोपित कानूनी धाराएं (STATUTORY CHARGES INVOKED):
+• भारतीय दंड संहिता (1860): आईपीसी धारा 166 (लोक सेवक द्वारा कानून की अवज्ञा), धारा 409 (आपराधिक विश्वासघात), धारा 268 (लोक उपद्रव)
+• भारतीय न्याय संहिता (2023): बीएनएस धारा 198 (लोक सेवक द्वारा कानून का उल्लंघन), धारा 316(5) (आपराधिक न्यासभंग)
+
+उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार, नागरिक की वैध शिकायतों एवं आरटीआई आवेदनों की जानबूझकर उपेक्षा करने पर दोषी अधिकारी पर व्यक्तिगत दण्ड अधिरोपित किया जाना अनिवार्य है।
+
+अतः आपको एतद्द्वारा 15 दिनों का सांविधिक नोटिस दिया जाता है कि 25 फीट रोड के नाली निर्माण कार्य का स्थलीय निरीक्षण कराकर जल निकासी बहाल करें तथा निविदा फंड व माप पुस्तिका (MB) का प्रमाणित विवरण उपलब्ध कराएं। ऐसा न होने पर माननीय पंजाब एवं हरियाणा उच्च न्यायालय में अनुच्छेद 226 के तहत जनहित याचिका एवं सक्षम न्यायालय में आपराधिक परिवाद दायर किया जाएगा।
+
+भवदीय,
+अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)`
   },
 
   "ARZ-1042": {
@@ -550,16 +722,40 @@ const SEED_CASES_I18N = {
       "5. कृपया उपरोक्त शिकायत आवेदन के प्रसंस्करण और वर्तमान निस्तारण स्थिति के संबंध में दर्ज सभी मौजूदा फाइल नोटिंग्स, कार्यालय पत्राचार, प्रोसेसिंग शीट, निरीक्षण रिपोर्ट और आधिकारिक आदेशों की प्रमाणित प्रतियां उपलब्ध कराएं।"
     ],
     fees_paid: "सूचना का अधिकार नियमावली 2012 के नियम 3 के तहत निर्धारित आवेदन शुल्क के रूप में ₹10 का भारतीय पोस्टल ऑर्डर (आईपीओ सं: 45F-992011, दिनांक: 15-फरवरी-2026, जीपीओ दिल्ली द्वारा जारी) संलग्न है।",
-    appeal_subject: "केस ARZ-1042 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील",
+    appeal_subject: "केस ARZ-1042 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील (खाद्य आपूर्ति डीम्ड रिफ्यूजल)",
     appeal_grounds: [
       "1. सूचना का अधिकार अधिनियम, 2005 की धारा 7(1) के तहत 30-दिवसीय अनिवार्य विधिक समयसीमा बीत चुकी है और जन सूचना अधिकारी द्वारा कोई सूचना नहीं दी गई है।",
       "2. अधिनियम की धारा 7(2) के तहत जन सूचना अधिकारी की यह विफलता आवेदन को 'स्वतः अस्वीकृत' (Deemed Refusal) मानने का विधिक आधार बनती है।",
-      "3. जन सूचना अधिकारी द्वारा नागरिक अधिकार पत्र एवं सूचना के अधिकार का प्रत्यक्ष उल्लंघन किया गया है।"
+      "3. जन सूचना अधिकारी द्वारा नागरिक अधिकार पत्र एवं राष्ट्रीय खाद्य सुरक्षा अधिनियम (NFSA 2013) के विधिक प्रावधानों का प्रत्यक्ष उल्लंघन किया गया है।",
+      "4. धारा 7(6) के अनुसार अपीलार्थी अब सभी अभिलेख बिना किसी शुल्क के निःशुल्क (FREE OF COST) प्राप्त करने की हकदार है।"
     ],
     appeal_prayers: [
       "1. जन सूचना अधिकारी को निर्देश दिया जाए कि वह मांगी गई समस्त प्रमाणित सूचनाएं अविलंब और निःशुल्क उपलब्ध कराएं।",
-      "2. सूचना का अधिकार अधिनियम की धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना अधिरोपित करने की संस्तुति की जाए।"
-    ]
+      "2. अपीलार्थी को प्रथम अपीलीय प्राधिकारी के समक्ष व्यक्तिगत सुनवाई का अवसर दिया जाए।",
+      "3. सूचना का अधिकार अधिनियम की धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना अधिरोपित करने की संस्तुति की जाए।"
+    ],
+    legal_notice: `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)
+रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित
+
+सेवा में:
+सहायक आयुक्त / खाद्य एवं नागरिक आपूर्ति अधिकारी (FSO),
+कार्यालय: खाद्य आपूर्ति सर्किल कार्यालय, वार्ड 4, सिविल लाइन्स, उत्तरी दिल्ली - 110054
+
+विषय: बीपीएल राशन कार्ड (संदर्भ संख्या: RC-88492) एवं राष्ट्रीय खाद्य सुरक्षा अधिनियम (NFSA 2013) के अंतर्गत खाद्यान्न वितरण में वैधानिक विफलता हेतु विधिक नोटिस।
+
+अपने मुवक्किल श्रीमती सुनीता देवी (निवासी: झुग्गी क्लस्टर, कबीर बस्ती, वार्ड 4, सिविल लाइन्स, दिल्ली) के विधिक अनुदेशों के अधीन एवं उनकी ओर से, हम आपको राशन कार्ड आवेदन के 6 माह से लंबित रहने एवं कोटेदार द्वारा खाद्यान्न न दिए जाने के संबंध में यह सांविधिक विधिक नोटिस प्रेषित कर रहे हैं।
+
+आरोपित कानूनी धाराएं (STATUTORY CHARGES INVOKED):
+• भारतीय दंड संहिता (1860): धारा 166 (लोक सेवक द्वारा कानून की अवज्ञा), धारा 409 (आपराधिक विश्वासघात)
+• भारतीय न्याय संहिता (2023): बीएनएस धारा 198, धारा 318(4) (धोखाधड़ी)
+• संबद्ध अधिनियम: राष्ट्रीय खाद्य सुरक्षा अधिनियम 2013 (NFSA) धारा 3 एवं धारा 8
+
+उच्चतम न्यायालय के ऐतिहासिक निर्णय *पीयूसीएल बनाम भारत संघ (भोजन का अधिकार, अनुच्छेद 21)* एवं *मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681)* के अनुसार, गरीब नागरिकों के जीवन निर्वाह से जुड़े खाद्यान्न को रोकना मौलिक अधिकारों का हनन एवं दांडिक अपराध है।
+
+अतः आपको एतद्द्वारा 15 दिनों की मोहलत दी जाती है कि आवेदक का बीपीएल राशन कार्ड जारी कराएं अथवा लंबित रहने का प्रमाणित कारण उपलब्ध कराएं, अन्यथा आपके विरुद्ध सक्षम दांडिक न्यायालय एवं दिल्ली उच्च न्यायालय में अनुच्छेद 226 के अंतर्गत विधिक कार्यवाही संस्थित की जाएगी।
+
+भवदीय,
+अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)`
   },
   "ARZ-1046": {
     raw_grievance: "मेरा भूमि नामांतरण खसरा 45/12 आवेदन (संदर्भ संख्या LND-88301) जो 10-जनवरी-2026 को तहसील कार्यालय महरौली में जमा किया गया था, 30 दिन से अधिक समय से लंबित है। पटवारी भू-अभिलेख में नाम दर्ज नहीं कर रहा है।",
@@ -572,31 +768,75 @@ const SEED_CASES_I18N = {
       "5. उक्त प्रकरण में सक्षम प्राधिकारी एवं तहसीलदार द्वारा दर्ज समस्त आदेश-पत्रक (Order Sheet) एवं स्थलीय निरीक्षण आख्या की प्रमाणित प्रतिलिपि उपलब्ध कराएं।"
     ],
     fees_paid: "केंद्रीय आरटीआई नियमावली 2012 के नियम 3 के अनुसार ₹10 का पोस्टल ऑर्डर (IPO No: 78D-441029) विहित शुल्क के रूप में संलग्न है।",
-    appeal_subject: "केस ARZ-1046 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील",
+    appeal_subject: "केस ARZ-1046 में प्रथम अपीलीय अधिकारी के समक्ष धारा 19(1) के तहत प्रथम अपील (भूमि नामांतरण डीम्ड रिफ्यूजल)",
     appeal_grounds: [
       "1. तहसील महरौली के सक्षम जन सूचना अधिकारी द्वारा 30-दिवसीय अनिवार्य विधिक समयसीमा का गंभीर उल्लंघन किया गया है।",
       "2. धारा 7(2) के तहत सूचना न देना डीम्ड रिफ्यूजल (स्वतः अस्वीकृति) का स्पष्ट आधार है।",
-      "3. दिल्ली भूमि सुधार अधिनियम के अंतर्गत नागरिक का नामांतरण रिकॉर्ड पाने का विधिक अधिकार बाधित किया गया है।"
+      "3. दिल्ली भूमि सुधार अधिनियम के अंतर्गत नागरिक का नामांतरण रिकॉर्ड पाने का विधिक अधिकार बाधित किया गया है।",
+      "4. धारा 7(6) के तहत विधिक समयसीमा समाप्ति के बाद समस्त वांछित अभिलेख निःशुल्क प्रदान किए जाने अनिवार्य हैं।"
     ],
     appeal_prayers: [
-      "1. संबंधित जन सूचना अधिकारी को आदेशित किया जाए कि खसरा 45/12 की प्रमाणित खतौनी एवं नामांतरण स्थिति 48 घंटे में उपलब्ध कराएं।",
-      "2. धारा 20(1) के तहत दोषी अधिकारी पर विधिक जुर्माना अधिरोपित किया जाए।"
-    ]
+      "1. संबंधित जन सूचना अधिकारी को आदेशित किया जाए कि खसरा 45/12 की प्रमाणित खतौनी एवं नामांतरण स्थिति 48 घंटे में निःशुल्क उपलब्ध कराएं।",
+      "2. प्रथम अपीलीय प्राधिकारी के समक्ष व्यक्तिगत सुनवाई नियत की जाए।",
+      "3. धारा 20(1) के तहत दोषी अधिकारी पर ₹250 प्रतिदिन की दर से विधिक जुर्माना अधिरोपित किया जाए।"
+    ],
+    legal_notice: `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)
+रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित
+
+सेवा में:
+नायब तहसीलदार / सक्षम जन सूचना अधिकारी,
+कार्यालय: राजस्व तहसील कार्यालय, महरौली, दक्षिणी दिल्ली - 110030
+
+विषय: भूमि नामांतरण (खसरा सं. 45/12, संदर्भ: LND-88301) में 30-दिवसीय वैधानिक समयसीमा का उल्लंघन एवं पटवारी द्वारा पद के दुरुपयोग हेतु धारा 80 सीपीसी नोटिस।
+
+अपने मुवक्किल श्री शिवांशु पाण्डेय (निवासी: मकान नं. 14, कालकाजी एक्सटेंशन, नई दिल्ली - 110019) के विधिक अनुदेशों के अधीन एवं उनकी ओर से, हम आपको नामांतरण आवेदन के जानबूझकर अनिस्तारित रखे जाने एवं दिल्ली भूमि सुधार अधिनियम 1954 के उल्लंघन के संबंध में यह सांविधिक विधिक नोटिस प्रेषित कर रहे हैं।
+
+आरोपित कानूनी धाराएं (STATUTORY CHARGES INVOKED):
+• भारतीय दंड संहिता (1860): धारा 166 (लोक सेवक द्वारा विधिक निर्देश की अवज्ञा), धारा 217, धारा 409
+• भारतीय न्याय संहिता (2023): बीएनएस धारा 198, धारा 316(5)
+• संबद्ध अधिनियम: दिल्ली भूमि सुधार अधिनियम, 1954 एवं दिल्ली लोक सेवा गारंटी अधिनियम
+
+उच्चतम न्यायालय के निर्णय *सीबीएसई बनाम आदित्य बंदोपाध्याय (2011) 8 SCC 497* एवं *मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681)* के अनुसार, जन प्राधिकारी जनता के अभिलेखों के न्यासी हैं तथा वैधानिक समयसीमा का उल्लंघन करने पर जन सूचना अधिकारी धारा 20(1) के तहत व्यक्तिगत ₹250 प्रतिदिन जुर्माने के दायी हैं।
+
+अतः आपको एतद्द्वारा 15 दिनों का अंतिम अवसर दिया जाता है कि खसरा 45/12 के नामांतरण आदेश की प्रमाणित प्रतिलिपि जारी करें, अन्यथा सक्षम न्यायालय में दीवानी वाद (Civil Suit) एवं दिल्ली उच्च न्यायालय में रिट याचिका (Writ Petition) योजित की जाएगी।
+
+भवदीय,
+अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)`
   },
   "ARZ-1047": {
     raw_grievance: "मेरा भूमि नामांतरण खसरा 45/12 आवेदन (संदर्भ संख्या LND-88301) जो 10-जनवरी-2026 को तहसील कार्यालय महरौली में जमा किया गया था, लंबित है। (केस ARZ-1046 के साथ विलय किया गया)",
     draft_subject: "राजस्व एवं भूमि अभिलेख के संबंध में महरौली तहसील में लंबित भूमि नामांतरण (खसरा 45/12) - समेकित डॉसियर",
     questions: [
-      "1. कृपया संबंधित नामांतरण आवेदन (खसरा संख्या 45/12) की अद्यतन प्रशासनिक स्थिति एवं फाइल मूवमेंट का प्रमाणित विवरण प्रदान करें।"
+      "1. कृपया संबंधित नामांतरण आवेदन (खसरा संख्या 45/12) की अद्यतन प्रशासनिक स्थिति एवं फाइल मूवमेंट का प्रमाणित विवरण प्रदान करें।",
+      "2. कृपया उक्त भूमि नामांतरण पर तहसील स्तर पर दर्ज समस्त विधिक टिप्पणियों एवं स्थलीय निरीक्षण रिपोर्ट की प्रमाणित प्रति उपलब्ध कराएं।"
     ],
     fees_paid: "₹10 का पोस्टल ऑर्डर विहित शुल्क के रूप में संलग्न है।",
-    appeal_subject: "केस ARZ-1047 (समेकित) में धारा 19(1) के तहत प्रथम अपील",
+    appeal_subject: "केस ARZ-1047 (समेकित) में धारा 19(1) के तहत प्रथम अपील (भूमि नामांतरण)",
     appeal_grounds: [
-      "1. 30 दिन की वैधानिक सीमा समाप्त हो चुकी है।"
+      "1. 30 दिन की वैधानिक सीमा समाप्त हो चुकी है और धारा 7(2) के तहत यह स्वतः अस्वीकृति (Deemed Refusal) है।",
+      "2. धारा 7(6) के अनुसार आवेदक समस्त अभिलेख निःशुल्क प्राप्त करने का हकदार है।"
     ],
     appeal_prayers: [
-      "1. अविलंब प्रमाणित सूचना उपलब्ध कराई जाए।"
-    ]
+      "1. अविलंब प्रमाणित सूचना एवं नामांतरण स्थिति निःशुल्क उपलब्ध कराई जाए।",
+      "2. दोषी प्राधिकारी के विरुद्ध धारा 20(1) के तहत जुर्माना संस्तुत किया जाए।"
+    ],
+    legal_notice: `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)
+रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित
+
+सेवा में:
+नायब तहसीलदार / सक्षम जन सूचना अधिकारी,
+कार्यालय: राजस्व तहसील कार्यालय, महरौली, दक्षिणी दिल्ली - 110030
+
+विषय: भूमि नामांतरण (खसरा सं. 45/12, समेकित डॉसियर ARZ-1047) के संबंध में विधिक मांग नोटिस।
+
+अपने मुवक्किल श्री शिवांशु पाण्डेय के विधिक अनुदेशों के अधीन एवं उनकी ओर से, हम आपको नामांतरण आवेदन के अनिस्तारित रहने एवं वैधानिक समयसीमा के उल्लंघन के संबंध में यह नोटिस प्रेषित कर रहे हैं।
+
+आरोपित धाराएं: आईपीसी धारा 166 / बीएनएस धारा 198, दिल्ली भूमि सुधार अधिनियम 1954।
+
+अतः 15 दिनों के भीतर नामांतरण आदेश व दैनिक प्रगति रजिस्टर की प्रमाणित प्रतिलिपि उपलब्ध कराएं अन्यथा सक्षम न्यायालय में विधिक कार्यवाही संस्थित की जाएगी।
+
+भवदीय,
+अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)`
   }
 };
 
@@ -887,7 +1127,12 @@ function tGrievance(caseIdOrRaw, maybeRaw) {
   let caseId = maybeRaw !== undefined ? caseIdOrRaw : (currentCase ? currentCase.case_id : null);
   let raw = maybeRaw !== undefined ? maybeRaw : caseIdOrRaw;
   if (!raw) return "";
-  if (currentLang !== "hi") return raw;
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].raw_grievance) {
+      return SEED_CASES_EN[caseId].raw_grievance;
+    }
+    return raw;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].raw_grievance) {
     return SEED_CASES_I18N[caseId].raw_grievance;
   }
@@ -897,100 +1142,369 @@ function tGrievance(caseIdOrRaw, maybeRaw) {
 function tDraftSubject(caseIdOrSubj, maybeSubj) {
   let caseId = maybeSubj !== undefined ? caseIdOrSubj : (currentCase ? currentCase.case_id : null);
   let subj = maybeSubj !== undefined ? maybeSubj : caseIdOrSubj;
-  if (!subj) return currentLang === "hi" ? "सूचना का अधिकार आवेदन" : "Right to Information Application";
-  if (currentLang !== "hi") return subj;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].draft_subject) {
+      return SEED_CASES_EN[caseId].draft_subject;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.draft_rti && c.draft_rti.application_subject && !/[\u0900-\u097F]/.test(c.draft_rti.application_subject)) {
+      return c.draft_rti.application_subject;
+    }
+    if (subj && typeof subj === "string" && !/[\u0900-\u097F]/.test(subj)) {
+      return subj;
+    }
+    if (c.department) {
+      return `Application under Section 6(1) of RTI Act 2005 seeking certified public records regarding ${c.department}`;
+    }
+    return "Application under Section 6(1) of RTI Act 2005 seeking certified public records";
+  }
+
+  if (subj && typeof subj === "string" && /[\u0900-\u097F]/.test(subj)) {
+    return subj;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].draft_subject) {
     return SEED_CASES_I18N[caseId].draft_subject;
   }
-  return subj;
+  const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+  if (c.department) {
+    const deptHindi = tDept(c.department);
+    return `${deptHindi} के संबंध में सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत प्रमाणित लोक अभिलेख प्राप्त करने हेतु आवेदन`;
+  }
+  if (subj && typeof subj === "string") {
+    return subj.replace(/Application under Section 6\(1\) of RTI Act,? 2005 regarding/gi, "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत आवेदन:")
+               .replace(/Application under Section 6\(1\)/gi, "धारा 6(1) के तहत आवेदन");
+  }
+  return "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत आवेदन";
 }
 
 function tDraftQuestions(caseIdOrQuestions, maybeQuestions) {
   let caseId = maybeQuestions !== undefined ? caseIdOrQuestions : (currentCase ? currentCase.case_id : null);
   let questions = maybeQuestions !== undefined ? maybeQuestions : caseIdOrQuestions;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].questions) {
+      return SEED_CASES_EN[caseId].questions;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.draft_rti && c.draft_rti.questions && c.draft_rti.questions.length > 0 && !/[\u0900-\u097F]/.test(c.draft_rti.questions[0])) {
+      return c.draft_rti.questions;
+    }
+    if (questions && Array.isArray(questions) && questions.length > 0 && !/[\u0900-\u097F]/.test(questions[0])) {
+      return questions;
+    }
+    return [
+      "1. Please provide certified copy of daily progress report and certified file movement register regarding the grievance application.",
+      "2. Please specify the names, designations, and official contact details of all dealing officials who held this file beyond statutory limits.",
+      "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
+      "4. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, and orders issued."
+    ];
+  }
+
   if (!questions || !Array.isArray(questions)) return [];
-  if (currentLang !== "hi") return questions;
+  if (questions.length > 0 && /[\u0900-\u097F]/.test(questions[0])) {
+    return questions;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].questions) {
     return SEED_CASES_I18N[caseId].questions;
   }
-  return questions;
+  return questions.map((q) => {
+    let tq = q;
+    tq = tq.replace(/Provide certified copy of daily progress report and file movement register/gi, "कृपया मूल शिकायत आवेदन की दैनिक प्रगति रिपोर्ट और प्रमाणित फाइल मूवमेंट रजिस्टर प्रदान करें")
+           .replace(/Provide names, designations, and contact details of all dealing officials/gi, "कृपया उन सभी संबंधित अधिकारियों/कर्मचारियों के नाम, पदनाम और आधिकारिक संपर्क विवरण बताएं")
+           .replace(/who kept this matter pending beyond/gi, "जिनके पास यह मामला विधिक सीमा से अधिक समय तक लंबित रहा")
+           .replace(/State the statutory Citizen Charter timeline for resolving this category of public grievance/gi, "नागरिक अधिकार पत्र के अनुसार इस श्रेणी की जन शिकायत के निवारण हेतु निर्धारित समयसीमा क्या है")
+           .replace(/Provide certified copies of all existing file-notings, office correspondence, processing sheets/gi, "कृपया उपरोक्त शिकायत आवेदन के संबंध में दर्ज सभी मौजूदा फाइल नोटिंग्स, कार्यालय पत्राचार एवं आदेशों की प्रमाणित प्रतियां उपलब्ध कराएं")
+           .replace(/Provide certified copy of the complete processing file/gi, "कृपया संपूर्ण प्रोसेसिंग फ़ाइल और आधिकारिक नोटशीट की प्रमाणित प्रतिलिपि प्रदान करें")
+           .replace(/Provide certified copy of/gi, "कृपया प्रमाणित प्रतिलिपि प्रदान करें:")
+           .replace(/State reasons in writing/gi, "कृपया लिखित में कारण स्पष्ट करें:");
+    return tq;
+  });
 }
 
 function tDraftFees(caseIdOrFees, maybeFees) {
   let caseId = maybeFees !== undefined ? caseIdOrFees : (currentCase ? currentCase.case_id : null);
   let fees = maybeFees !== undefined ? maybeFees : caseIdOrFees;
-  if (!fees) return currentLang === "hi" ? "₹10 विहित आरटीआई शुल्क संलग्न" : "Rs. 10 prescribed fee attached";
-  if (currentLang !== "hi") return fees;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].fees_paid) {
+      return SEED_CASES_EN[caseId].fees_paid;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.draft_rti && c.draft_rti.fees_paid && !/[\u0900-\u097F]/.test(c.draft_rti.fees_paid)) {
+      return c.draft_rti.fees_paid;
+    }
+    if (fees && typeof fees === "string" && !/[\u0900-\u097F]/.test(fees)) {
+      return fees;
+    }
+    return "Rs. 10 Indian Postal Order (IPO) / Court Fee Stamp enclosed under Rule 3 of RTI Rules 2012.";
+  }
+
+  if (fees && typeof fees === "string" && /[\u0900-\u097F]/.test(fees)) {
+    return fees;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].fees_paid) {
     return SEED_CASES_I18N[caseId].fees_paid;
   }
-  return fees;
+  return "सूचना का अधिकार नियमावली, 2012 के नियम 3 के तहत ₹10 का भारतीय पोस्टल ऑर्डर (आईपीओ) / कोर्ट फीस स्टाम्प विहित शुल्क के रूप में संलग्न है।";
 }
 
 function tAppealSubject(caseIdOrSubj, maybeSubj) {
   let caseId = maybeSubj !== undefined ? caseIdOrSubj : (currentCase ? currentCase.case_id : null);
   let subj = maybeSubj !== undefined ? maybeSubj : caseIdOrSubj;
-  if (!subj) return currentLang === "hi" ? "धारा 19(1) के तहत प्रथम अपील" : "FIRST APPEAL UNDER SECTION 19(1)";
-  if (currentLang !== "hi") return subj;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].appeal_subject) {
+      return SEED_CASES_EN[caseId].appeal_subject;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.first_appeal_draft && c.first_appeal_draft.subject && !/[\u0900-\u097F]/.test(c.first_appeal_draft.subject)) {
+      return c.first_appeal_draft.subject;
+    }
+    if (subj && typeof subj === "string" && !/[\u0900-\u097F]/.test(subj)) {
+      return subj;
+    }
+    const isUrgent = Boolean(c.is_life_liberty || c.statutory_sla_hours === 48);
+    if (isUrgent) {
+      return `*** URGENT FIRST APPEAL: Under Section 19(1) read with Section 7(1) Proviso of RTI Act 2005 (48-Hour Life/Liberty Emergency) against Deemed Refusal in Case ${caseId || c.case_id || ''} ***`;
+    }
+    return `FIRST APPEAL UNDER SECTION 19(1) OF RTI ACT 2005 AGAINST DEEMED REFUSAL BY PIO IN CASE ${caseId || c.case_id || ''}`;
+  }
+
+  if (subj && typeof subj === "string" && /[\u0900-\u097F]/.test(subj)) {
+    return subj;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_subject) {
     return SEED_CASES_I18N[caseId].appeal_subject;
   }
-  return subj;
+  const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+  const isUrgent = Boolean(c.is_life_liberty || c.statutory_sla_hours === 48);
+  if (isUrgent) {
+    return `*** अति-आवश्यक प्रथम अपील: सूचना का अधिकार अधिनियम 2005 की धारा 19(1) सपठित धारा 7(1) परंतुक (48 घंटे जीवन व स्वतंत्रता आपातकाल) - केस ${caseId || c.case_id || ''} में स्वतः अस्वीकृति (Deemed Refusal) के विरुद्ध ***`;
+  }
+  return `सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत जन सूचना अधिकारी द्वारा केस ${caseId || c.case_id || ''} में निर्धारित समयसीमा में सूचना न देने / स्वतः अस्वीकृति (Deemed Refusal) के विरुद्ध प्रथम अपील`;
 }
 
 function tAppealGrounds(caseIdOrGrounds, maybeGrounds) {
   let caseId = maybeGrounds !== undefined ? caseIdOrGrounds : (currentCase ? currentCase.case_id : null);
   let grounds = maybeGrounds !== undefined ? maybeGrounds : caseIdOrGrounds;
-  if (!grounds || !Array.isArray(grounds)) return [];
-  if (currentLang !== "hi") return grounds;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].appeal_grounds) {
+      return SEED_CASES_EN[caseId].appeal_grounds;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.first_appeal_draft && c.first_appeal_draft.grounds_of_appeal && c.first_appeal_draft.grounds_of_appeal.length > 0 && !/[\u0900-\u097F]/.test(c.first_appeal_draft.grounds_of_appeal[0])) {
+      return c.first_appeal_draft.grounds_of_appeal;
+    }
+    if (grounds && Array.isArray(grounds) && grounds.length > 0 && !/[\u0900-\u097F]/.test(grounds[0])) {
+      return grounds;
+    }
+    const pioName = (c.suggested_pio && c.suggested_pio.pio_name) || "Designated PIO";
+    const refNo = c.application_ref_no || "N/A";
+    const isUrgent = Boolean(c.is_life_liberty || c.statutory_sla_hours === 48);
+
+    if (isUrgent) {
+      return [
+        `1. The Appellant filed an RTI application (Ref: ${refNo}) under Section 7(1) proviso concerning life and personal liberty.`,
+        `2. More than 48 hours have elapsed and the designated PIO (${pioName}) failed to supply the requested public records within statutory SLA.`,
+        "3. Under Section 7(2) of the RTI Act 2005, failure to furnish information within 48 hours constitutes immediate Deemed Refusal.",
+        "4. Deprivation of this information creates grave imminent harm and violates Article 21 of the Constitution of India.",
+        "5. Under Section 7(6), the Appellant is entitled to receive all information FREE OF COST.",
+        "6. The PIO has incurred personal statutory penalty liability of Rs. 250 per day under Section 20(1) (Manohar v. State of Maharashtra AIR 2013 SC 681)."
+      ];
+    }
+    return [
+      `1. The Appellant filed an RTI application (Ref: ${refNo}) under Section 6(1) seeking certified public records.`,
+      `2. More than 30 days have elapsed and the designated PIO (${pioName}) failed to supply the requested records within the 30-day statutory timeline under Section 7(1).`,
+      "3. Under Section 7(2) of the RTI Act 2005, failure of the PIO to respond constitutes Deemed Refusal.",
+      "4. Under Section 7(6), the Appellant is entitled to receive all requested records FREE OF COST without additional documentation fees.",
+      "5. The PIO has incurred personal statutory penalty liability of Rs. 250 per day under Section 20(1) (Manohar v. State of Maharashtra AIR 2013 SC 681)."
+    ];
+  }
+
+  if (grounds && Array.isArray(grounds) && grounds.length > 0 && /[\u0900-\u097F]/.test(grounds[0])) {
+    return grounds;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_grounds) {
     return SEED_CASES_I18N[caseId].appeal_grounds;
   }
-  return grounds;
+  const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+  const pioName = tOfficer(c.suggested_pio && c.suggested_pio.pio_name) || "जन सूचना अधिकारी";
+  const refNo = c.application_ref_no || "N/A";
+  const isUrgent = Boolean(c.is_life_liberty || c.statutory_sla_hours === 48);
+
+  if (isUrgent) {
+    return [
+      `1. अपीलार्थी ने आरटीआई अधिनियम 2005 की धारा 7(1) के परंतुक के अधीन व्यक्ति के जीवन एवं व्यक्तिगत स्वतंत्रता से संबंधित आवश्यक लोक अभिलेखों हेतु त्वरित आरटीआई आवेदन (संदर्भ: ${refNo}) प्रस्तुत किया था।`,
+      `2. आवेदन प्राप्ति के 48 घंटे से अधिक का समय व्यतीत हो चुका है, किन्तु नामित जन सूचना अधिकारी (${pioName}) अनिवार्य 48-घंटे की वैधानिक समयसीमा में सूचना प्रदान करने में पूर्णतः विफल रहे हैं।`,
+      "3. आरटीआई अधिनियम 2005 की धारा 7(2) के अंतर्गत, 48 घंटे में निर्णय न देना आवेदन की तत्काल 'स्वतः अस्वीकृति' (Deemed Refusal) मानी जाती है।",
+      "4. इस अति-महत्वपूर्ण सूचना से वंचित रखा जाना अपूरणीय क्षति का आसन्न खतरा उत्पन्न करता है और भारत के संविधान के अनुच्छेद 21 के तहत प्रदत्त जीवन के मौलिक अधिकार का उल्लंघन है।",
+      "5. आरटीआई अधिनियम की धारा 7(6) के अंतर्गत, विधिक समयसीमा बीतने के कारण अपीलार्थी अब सभी मांगी गई प्रमाणित सूचनाएं पूर्णतः निःशुल्क (FREE OF COST) प्राप्त करने का विधिक हकदार है।",
+      "6. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार दोषी जन सूचना अधिकारी धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माने के भागीदार बन चुके हैं।"
+    ];
+  }
+
+  return [
+    `1. अपीलार्थी ने धारा 6(1) के अंतर्गत प्रमाणित लोक अभिलेखों की प्राप्ति हेतु मूल आरटीआई आवेदन (संदर्भ: ${refNo}) विधिवत प्रस्तुत किया था।`,
+    `2. आवेदन जमा किए जाने के 30 दिन से अधिक का समय बीत चुका है, किन्तु नामित जन सूचना अधिकारी (${pioName}) धारा 7(1) के अंतर्गत 30-दिवसीय वैधानिक समयसीमा में सूचना उपलब्ध कराने में विफल रहे हैं।`,
+    "3. आरटीआई अधिनियम 2005 की धारा 7(2) के अंतर्गत, 30 दिनों में कोई निर्णय न देना आवेदन की विधिक 'स्वतः अस्वीकृति' (Deemed Refusal) है।",
+    "4. धारा 7(6) के अनुसार निर्धारित 30 दिन बीत जाने के उपरांत अपीलार्थी बिना किसी अतिरिक्त प्रलेखन शुल्क के समस्त वांछित प्रमाणित सूचनाएं निःशुल्क (FREE OF COST) प्राप्त करने का हकदार है।",
+    "5. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार समयसीमा उल्लंघन हेतु जन सूचना अधिकारी पर धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना देय है।"
+  ];
 }
 
 function tAppealPrayers(caseIdOrPrayers, maybePrayers) {
   let caseId = maybePrayers !== undefined ? caseIdOrPrayers : (currentCase ? currentCase.case_id : null);
   let prayers = maybePrayers !== undefined ? maybePrayers : caseIdOrPrayers;
-  if (!prayers || !Array.isArray(prayers)) return [];
-  if (currentLang !== "hi") return prayers;
+
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].appeal_prayers) {
+      return SEED_CASES_EN[caseId].appeal_prayers;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.first_appeal_draft && c.first_appeal_draft.prayers_sought && c.first_appeal_draft.prayers_sought.length > 0 && !/[\u0900-\u097F]/.test(c.first_appeal_draft.prayers_sought[0])) {
+      return c.first_appeal_draft.prayers_sought;
+    }
+    if (prayers && Array.isArray(prayers) && prayers.length > 0 && !/[\u0900-\u097F]/.test(prayers[0])) {
+      return prayers;
+    }
+    const isUrgent = Boolean((c && c.is_life_liberty) || (c && c.statutory_sla_hours === 48));
+    if (isUrgent) {
+      return [
+        "a) Direct the designated PIO to furnish certified copies of all emergency records FREE OF COST within 24 hours.",
+        "b) Grant an immediate personal hearing before the First Appellate Authority within 48 hours.",
+        "c) Recommend penalty proceedings under Section 20(1) and disciplinary action under Section 20(2) against the defaulting officer."
+      ];
+    }
+    return [
+      "a) Direct the designated PIO to furnish certified copies of all requested records FREE OF COST within 7 days.",
+      "b) Grant personal hearing to the Appellant before the First Appellate Authority.",
+      "c) Recommend initiation of Section 20(1) penalty proceedings and departmental disciplinary inquiry against the defaulting officer."
+    ];
+  }
+
+  if (prayers && Array.isArray(prayers) && prayers.length > 0 && /[\u0900-\u097F]/.test(prayers[0])) {
+    return prayers;
+  }
   if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].appeal_prayers) {
     return SEED_CASES_I18N[caseId].appeal_prayers;
   }
-  return prayers;
+  const isUrgent = Boolean((currentCase && currentCase.is_life_liberty) || (currentCase && currentCase.statutory_sla_hours === 48));
+
+  if (isUrgent) {
+    return [
+      "क) नामित जन सूचना अधिकारी को निर्देशित किया जाए कि वह 24 घंटे के भीतर मांगी गई सभी आपातकालीन पत्रावलियों की प्रमाणित प्रतियां अपीलार्थी को निःशुल्क उपलब्ध कराएं।",
+      "ख) प्रथम अपीलीय प्राधिकारी के समक्ष 48 घंटे के भीतर तत्काल व्यक्तिगत सुनवाई आयोजित की जाए।",
+      "ग) दोषी अधिकारी के विरुद्ध धारा 20(1) के तहत जुर्माना कार्यवाही एवं धारा 20(2) के तहत अनुशासनात्मक कार्यवाही की संस्तुति की जाए।"
+    ];
+  }
+
+  return [
+    "क) नामित जन सूचना अधिकारी को आदेशित किया जाए कि वह 7 दिनों के भीतर सभी वांछित अभिलेखों की प्रमाणित प्रतियां अपीलार्थी को निःशुल्क उपलब्ध कराएं।",
+    "ख) प्रथम अपीलीय प्राधिकारी के समक्ष अपीलार्थी को व्यक्तिगत सुनवाई का अवसर प्रदान किया जाए।",
+    "ग) दोषी अधिकारी के विरुद्ध विभागीय अनुशासनात्मक कार्यवाही एवं धारा 20(1) के तहत जुर्माने की कार्यवाही प्रारंभ की जाए।"
+  ];
 }
 
 function tLegalNotice(caseId, notice) {
-  if (!notice) return "";
-  if (currentLang !== "hi") return notice;
-  return `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908)
-सेवा में,
-सक्षम जन सूचना अधिकारी एवं सक्षम प्राधिकारी,
-भारत सरकार / राष्ट्रीय राजधानी क्षेत्र दिल्ली।
+  if (currentLang !== "hi") {
+    if (caseId && SEED_CASES_EN[caseId] && SEED_CASES_EN[caseId].legal_notice) {
+      return SEED_CASES_EN[caseId].legal_notice;
+    }
+    const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+    if (c.legal_notice_draft && typeof c.legal_notice_draft === "string" && !/[\u0900-\u097F]/.test(c.legal_notice_draft)) {
+      return c.legal_notice_draft;
+    }
+    if (notice && typeof notice === "string" && !/[\u0900-\u097F]/.test(notice)) {
+      return notice;
+    }
+    const complainant = (c.complainant && c.complainant.name) || "Citizen Complainant";
+    const compAddr = (c.complainant && c.complainant.address) || "Local Address";
+    const pioName = (c.suggested_pio && c.suggested_pio.pio_name) || "Designated Public Information Officer";
+    const pioDesig = (c.suggested_pio && c.suggested_pio.designation) || "Competent Authority";
+    const pioAddr = (c.suggested_pio && c.suggested_pio.office_address) || "Administrative Office";
+    const refNo = c.application_ref_no || c.case_id || "N/A";
+    const ipcSections = (c.statutory_legal_analysis && c.statutory_legal_analysis.ipc_sections ? c.statutory_legal_analysis.ipc_sections.join(", ") : "") || "Section 166, Section 409";
+    const bnsSections = (c.statutory_legal_analysis && c.statutory_legal_analysis.bns_sections ? c.statutory_legal_analysis.bns_sections.join(", ") : "") || "Section 198, Section 318(4)";
 
-विषय: नागरिक शिकायत निस्तारण में वैधानिक विफलता एवं आरटीआई अधिनियम, 2005 की धारा 20(1) के अंतर्गत व्यक्तिगत जुर्माने की विधिक सूचना।
+    return `LEGAL NOTICE UNDER SECTION 80 CPC READ WITH IPC & BNS
+REGISTERED AD / SPEED POST
 
-महोदय,
-आवेदक द्वारा विधिवत प्रस्तुत शिकायत/आवेदन निर्धारित 30-दिवसीय समयसीमा व्यतीत हो जाने के उपरांत भी आपके कार्यालय में अनिस्तारित एवं लंबित है। उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार, बिना किसी ठोस कारण के विलंब किए जाने पर दोषी अधिकारी के व्यक्तिगत वेतन से ₹250 प्रतिदिन की दर से अधिकतम ₹25,000 जुर्माना वसूल किया जाना अनिवार्य है।
+To:
+${pioName} (${pioDesig}),
+Office: ${pioAddr}
 
-अतः आपको एतद्द्वारा 15 दिनों की विधिक मोहलत दी जाती है कि वांछित सूचना/कार्यवाही संपन्न कराएं, अन्यथा आपके विरुद्ध सक्षम न्यायालय एवं केंद्रीय/राज्य सूचना आयोग के समक्ष विधिक कार्यवाही संस्थित की जाएगी।
+Under instructions from and on behalf of our client ${complainant} (Residing at: ${compAddr}), formal statutory legal notice is hereby served regarding gross administrative dereliction, breach of statutory duties, and violation of prescribed timeframes in grievance application Ref: ${refNo}.
+
+STATUTORY CHARGES INVOKED:
+• Indian Penal Code (1860): ${ipcSections}
+• Bharatiya Nyaya Sanhita (2023): ${bnsSections}
+
+Pursuant to the Supreme Court ruling in Manohar v. State of Maharashtra (AIR 2013 SC 681), failure to discharge statutory duties renders the concerned public official personally liable for monetary penalties and disciplinary prosecution.
+
+You are hereby called upon to rectify the administrative dereliction and provide certified status within 15 days of receipt of this notice, failing which our client shall initiate criminal prosecution before the competent court and file a Writ Petition under Article 226 of the Constitution of India, at your sole risk, costs, and consequences.
+
+Sincerely,
+Adv. S. Kalra (Bar Council / Legal Counsel)`;
+  }
+
+  if (notice && typeof notice === "string" && /[\u0900-\u097F]/.test(notice)) {
+    return notice;
+  }
+  if (caseId && SEED_CASES_I18N[caseId] && SEED_CASES_I18N[caseId].legal_notice) {
+    return SEED_CASES_I18N[caseId].legal_notice;
+  }
+  const c = (currentCase && currentCase.case_id === caseId) ? currentCase : (typeof allCasesCache !== "undefined" ? allCasesCache.find(x => x.case_id === caseId) : null) || currentCase || {};
+  const complainant = tComplainant(c.complainant && c.complainant.name) || "नागरिक आवेदक";
+  const compAddr = tAddress(c.complainant && c.complainant.address) || "स्थानीय पता";
+  const pioName = tOfficer(c.suggested_pio && c.suggested_pio.pio_name) || "नामित जन सूचना अधिकारी";
+  const pioDesig = tDesignation(c.suggested_pio && c.suggested_pio.designation) || "सक्षम प्राधिकारी";
+  const pioAddr = tAddress(c.suggested_pio && c.suggested_pio.office_address) || "संबंधित प्रशासनिक कार्यालय";
+  const refNo = c.application_ref_no || c.case_id || "N/A";
+  const ipcSections = (c.statutory_legal_analysis && c.statutory_legal_analysis.ipc_sections ? c.statutory_legal_analysis.ipc_sections.map(tSection).join(", ") : "") || "आईपीसी धारा 166, धारा 409";
+  const bnsSections = (c.statutory_legal_analysis && c.statutory_legal_analysis.bns_sections ? c.statutory_legal_analysis.bns_sections.map(tSection).join(", ") : "") || "बीएनएस धारा 198, धारा 318(4)";
+
+  return `विधिक नोटिस (धारा 80 सिविल प्रक्रिया संहिता, 1908 एवं आईपीसी/बीएनएस की धाराएं)
+रजिस्टर्ड डाक / स्पीड पोस्ट द्वारा प्रेषित
+
+सेवा में:
+${pioName} (${pioDesig}),
+कार्यालय: ${pioAddr}
+
+अपने मुवक्किल ${complainant} (निवासी: ${compAddr}) के विधिक अनुदेशों के अधीन एवं उनकी ओर से, हम आपको नागरिक शिकायत (संदर्भ संख्या: ${refNo}) के निस्तारण में की गई घोर प्रशासनिक उपेक्षा, विधिक कर्तव्यों की अवहेलना एवं वैधानिक समयसीमा उल्लंघन के संबंध में यह औपचारिक सांविधिक विधिक नोटिस प्रेषित कर रहे हैं।
+
+आरोपित कानूनी धाराएं (STATUTORY CHARGES INVOKED):
+• भारतीय दंड संहिता (1860): ${ipcSections}
+• भारतीय न्याय संहिता (2023): ${bnsSections}
+
+उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार समयसीमा उल्लंघन एवं कर्तव्यों के निर्वहन में विफलता हेतु संबंधित अधिकारी व्यक्तिगत जुर्माने एवं अनुशासनात्मक कार्यवाही के भागीदार हैं।
+
+अतः आपको एतद्द्वारा सूचित किया जाता है कि इस नोटिस की प्राप्ति के 15 दिनों के भीतर उक्त विधिक विफलता का निवारण करें एवं अद्यतन स्थिति की प्रमाणित प्रतिलिपि उपलब्ध कराएं। निर्धारित 15 दिनों में समाधान न होने की दशा में हमारे मुवक्किल आपके विरुद्ध सक्षम न्यायालय में दांडिक अभियोजन एवं भारत के संविधान के अनुच्छेद 226 के अंतर्गत माननीय उच्च न्यायालय में रिट याचिका दायर करेंगे, जिसका संपूर्ण हर्जा-खर्चा एवं विधिक दायित्व आपका व्यक्तिगत होगा।
 
 भवदीय,
-अधिवक्ता / विधिक परामर्शदाता`;
+अधिवक्ता एस. कालरा (बार काउंसिल / विधिक परामर्शदाता)`;
 }
 
 function tMlReport(c) {
   if (!c) return "";
   if (currentLang !== "hi") return c.ml_report_format || "";
+  const compName = c.complainant && c.complainant.name ? tComplainant(c.complainant.name) : "नागरिक आवेदक";
+  const meritScore = c.statutory_legal_analysis && c.statutory_legal_analysis.case_merit_score ? c.statutory_legal_analysis.case_merit_score : 92;
+  const penalty = c.statutory_legal_analysis && c.statutory_legal_analysis.section_20_penalty_liability_inr ? c.statutory_legal_analysis.section_20_penalty_liability_inr : 0;
+  const bnsSecs = c.statutory_legal_analysis && c.statutory_legal_analysis.bns_sections ? c.statutory_legal_analysis.bns_sections.map(tSection).join(", ") : "बीएनएस धारा 318(4)";
+  const pioName = c.suggested_pio && c.suggested_pio.pio_name ? tOfficer(c.suggested_pio.pio_name) : "नामित जन सूचना अधिकारी";
+  const pioAddr = c.suggested_pio && c.suggested_pio.office_address ? tAddress(c.suggested_pio.office_address) : "संबंधित कार्यालय";
+
   return `[विधिक मूल्यांकन रिपोर्ट - अर्जी प्लेटफॉर्म]
 केस संख्या: ${c.case_id}
-आवेदक का नाम: ${tComplainant(c.complainant?.name)}
+आवेदक का नाम: ${compName}
 संबंधित विभाग: ${tDept(c.department)}
-विधिक योग्यता स्कोर (Merit Score): ${c.statutory_legal_analysis?.case_merit_score || 92}/100
-धारा 20(1) संभावित जुर्माना देयता: ₹${c.statutory_legal_analysis?.section_20_penalty_liability_inr || 0}
-प्राथमिक विधिक धाराएं: ${c.statutory_legal_analysis?.bns_sections ? c.statutory_legal_analysis.bns_sections.map(tSection).join(", ") : "बीएनएस धारा 318(4)"}
-नामित जन सूचना अधिकारी: ${tOfficer(c.suggested_pio?.pio_name)}
-कार्यालय पता: ${tAddress(c.suggested_pio?.office_address)}
+विधिक योग्यता स्कोर (Merit Score): ${meritScore}/100
+धारा 20(1) संभावित जुर्माना देयता: ₹${penalty}
+प्राथमिक विधिक धाराएं: ${bnsSecs}
+नामित जन सूचना अधिकारी: ${pioName}
+कार्यालय पता: ${pioAddr}
 स्थिति: ${tStatus(c.status)}`;
 }
 
@@ -1001,6 +1515,8 @@ function tRunLogEvent(ev) {
     "INTAKE_INGESTED": "शिकायत दर्ज",
     "INTAKE_RECEIVED": "शिकायत प्राप्त",
     "INPLACE_GRIEVANCE_UPDATE": "यथास्थान अद्यतन",
+    "INPLACE_COMPLAINANT_FIX": "शिकायतकर्ता संशोधन",
+    "DEPT_OVERRIDE_CORRECTED": "विभाग संशोधन",
     "CASE_STATUS_CHANGE": "केस स्थिति परिवर्तन",
     "CASE_DISPATCHED": "केस प्रेषित",
     "SECTION_6_3_TRANSFER": "धारा 6(3) अंतरण",
@@ -1018,10 +1534,12 @@ function tRunLogActor(actor) {
   const map = {
     "Citizen Intake Gateway": "नागरिक इनटेक गेटवे",
     "System Intake Gateway": "सिस्टम इनटेक गेटवे",
+    "System Ingestion Gateway": "सिस्टम इनजेशन गेटवे",
     "Intake Gateway / Legal Reviewer": "इनटेक गेटवे / विधिक समीक्षक",
     "Legal Reviewer": "विधिक समीक्षक",
     "Counsel / Citizen Desk": "विधिक परामर्शदाता / नागरिक डेस्क",
     "Legal Operator": "विधिक ऑपरेटर",
+    "Adv. S. Kalra (Legal NGO)": "अधिवक्ता एस. कालरा (विधिक एनजीओ)",
     "Adv. S. Kalra (Bar Council / Legal Counsel)": "अधिवक्ता एस. कालरा (बार काउंसिल)",
     "Shri R. P. Maurya, IAS (Designated Public Authority)": "श्री आर. पी. मौर्य, आईएएस"
   };
@@ -1033,6 +1551,9 @@ function tRunLogAction(action) {
   if (currentLang !== "hi") return action;
   let str = action;
   str = str.replace(/Created case/gi, "केस सृजित:")
+           .replace(/Corrected complainant name in-place from/gi, "शिकायतकर्ता का नाम यथास्थान संशोधित:")
+           .replace(/Operator corrected department from/gi, "ऑपरेटर द्वारा विभाग संशोधित:")
+           .replace(/Grievance ingested for Land Mutation khasra/gi, "भूमि नामांतरण खसरा हेतु शिकायत दर्ज:")
            .replace(/for complainant/gi, "शिकायतकर्ता:")
            .replace(/Updated Master Case/gi, "मास्टर केस अद्यतन:")
            .replace(/in-place for complainant/gi, "यथास्थान शिकायतकर्ता:")
@@ -1049,6 +1570,8 @@ function tRunLogResult(res) {
   if (currentLang !== "hi") return res;
   const map = {
     "SUCCESS": "सफल",
+    "INPLACE_UPDATE_SUCCESS": "यथास्थान संशोधन सफल",
+    "OVERRIDE_SUCCESS": "विभाग संशोधन सफल",
     "INPLACE_SUCCESS": "सफल (यथास्थान)",
     "DISPATCH_EXECUTED": "प्रेषण सम्पन्न",
     "TRANSFER_EXECUTED": "अंतरण सम्पन्न"
@@ -1057,15 +1580,17 @@ function tRunLogResult(res) {
 }
 
 function setLanguage(lang) {
-  // Sync auth and studio language
-  if (typeof updateHeaderAuthState === "function") updateHeaderAuthState();
-  if (typeof loadStudioPreset === "function" && typeof currentStudioPreset !== "undefined") {
-    loadStudioPreset(currentStudioPreset);
-  }
-
   if (lang !== "hi") lang = "en";
   currentLang = lang;
   localStorage.setItem("arzi_lang", lang);
+
+  // Sync auth and studio language
+  if (typeof updateHeaderAuthState === "function") updateHeaderAuthState();
+  if (typeof setStudioDocType === "function" && typeof currentStudioDocType !== "undefined") {
+    setStudioDocType(currentStudioDocType);
+  } else if (typeof loadStudioPreset === "function" && typeof currentStudioPreset !== "undefined") {
+    loadStudioPreset(currentStudioPreset);
+  }
 
   // Set strict CSS class on <body>
   document.body.classList.remove("lang-en", "lang-hi", "lang-bi");
@@ -1544,12 +2069,12 @@ function handleAuthRegister(role, event) {
   clearAuthAlert();
 
   if (role === "law_firm") {
-    const chamber = (document.getElementById("regLawChamber")?.value || "").trim();
-    const barId = (document.getElementById("regLawBarId")?.value || "").trim();
-    const category = document.getElementById("regLawCategory")?.value || "advocate";
-    const email = (document.getElementById("regLawEmail")?.value || "").trim();
-    const pin = (document.getElementById("regLawPin")?.value || "").trim();
-    const pinConfirm = (document.getElementById("regLawPinConfirm")?.value || "").trim();
+    const chamber = (document.getElementById("regLawChamber") ? document.getElementById("regLawChamber").value : "").trim();
+    const barId = (document.getElementById("regLawBarId") ? document.getElementById("regLawBarId").value : "").trim();
+    const category = (document.getElementById("regLawCategory") ? document.getElementById("regLawCategory").value : "") || "advocate";
+    const email = (document.getElementById("regLawEmail") ? document.getElementById("regLawEmail").value : "").trim();
+    const pin = (document.getElementById("regLawPin") ? document.getElementById("regLawPin").value : "").trim();
+    const pinConfirm = (document.getElementById("regLawPinConfirm") ? document.getElementById("regLawPinConfirm").value : "").trim();
 
     if (!chamber || !barId || !email || !pin) {
       showAuthAlert("Please fill in all required registration fields.", "error");
@@ -1597,11 +2122,11 @@ function handleAuthRegister(role, event) {
     showPage("home");
 
   } else {
-    const name = (document.getElementById("regAdminName")?.value || "").trim();
-    const username = (document.getElementById("regAdminUser")?.value || "").trim();
-    const authKey = (document.getElementById("regAdminAuthKey")?.value || "").trim();
-    const pin = (document.getElementById("regAdminPin")?.value || "").trim();
-    const pinConfirm = (document.getElementById("regAdminPinConfirm")?.value || "").trim();
+    const name = (document.getElementById("regAdminName") ? document.getElementById("regAdminName").value : "").trim();
+    const username = (document.getElementById("regAdminUser") ? document.getElementById("regAdminUser").value : "").trim();
+    const authKey = (document.getElementById("regAdminAuthKey") ? document.getElementById("regAdminAuthKey").value : "").trim();
+    const pin = (document.getElementById("regAdminPin") ? document.getElementById("regAdminPin").value : "").trim();
+    const pinConfirm = (document.getElementById("regAdminPinConfirm") ? document.getElementById("regAdminPinConfirm").value : "").trim();
 
     if (!name || !username || !authKey || !pin) {
       showAuthAlert("Please fill in all required administrator fields.", "error");
@@ -1881,6 +2406,57 @@ const STUDIO_PRESETS = {
   }
 };
 
+const STUDIO_DOC_TEMPLATES = {
+  form: {
+    en: {
+      subjectLine: "Application under Section 6(1) of RTI Act, 2005 for supply of certified public records",
+      demandsText: "1. Provide certified copy of the complete processing file and official file-notings.\n2. State reasons in writing why the application was kept pending beyond statutory timeline.\n3. Provide the names and designations of the dealing officials responsible for processing said file.\n4. State the statutory Citizen Charter timeline for resolving this matter.",
+      penaltyClause: "Notice under Section 20(1) RTI Act: Failure to supply requested information within 30 days shall invite mandatory penalty of ₹250/day up to ₹25,000.",
+      reliefDemanded: "Immediate supply of certified file-notings within 30 days under Section 7(1).",
+      feeParticulars: "₹10/- paid via Indian Postal Order (IPO) / Court Fee Stamp as per RTI Rules 2012."
+    },
+    hi: {
+      subjectLine: "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत प्रमाणित अभिलेख एवं दैनिक प्रगति आख्या उपलब्ध कराने हेतु आवेदन",
+      demandsText: "1. कृपया प्रकरण से संबंधित समस्त आधिकारिक नोटशीट, फाइल संचालन पंजी एवं पत्राचार की प्रमाणित प्रतिलिपि उपलब्ध कराएं।\n2. कृपया लिखित में कारण स्पष्ट करें कि वैधानिक समयसीमा बीतने के उपरांत भी फाइल अनिस्तारित क्यों रही।\n3. उक्त कार्य/आवेदन के निस्तारण हेतु जिम्मेदार संबंधित अधिकारियों/कर्मचारियों के नाम व पदनाम प्रदान करें।\n4. नागरिक अधिकार पत्र (Citizen Charter) के अंतर्गत इस सेवा के निवारण हेतु निर्धारित वैधानिक समयसीमा क्या है?",
+      penaltyClause: "धारा 20(1) नोटिस: विहित 30-दिवसीय समयसीमा में सूचना प्रदान न करने पर ₹250 प्रतिदिन (अधिकतम ₹25,000) का वैधानिक जुर्माना अधिरोपित किया जाएगा।",
+      reliefDemanded: "धारा 7(1) के तहत 30 दिनों की वैधानिक अवधि में समस्त वांछित अभिलेख प्रमाणित प्रति में उपलब्ध कराए जाएं।",
+      feeParticulars: "आरटीआई नियमावली 2012 के नियम 3 के अनुसार ₹10 का भारतीय पोस्टल ऑर्डर / कोर्ट फीस स्टाम्प संलग्न है।"
+    }
+  },
+  appeal: {
+    en: {
+      subjectLine: "MEMORANDUM OF FIRST APPEAL UNDER SECTION 19(1) OF THE RTI ACT, 2005 AGAINST DEEMED REFUSAL",
+      demandsText: "1. The designated Public Information Officer (PIO) failed to furnish any response within the mandatory 30-day statutory period stipulated under Section 7(1) of the RTI Act, 2005.\n2. In terms of Section 7(2) of the Act, the non-furnishing of information constitutes a Deemed Refusal without lawful justification.\n3. Under Section 7(6) of the RTI Act 2005, the Appellant is legally entitled to receive all requested certified information completely FREE OF COST.\n4. The defaulting PIO has incurred personal statutory penalty liability under Section 20(1) as held in Manohar v. State of Maharashtra AIR 2013 SC 681.",
+      penaltyClause: "Statutory Reference: Section 19(1) read with Section 20(1) and Section 20(2) of the Right to Information Act, 2005.",
+      reliefDemanded: "Order the PIO to immediately supply all requested certified records FREE OF CHARGE within 7 days, and recommend disciplinary action under Section 20(2).",
+      feeParticulars: "No fee is payable for First Appeal under the RTI Rules 2012 / relevant State RTI Rules."
+    },
+    hi: {
+      subjectLine: "सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत प्रथम अपीलीय प्राधिकारी के समक्ष अपील का ज्ञापन (डीम्ड रिफ्यूजल के विरुद्ध)",
+      demandsText: "1. सक्षम जन सूचना अधिकारी द्वारा धारा 7(1) के अंतर्गत विहित 30-दिवसीय अनिवार्य विधिक समयसीमा बीत जाने पर भी कोई सूचना उपलब्ध नहीं कराई गई।\n2. अधिनियम की धारा 7(2) के अनुसार निर्धारित समय में सूचना न दिया जाना आवेदन को स्वतः अस्वीकृत (Deemed Refusal) माना जाना स्थापित करता है।\n3. धारा 7(6) के अनुसार निर्धारित 30 दिन बीत जाने के उपरांत अपीलार्थी बिना किसी अतिरिक्त प्रलेखन शुल्क के समस्त वांछित प्रमाणित सूचनाएं निःशुल्क (FREE OF COST) प्राप्त करने का हकदार है।\n4. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार दोषी जन सूचना अधिकारी पर धारा 20(1) के तहत ₹250 प्रतिदिन की दर से व्यक्तिगत जुर्माना अधिरोपित किया जाना चाहिए।",
+      penaltyClause: "सांविधिक संदर्भ: सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) सपठित धारा 20(1) एवं धारा 20(2)।",
+      reliefDemanded: "जन सूचना अधिकारी को आदेशित किया जाए कि वह धारा 7(6) के तहत समस्त वांछित सूचनाएं 7 दिनों में निःशुल्क प्रदान करें एवं धारा 20(1) के तहत दंडात्मक कार्यवाही संस्तुत की जाए।",
+      feeParticulars: "आरटीआई नियमावली के अंतर्गत प्रथम अपीलीय प्राधिकारी के समक्ष अपील हेतु कोई शुल्क देय नहीं है।"
+    }
+  },
+  notice: {
+    en: {
+      subjectLine: "STATUTORY LEGAL NOTICE UNDER SECTION 80 CPC READ WITH SECTION 20 RTI ACT FOR ADMINISTRATIVE WILLFUL DEFAULT",
+      demandsText: "1. The Noticee public authority has failed to perform its statutory obligations and redress legitimate grievances within the stipulated Citizen Charter timelines.\n2. Official requests and statutory RTI applications have been deliberately obstructed, causing severe legal prejudice, mental agony, and civil detriment to the Complainant.\n3. The deliberate failure and suppression of public records attracts penal liability under Sections 166/409 of IPC and Sections 198/316(5) of Bharatiya Nyaya Sanhita 2023.\n4. Noticee is put on formal notice that continued administrative non-feasance constitutes actionable civil and statutory default.",
+      penaltyClause: "Notice under Section 80 CPC: Comply within 15 days, failing which legal proceedings under Article 226 / Civil Suit / Section 20 RTI Act shall be instituted without further reference.",
+      reliefDemanded: "Immediate rectification of the administrative grievance, supply of pending records, and disbursement of legitimate dues with compensatory damages.",
+      feeParticulars: "Statutory Legal Demand Notice served through Registered A.D. / Speed Post."
+    },
+    hi: {
+      subjectLine: "सिविल प्रक्रिया संहिता, 1908 की धारा 80 सहपठित आरटीआई अधिनियम की धारा 20 के अंतर्गत विधिक मांग नोटिस",
+      demandsText: "1. नोटिस प्राप्तकर्ता जन प्राधिकरण द्वारा नागरिक अधिकार पत्र एवं सांविधिक नियमों के अंतर्गत निर्धारित समयसीमा में अपने विधिक कर्तव्यों का निर्वहन नहीं किया गया है।\n2. प्रार्थी द्वारा प्रस्तुत विधिक आवेदनों की जानबूझकर उपेक्षा की गई है जिससे प्रार्थी को गंभीर मानसिक प्रताड़ना, आर्थिक क्षति एवं वैधानिक अधिकारों का हनन हुआ है।\n3. यह विधिक विफलता भारतीय दंड संहिता की धारा 166/409 एवं भारतीय न्याय संहिता 2023 की धारा 198/316(5) के तहत दंडनीय लोक सेवक दुराचार है।\n4. उच्चतम न्यायालय के निर्णय मनोहर बनाम महाराष्ट्र राज्य (AIR 2013 SC 681) के अनुसार समयसीमा उल्लंघन एवं लापरवाही पर संबंधित अधिकारी व्यक्तिगत रूप से उत्तरदायी हैं।",
+      penaltyClause: "धारा 80 सीपीसी विधिक चेतावनी: इस नोटिस की प्राप्ति के 15 दिनों के भीतर विधिक अनुपालन सुनिश्चित करें, अन्यथा उच्च न्यायालय में अनुच्छेद 226 के तहत रिट याचिका एवं सक्षम न्यायालय में विधिक वाद दायर किया जाएगा।",
+      reliefDemanded: "लंबित जन समस्या का 15 दिनों में वैधानिक निस्तारण, समस्त वांछित अभिलेखों का प्रदाय एवं हुई क्षति हेतु उचित प्रतिकर प्रदान किया जाए।",
+      feeParticulars: "पंजीकृत डाक / स्पीड पोस्ट पावती सहित प्रेषित औपचारिक वैधानिक नोटिस।"
+    }
+  }
+};
+
 function initStudioDocumentGenerator() {
   const dateInput = document.getElementById("stDocDate");
   if (dateInput && !dateInput.value) {
@@ -1907,8 +2483,23 @@ function setStudioDocType(docType) {
     else if (docType === "notice") secSelect.value = "cpc_sec80";
   }
 
+  const langKey = (currentLang === "hi") ? "hi" : "en";
+  if (STUDIO_DOC_TEMPLATES && STUDIO_DOC_TEMPLATES[docType] && STUDIO_DOC_TEMPLATES[docType][langKey]) {
+    const tpl = STUDIO_DOC_TEMPLATES[docType][langKey];
+    const subjEl = document.getElementById("stSubjectLine");
+    const demEl = document.getElementById("stDemandsText");
+    const penEl = document.getElementById("stPenaltyClause");
+    const relEl = document.getElementById("stReliefDemanded");
+    const feeEl = document.getElementById("stFeeParticulars");
+    if (subjEl) subjEl.value = tpl.subjectLine;
+    if (demEl) demEl.value = tpl.demandsText;
+    if (penEl) penEl.value = tpl.penaltyClause;
+    if (relEl) relEl.value = tpl.reliefDemanded;
+    if (feeEl) feeEl.value = tpl.feeParticulars;
+  }
+
   updateStudioLivePreview();
-  renderLucide();
+  if (typeof renderLucide === "function") renderLucide();
 }
 
 function loadStudioPreset(presetId) {
@@ -1925,7 +2516,7 @@ function loadStudioPreset(presetId) {
   if (activeBtn) activeBtn.classList.add("active");
 
   const langKey = (currentLang === "hi") ? "hi" : "en";
-  const data = STUDIO_PRESETS[presetId]?.[langKey] || STUDIO_PRESETS[presetId]?.["en"];
+  const data = (STUDIO_PRESETS[presetId] && STUDIO_PRESETS[presetId][langKey]) || (STUDIO_PRESETS[presetId] && (STUDIO_PRESETS[presetId]["en"] || STUDIO_PRESETS[presetId]["hi"]));
   if (!data) return;
 
   const setVal = (id, val) => {
@@ -1959,14 +2550,19 @@ function updateStudioLivePreview() {
   const previewBox = document.getElementById("studioLivePreviewDoc");
   if (!previewBox) return;
 
-  const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
+  const getVal = (id) => {
+    const el = document.getElementById(id);
+    return (el && el.value ? el.value.trim() : "");
+  };
 
-  const applicantName = getVal("stApplicantName") || (currentLang === "hi" ? "श्री शिवंशु पांडेय" : "Shivanshu Pandey");
+  const isHi = (currentLang === "hi");
+
+  const applicantName = getVal("stApplicantName") || (isHi ? "श्री शिवंशु पांडेय" : "Shivanshu Pandey");
   const applicantContact = getVal("stApplicantContact") || "+91 99887 76655";
-  const applicantAddress = getVal("stApplicantAddress") || (currentLang === "hi" ? "सिविल लाइन्स, उत्तरी दिल्ली - 110054" : "Civil Lines, North Delhi - 110054");
-  const authorityName = getVal("stAuthorityName") || (currentLang === "hi" ? "उत्तर रेलवे" : "Northern Railway");
-  const pioDesignation = getVal("stPioDesignation") || (currentLang === "hi" ? "जन सूचना अधिकारी" : "Public Information Officer");
-  const authorityAddress = getVal("stAuthorityAddress") || (currentLang === "hi" ? "बड़ौदा हाउस, नई दिल्ली" : "Baroda House, New Delhi");
+  const applicantAddress = getVal("stApplicantAddress") || (isHi ? "सिविल लाइन्स, उत्तरी दिल्ली - 110054" : "Civil Lines, North Delhi - 110054");
+  const authorityName = getVal("stAuthorityName") || (isHi ? "उत्तर रेलवे" : "Northern Railway");
+  const pioDesignation = getVal("stPioDesignation") || (isHi ? "जन सूचना अधिकारी" : "Public Information Officer");
+  const authorityAddress = getVal("stAuthorityAddress") || (isHi ? "बड़ौदा हाउस, नई दिल्ली" : "Baroda House, New Delhi");
   const docketRef = getVal("stDocketRef") || "ARZI-2024-DOC-8942";
   const docDate = getVal("stDocDate") || new Date().toISOString().split("T")[0];
   const subjectLine = getVal("stSubjectLine") || "";
@@ -1975,7 +2571,6 @@ function updateStudioLivePreview() {
   const reliefDemanded = getVal("stReliefDemanded") || "";
   const feeParticulars = getVal("stFeeParticulars") || "";
   const signatoryName = getVal("stSignatoryName") || applicantName;
-  const isVerified = document.getElementById("stVerifyCheck")?.checked !== false;
 
   // Split demands by newlines into clean numbered list
   const lines = demandsRaw.split("\n").map(l => l.trim()).filter(l => l.length > 0);
@@ -1988,7 +2583,7 @@ function updateStudioLivePreview() {
       }).join("") +
       `</ol>`;
   } else {
-    demandsHtml = `<p style="font-style: italic; color: #718096;">${currentLang === "hi" ? "(कोई विशिष्ट बिंदु दर्ज नहीं किया गया)" : "(No itemized questions entered)"}</p>`;
+    demandsHtml = `<p style="font-style: italic; color: #718096;">${isHi ? "(कोई विशिष्ट बिंदु दर्ज नहीं किया गया)" : "(No specific points entered)"}</p>`;
   }
 
   let docHeaderTitle = "";
@@ -1996,186 +2591,112 @@ function updateStudioLivePreview() {
   let salutation = "";
   let preamble = "";
 
-  if (currentLang === "hi") {
-    if (currentStudioDocType === "form") {
-      docHeaderTitle = "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत आवेदन पत्र (फॉर्म-क)";
-      docSubtitle = "सत्यमेव जयते • भारत सरकार एवं राज्य जन प्राधिकरणों के लिए आधिकारिक विधिक प्रारूप";
-      salutation = "महोदय / महोदया,";
-      preamble = "सविनय निवेदन है कि मैं भारत का नागरिक हूँ तथा सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत प्रदत्त मौलिक अधिकारों के अधीन आपसे निम्नलिखित विशिष्ट सूचना एवं अभिलेखों की प्रमाणित प्रतियां उपलब्ध कराने का अनुरोध करता हूँ:";
-    } else if (currentStudioDocType === "appeal") {
-      docHeaderTitle = "सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत प्रथम अपील का ज्ञापन";
-      docSubtitle = "प्रथम अपीलीय प्राधिकारी (FAA) के समक्ष सांविधिक प्रथम अपील";
-      salutation = "मान्यवर प्रथम अपीलीय प्राधिकारी महोदय,";
-      preamble = "सविनय निवेदन है कि अपीलार्थी द्वारा जन सूचना अधिकारी के समक्ष विहित आवेदन प्रस्तुत किया गया था, किन्तु निर्धारित 30 दिनों की वैधानिक अवधि बीत जाने पर भी सूचना उपलब्ध न कराए जाने (डीम्ड रिफ्यूजल) अथवा असंतोषजनक उत्तर से क्षुब्ध होकर यह प्रथम अपील निम्नलिखित आधारों पर प्रस्तुत की जा रही है:";
-    } else {
-      docHeaderTitle = "सिविल प्रक्रिया संहिता, 1908 की धारा 80 के अंतर्गत वैधानिक कानूनी मांग नोटिस";
-      docSubtitle = "सार्वजनिक अधिकारी / सरकार के विरुद्ध वाद दायर करने से पूर्व दो माह का अनिवार्य विधिक नोटिस";
-      salutation = "महोदय,";
-      preamble = "एतद्द्वारा मेरे मुवक्किल / प्रार्थी के विधिक अनुदेशों के अधीन आपको सूचित किया जाता है कि आपके विभाग के निम्नलिखित कृत्य एवं विधिक अधिकारों के हनन के संबंध में यह औपचारिक नोटिस प्रेषित किया जा रहा है:";
-    }
-
-    previewBox.innerHTML = `
-      <div class="parchment-header">
-        <div class="parchment-emblem">⚖️</div>
-        <div class="parchment-title">${docHeaderTitle}</div>
-        <div class="parchment-subtitle">${docSubtitle}</div>
-      </div>
-
-      <div class="parchment-meta-row">
-        <span><strong>संदर्भ / केस सं.:</strong> ${docketRef}</span>
-        <span><strong>दिनांक:</strong> ${docDate}</span>
-      </div>
-
-      <div class="parchment-block">
-        <div class="parchment-label">सेवा में,</div>
-        <div style="margin-left: 12px; margin-top: 2px;">
-          <strong>${pioDesignation}</strong><br/>
-          ${authorityName}<br/>
-          ${authorityAddress}
-        </div>
-      </div>
-
-      <div class="parchment-block">
-        <div class="parchment-label">आवेदक / अपीलार्थी विवरण:</div>
-        <div style="margin-left: 12px; margin-top: 2px;">
-          <strong>${applicantName}</strong><br/>
-          पता: ${applicantAddress}<br/>
-          संपर्क दूरभाष: ${applicantContact}
-        </div>
-      </div>
-
-      <div class="parchment-subject">
-        विषय: ${subjectLine}
-      </div>
-
-      <div class="parchment-block">
-        <p style="margin: 6px 0 8px 0;"><strong>${salutation}</strong></p>
-        <p style="margin: 0 0 8px 0; text-align: justify;">${preamble}</p>
-        ${demandsHtml}
-      </div>
-
-      ${penaltyClause ? `
-      <div class="parchment-penalty-alert">
-        <strong>⚠️ सांविधिक चेतावनी क्लॉज (धारा 20):</strong> ${penaltyClause}
-      </div>` : ""}
-
-      <div class="parchment-block">
-        <strong>मांगी गई राहत / प्रार्थना:</strong>
-        <p style="margin: 4px 0 8px 12px;">${reliefDemanded}</p>
-      </div>
-
-      <div class="parchment-block">
-        <strong>आवेदन शुल्क का विवरण:</strong>
-        <p style="margin: 4px 0 8px 12px;">${feeParticulars}</p>
-      </div>
-
-      <div class="parchment-block" style="font-size: 11px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-left: 3px solid #718096;">
-        <strong>सत्यापन:</strong> मैं एतद्द्वारा सत्यापित करता/करती हूँ कि ऊपर वर्णित समस्त विवरण एवं तथ्य मेरे निजी ज्ञान एवं आधिकारिक अभिलेखों के अनुसार पूर्णतः सत्य एवं सही हैं।
-      </div>
-
-      <div class="parchment-sign-box">
-        <div>
-          <span style="font-size: 10.5px; color: #4A5568;">स्थान: नई दिल्ली / क्षेत्राधिकार</span><br/>
-          <span style="font-size: 10.5px; color: #4A5568;">दिनांक: ${docDate}</span>
-        </div>
-        <div class="parchment-sign-line">
-          <div style="font-family: monospace; font-size: 11px; color: #1E3A8A; margin-bottom: 3px;">[हस्ताक्षरित / प्रेषित]</div>
-          <strong>${signatoryName}</strong><br/>
-          <span style="font-size: 10px; color: #4A5568;">(हस्ताक्षरकर्ता / अधिकृत विधिक प्रेषक)</span>
-        </div>
-      </div>
-    `;
+  if (currentStudioDocType === "form") {
+    docHeaderTitle = isHi
+      ? "सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के अंतर्गत आवेदन पत्र (फॉर्म-क)"
+      : "APPLICATION FORM UNDER SECTION 6(1) OF THE RTI ACT, 2005 (FORM-A)";
+    docSubtitle = isHi
+      ? "सत्यमेव जयते • भारत सरकार एवं राज्य जन प्राधिकरणों के लिए आधिकारिक विधिक प्रारूप"
+      : "SATYAMEVA JAYATE • Official Statutory Format for Central & State Public Authorities";
+    salutation = isHi ? "महोदय / महोदया," : "Respected Sir / Madam,";
+    preamble = isHi
+      ? "सविनय निवेदन है कि मैं भारत का नागरिक हूँ तथा सूचना का अधिकार अधिनियम, 2005 की धारा 6(1) के तहत प्रदत्त मौलिक अधिकारों के अधीन आपसे निम्नलिखित विशिष्ट सूचना एवं अभिलेखों की प्रमाणित प्रतियां उपलब्ध कराने का अनुरोध करता हूँ:"
+      : "I am a citizen of India and hereby request certified copies of public records and official information under the provisions of Section 6(1) of the Right to Information Act, 2005 as detailed below:";
+  } else if (currentStudioDocType === "appeal") {
+    docHeaderTitle = isHi
+      ? "सूचना का अधिकार अधिनियम, 2005 की धारा 19(1) के अंतर्गत प्रथम अपील का ज्ञापन"
+      : "MEMORANDUM OF FIRST APPEAL UNDER SECTION 19(1) OF THE RTI ACT, 2005";
+    docSubtitle = isHi
+      ? "प्रथम अपीलीय प्राधिकारी (FAA) के समक्ष सांविधिक प्रथम अपील"
+      : "Statutory First Appeal before the First Appellate Authority (FAA)";
+    salutation = isHi ? "मान्यवर प्रथम अपीलीय प्राधिकारी महोदय," : "Respected First Appellate Authority,";
+    preamble = isHi
+      ? "सविनय निवेदन है कि अपीलार्थी द्वारा जन सूचना अधिकारी के समक्ष विहित आवेदन प्रस्तुत किया गया था, किन्तु निर्धारित 30 दिनों की वैधानिक अवधि बीत जाने पर भी सूचना उपलब्ध न कराए जाने (डीम्ड रिफ्यूजल) अथवा असंतोषजनक उत्तर से क्षुब्ध होकर यह प्रथम अपील निम्नलिखित आधारों पर प्रस्तुत की जा रही है:"
+      : "Aggrieved by the deemed refusal / non-supply of certified information within the mandatory statutory period under Section 7(1) of the RTI Act, 2005, the Appellant prefers this First Appeal under Section 19(1) on the following grounds:";
   } else {
-    // English Rendering
-    if (currentStudioDocType === "form") {
-      docHeaderTitle = "APPLICATION UNDER SECTION 6(1) OF THE RIGHT TO INFORMATION ACT, 2005 (FORM-A)";
-      docSubtitle = "Institutional Legal Operations Desk • Statutory Civic Redressal";
-      salutation = "Sir / Madam,";
-      preamble = "I, the undersigned citizen of India, hereby request you to provide certified copies of official records and information under Section 6(1) of the Right to Information Act, 2005 as itemized below:";
-    } else if (currentStudioDocType === "appeal") {
-      docHeaderTitle = "MEMORANDUM OF FIRST STATUTORY APPEAL UNDER SECTION 19(1) OF RTI ACT, 2005";
-      docSubtitle = "Before the First Appellate Authority (FAA) against Non-Disposal / Deemed Refusal";
-      salutation = "Respected Appellate Authority,";
-      preamble = "Being deeply aggrieved by the non-disposal and deemed refusal of the original application within the mandatory 30-day timeline by the Public Information Officer, this First Appeal is preferred on the following statutory grounds:";
-    } else {
-      docHeaderTitle = "STATUTORY LEGAL DEMAND NOTICE UNDER SECTION 80 OF CODE OF CIVIL PROCEDURE, 1908";
-      docSubtitle = "Mandatory 60-Day Notice Prior to Institution of Civil Action Against Public Officer";
-      salutation = "Sir / Madam,";
-      preamble = "TAKE NOTICE that under instructions from my client, I hereby serve upon you this statutory notice under Section 80 CPC regarding the infringement of rights and damages detailed below:";
-    }
-
-    previewBox.innerHTML = `
-      <div class="parchment-header">
-        <div class="parchment-emblem">⚖️</div>
-        <div class="parchment-title">${docHeaderTitle}</div>
-        <div class="parchment-subtitle">${docSubtitle}</div>
-      </div>
-
-      <div class="parchment-meta-row">
-        <span><strong>Docket Ref:</strong> ${docketRef}</span>
-        <span><strong>Date:</strong> ${docDate}</span>
-      </div>
-
-      <div class="parchment-block">
-        <div class="parchment-label">To,</div>
-        <div style="margin-left: 12px; margin-top: 2px;">
-          <strong>${pioDesignation}</strong><br/>
-          ${authorityName}<br/>
-          ${authorityAddress}
-        </div>
-      </div>
-
-      <div class="parchment-block">
-        <div class="parchment-label">Applicant / Complainant Particulars:</div>
-        <div style="margin-left: 12px; margin-top: 2px;">
-          <strong>${applicantName}</strong><br/>
-          Postal Address: ${applicantAddress}<br/>
-          Contact Tel: ${applicantContact}
-        </div>
-      </div>
-
-      <div class="parchment-subject">
-        Subject: ${subjectLine}
-      </div>
-
-      <div class="parchment-block">
-        <p style="margin: 6px 0 8px 0;"><strong>${salutation}</strong></p>
-        <p style="margin: 0 0 8px 0; text-align: justify;">${preamble}</p>
-        ${demandsHtml}
-      </div>
-
-      ${penaltyClause ? `
-      <div class="parchment-penalty-alert">
-        <strong>⚠️ Statutory Penalty Notice (Section 20):</strong> ${penaltyClause}
-      </div>` : ""}
-
-      <div class="parchment-block">
-        <strong>Relief / Remedy Demanded:</strong>
-        <p style="margin: 4px 0 8px 12px;">${reliefDemanded}</p>
-      </div>
-
-      <div class="parchment-block">
-        <strong>Statutory Fee Particulars:</strong>
-        <p style="margin: 4px 0 8px 12px;">${feeParticulars}</p>
-      </div>
-
-      <div class="parchment-block" style="font-size: 11px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-left: 3px solid #718096;">
-        <strong>Verification Declaration:</strong> I hereby declare that the particulars stated above are true and correct to the best of my knowledge, information, and official belief.
-      </div>
-
-      <div class="parchment-sign-box">
-        <div>
-          <span style="font-size: 10.5px; color: #4A5568;">Place: New Delhi / Jurisdiction</span><br/>
-          <span style="font-size: 10.5px; color: #4A5568;">Date: ${docDate}</span>
-        </div>
-        <div class="parchment-sign-line">
-          <div style="font-family: monospace; font-size: 11px; color: #1E3A8A; margin-bottom: 3px;">[Signed / Executed]</div>
-          <strong>${signatoryName}</strong><br/>
-          <span style="font-size: 10px; color: #4A5568;">(Signatory / Legal Counsel)</span>
-        </div>
-      </div>
-    `;
+    docHeaderTitle = isHi
+      ? "सिविल प्रक्रिया संहिता, 1908 की धारा 80 के अंतर्गत वैधानिक कानूनी मांग नोटिस"
+      : "STATUTORY LEGAL NOTICE UNDER SECTION 80 OF THE CODE OF CIVIL PROCEDURE, 1908";
+    docSubtitle = isHi
+      ? "सार्वजनिक अधिकारी / सरकार के विरुद्ध वाद दायर करने से पूर्व दो माह का अनिवार्य विधिक नोटिस"
+      : "Mandatory Two-Month Statutory Legal Notice Prior to Institution of Suit Against Public Authority";
+    salutation = isHi ? "महोदय," : "Sir / Madam,";
+    preamble = isHi
+      ? "एतद्द्वारा मेरे मुवक्किल / प्रार्थी के विधिक अनुदेशों के अधीन आपको सूचित किया जाता है कि आपके विभाग के निम्नलिखित कृत्य एवं विधिक अधिकारों के हनन के संबंध में यह औपचारिक नोटिस प्रेषित किया जा रहा है:"
+      : "Under instructions from and on behalf of our client, notice is hereby served upon you regarding gross administrative dereliction, violation of statutory rights, and failure to discharge statutory obligations:";
   }
+
+  previewBox.innerHTML = `
+    <div class="parchment-header">
+      <div class="parchment-emblem">⚖️</div>
+      <div class="parchment-title">${docHeaderTitle}</div>
+      <div class="parchment-subtitle">${docSubtitle}</div>
+    </div>
+
+    <div class="parchment-meta-row">
+      <span><strong>${isHi ? "संदर्भ / केस सं.:" : "Reference / Docket No.:"}</strong> ${docketRef}</span>
+      <span><strong>${isHi ? "दिनांक:" : "Date:"}</strong> ${docDate}</span>
+    </div>
+
+    <div class="parchment-block">
+      <div class="parchment-label">${isHi ? "सेवा में," : "To,"}</div>
+      <div style="margin-left: 12px; margin-top: 2px;">
+        <strong>${pioDesignation}</strong><br/>
+        ${authorityName}<br/>
+        ${authorityAddress}
+      </div>
+    </div>
+
+    <div class="parchment-block">
+      <div class="parchment-label">${isHi ? "आवेदक / अपीलार्थी विवरण:" : "Applicant / Appellant Details:"}</div>
+      <div style="margin-left: 12px; margin-top: 2px;">
+        <strong>${applicantName}</strong><br/>
+        ${isHi ? "पता:" : "Address:"} ${applicantAddress}<br/>
+        ${isHi ? "संपर्क दूरभाष:" : "Contact No.:"} ${applicantContact}
+      </div>
+    </div>
+
+    <div class="parchment-subject">
+      ${isHi ? "विषय:" : "Subject:"} ${subjectLine}
+    </div>
+
+    <div class="parchment-block">
+      <p style="margin: 6px 0 8px 0;"><strong>${salutation}</strong></p>
+      <p style="margin: 0 0 8px 0; text-align: justify;">${preamble}</p>
+      ${demandsHtml}
+    </div>
+
+    ${penaltyClause ? `
+    <div class="parchment-penalty-alert">
+      <strong>⚠️ ${isHi ? "सांविधिक चेतावनी क्लॉज (धारा 20):" : "STATUTORY WARNING CLAUSE (SECTION 20):"}</strong> ${penaltyClause}
+    </div>` : ""}
+
+    <div class="parchment-block">
+      <strong>${isHi ? "मांगी गई राहत / प्रार्थना:" : "Prayers / Relief Demanded:"}</strong>
+      <p style="margin: 4px 0 8px 12px;">${reliefDemanded}</p>
+    </div>
+
+    <div class="parchment-block">
+      <strong>${isHi ? "आवेदन शुल्क का विवरण:" : "Application Fee Particulars:"}</strong>
+      <p style="margin: 4px 0 8px 12px;">${feeParticulars}</p>
+    </div>
+
+    <div class="parchment-block" style="font-size: 11px; background: rgba(0,0,0,0.02); padding: 8px 10px; border-left: 3px solid #718096;">
+      <strong>${isHi ? "सत्यापन:" : "Verification:"}</strong> ${isHi ? "मैं एतद्द्वारा सत्यापित करता/करती हूँ कि ऊपर वर्णित समस्त विवरण एवं तथ्य मेरे निजी ज्ञान एवं आधिकारिक अभिलेखों के अनुसार पूर्णतः सत्य एवं सही हैं।" : "I hereby verify that the facts and particulars stated above are true and correct to the best of my knowledge and official records."}
+    </div>
+
+    <div class="parchment-sign-box">
+      <div>
+        <span style="font-size: 10.5px; color: #4A5568;">${isHi ? "स्थान: नई दिल्ली / क्षेत्राधिकार" : "Place: New Delhi / Jurisdiction"}</span><br/>
+        <span style="font-size: 10.5px; color: #4A5568;">${isHi ? "दिनांक:" : "Date:"} ${docDate}</span>
+      </div>
+      <div class="parchment-sign-line">
+        <div style="font-family: monospace; font-size: 11px; color: #1E3A8A; margin-bottom: 3px;">[${isHi ? "हस्ताक्षरित / प्रेषित" : "SIGNED / TRANSMITTED"}]</div>
+        <strong>${signatoryName}</strong><br/>
+        <span style="font-size: 10px; color: #4A5568;">(${isHi ? "हस्ताक्षरकर्ता / अधिकृत विधिक प्रेषक" : "Signatory / Authorized Sender"})</span>
+      </div>
+    </div>
+  `;
 }
 
 function copyStudioDocText() {
@@ -2199,7 +2720,7 @@ function downloadStudioDocPdf() {
 }
 
 function saveStudioDocToQueue() {
-  const getVal = (id) => document.getElementById(id)?.value?.trim() || "";
+  const getVal = (id) => (document.getElementById(id) && document.getElementById(id).value ? document.getElementById(id).value.trim() : "");
   const applicantName = getVal("stApplicantName") || "Shivanshu Pandey";
   const applicantContact = getVal("stApplicantContact") || "+91 99887 76655";
   const applicantAddress = getVal("stApplicantAddress") || "Delhi";
@@ -2219,7 +2740,7 @@ function saveStudioDocToQueue() {
     department: authorityName,
     public_authority: authorityName,
     infraction: subjectLine,
-    statutory_section: document.getElementById("stLegalSection")?.value || "RTI Act 2005 - Section 6(1)",
+    statutory_section: (document.getElementById("stLegalSection") ? document.getElementById("stLegalSection").value : "") || "RTI Act 2005 - Section 6(1)",
     urgency_level: "STANDARD",
     status: "DRAFT_READY",
     intake_timestamp: new Date().toISOString(),
@@ -2521,7 +3042,7 @@ async function handlePincodeInput(val) {
               <b style="color: var(--gov-navy);">✓ Verified Administrative Jurisdiction:</b>
               <span style="font-weight: 600; color: var(--ink-primary);">${data.district}, ${data.state} (${data.block || 'Taluk/Block'})</span>
             </div>
-            <span style="font-size: 10px; color: var(--status-active); font-weight: 700;">Center: ${data.latitude?.toFixed(4)}, ${data.longitude?.toFixed(4)}</span>
+            <span style="font-size: 10px; color: var(--status-active); font-weight: 700;">Center: ${data.latitude ? data.latitude.toFixed(4) : ""}, ${data.longitude ? data.longitude.toFixed(4) : ""}</span>
           </div>
           <div style="margin-top: 3px; color: var(--ink-secondary); font-size: 10.5px;">
             <b>Designated PIO:</b> ${pio.pio_name || 'Tahsildar / Nodal Officer'} &bull; <i>${pio.designation || 'PIO'}</i>
@@ -2908,8 +3429,8 @@ async function loadCaseQueue() {
       const distLabel = pio.distance_label || (c.geospatial_meta ? c.geospatial_meta.distance_label : "1.5 km away");
 
       const displayStatus = tStatus(c.status);
-      const displayComplainant = tComplainant(c.complainant?.name);
-      const displayAddress = tAddress(c.complainant?.address);
+      const displayComplainant = tComplainant(c.complainant && c.complainant.name);
+      const displayAddress = tAddress(c.complainant && c.complainant.address);
       const displayDept = tDept(c.department);
       const displayInfraction = tInfraction(legal.statutory_infraction);
       const displayBns = tSection(bnsBrief);
@@ -2969,7 +3490,7 @@ function populateWorkspaceFields(c) {
     statusEl.className = `status-pill ${c.status === 'APPROVED' ? 'approved' : (c.status === 'TRANSFERRED_SEC_6_3' ? 'transferred' : (c.status === 'MERGED_DUPLICATE' ? 'neutral' : 'under-review'))}`;
   }
 
-  document.getElementById("viewComplainant").textContent = tComplainant(c.complainant?.name);
+  document.getElementById("viewComplainant").textContent = tComplainant(c.complainant && c.complainant.name);
   document.getElementById("viewRawGrievance").textContent = `"${tGrievance(c.case_id, c.raw_grievance)}"`;
 
   // Pan-India Jurisdiction & State Land Codex Banner
@@ -3092,9 +3613,9 @@ function populateWorkspaceFields(c) {
   });
 
   // Draft RTI Inputs
-  document.getElementById("editDraftSubject").value = tDraftSubject(c.case_id, c.draft_rti?.application_subject);
-  document.getElementById("editDraftQuestions").value = tDraftQuestions(c.case_id, c.draft_rti?.questions).join("\n\n");
-  document.getElementById("editDraftFees").value = tDraftFees(c.case_id, c.draft_rti?.fees_paid);
+  document.getElementById("editDraftSubject").value = tDraftSubject(c.case_id, c.draft_rti && c.draft_rti.application_subject);
+  document.getElementById("editDraftQuestions").value = tDraftQuestions(c.case_id, c.draft_rti && c.draft_rti.questions).join("\n\n");
+  document.getElementById("editDraftFees").value = tDraftFees(c.case_id, c.draft_rti && c.draft_rti.fees_paid);
 
   // First Appeal Panel
   const appeal = c.first_appeal_draft || {};
@@ -3234,7 +3755,7 @@ async function submitTransferSec6_3() {
 
     const data = await res.json();
     if (res.ok) {
-      alert(`Section 6(3) 5-Day Mandatory Transfer Executed!\n\n• Transferred to: ${targetDept}\n• Transferee PIO: ${data.case.suggested_pio?.pio_name}\n• Transfer ID: ${data.case.section_6_3_transfer?.transfer_id}`);
+      alert(`Section 6(3) 5-Day Mandatory Transfer Executed!\n\n• Transferred to: ${targetDept}\n• Transferee PIO: ${data.case.suggested_pio && data.case.suggested_pio.pio_name ? data.case.suggested_pio.pio_name : ""}\n• Transfer ID: ${data.case.section_6_3_transfer && data.case.section_6_3_transfer.transfer_id ? data.case.section_6_3_transfer.transfer_id : ""}`);
       closeTransferModal();
       openCaseWorkspace(data.case);
       loadRunLogs();
@@ -3273,7 +3794,7 @@ async function approveCurrentCase() {
 
     const data = await res.json();
     if (res.ok) {
-      alert(`Case ${currentCase.case_id} approved and dispatched!\n\n• Dispatch Tracking ID: ${data.case.dispatch_info?.tracking_id}\n• Status: APPROVED & DISPATCHED`);
+      alert(`Case ${currentCase.case_id} approved and dispatched!\n\n• Dispatch Tracking ID: ${data.case.dispatch_info && data.case.dispatch_info.tracking_id ? data.case.dispatch_info.tracking_id : ""}\n• Status: APPROVED & DISPATCHED`);
       openCaseWorkspace(data.case);
       loadRunLogs();
     } else {
@@ -3290,7 +3811,8 @@ function viewPdf(type = "rti") {
     alert("Please select a case first.");
     return;
   }
-  window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=${type}`, "_blank");
+  const langParam = (currentLang === "hi") ? "hi" : "en";
+  window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=${type}&lang=${langParam}`, "_blank");
 }
 
 // Immutable Run Logs & Multi-Field Search Cache
@@ -3407,16 +3929,16 @@ function handleRunLogSearch(rawQuery) {
 
   // 1. Search cases across: Complainant Name, Place/Address, Subject/Grievance/Department, Officer Name
   const matchedCases = allCasesCache.filter(c => {
-    const complainantName = (c.complainant?.name || "").toLowerCase();
-    const complainantAddr = (c.complainant?.address || "").toLowerCase();
-    const userLocality = (c.confidence?.user_locality || "").toLowerCase();
+    const complainantName = ((c.complainant && c.complainant.name) || "").toLowerCase();
+    const complainantAddr = ((c.complainant && c.complainant.address) || "").toLowerCase();
+    const userLocality = ((c.confidence && c.confidence.user_locality) || "").toLowerCase();
     const department = (c.department || c.category || "").toLowerCase();
     const rawGrievance = (c.raw_grievance || "").toLowerCase();
-    const draftSubject = (c.draft_rti?.application_subject || "").toLowerCase();
+    const draftSubject = ((c.draft_rti && c.draft_rti.application_subject) || "").toLowerCase();
     const refNo = (c.application_ref_no || "").toLowerCase();
-    const pioName = (c.suggested_pio?.pio_name || "").toLowerCase();
-    const pioAddr = (c.suggested_pio?.office_address || "").toLowerCase();
-    const pioDesig = (c.suggested_pio?.designation || "").toLowerCase();
+    const pioName = ((c.suggested_pio && c.suggested_pio.pio_name) || "").toLowerCase();
+    const pioAddr = ((c.suggested_pio && c.suggested_pio.office_address) || "").toLowerCase();
+    const pioDesig = ((c.suggested_pio && c.suggested_pio.designation) || "").toLowerCase();
     const caseId = (c.case_id || "").toLowerCase();
 
     const fullSearchText = `${caseId} ${complainantName} ${complainantAddr} ${userLocality} ${department} ${rawGrievance} ${draftSubject} ${refNo} ${pioName} ${pioAddr} ${pioDesig}`;
@@ -3444,14 +3966,14 @@ function handleRunLogSearch(rawQuery) {
       matchedCasesContainer.innerHTML = matchedCases.map(c => {
         const pio = c.suggested_pio || {};
         const pioOfficer = pio.pio_name ? `${tOfficer(pio.pio_name)} (${pio.designation || (currentLang === 'hi' ? 'जन सूचना अधिकारी' : 'PIO')})` : (currentLang === 'hi' ? 'पद लंबित' : 'Designation Pending');
-        const locality = c.confidence?.user_locality || (c.complainant?.address ? tAddress(c.complainant.address).split(',').slice(-2).join(',').trim() : (currentLang === 'hi' ? 'क्षेत्राधिकार आवंटित' : 'Jurisdiction Assigned'));
-        const subjectBrief = tDraftSubject(c.draft_rti?.application_subject) || tGrievance(c.raw_grievance) || (currentLang === 'hi' ? 'सार्वजनिक अभिलेख जांच' : 'Public Record Inquiry');
+        const locality = (c.confidence && c.confidence.user_locality) || (c.complainant && c.complainant.address ? tAddress(c.complainant.address).split(',').slice(-2).join(',').trim() : (currentLang === 'hi' ? 'क्षेत्राधिकार आवंटित' : 'Jurisdiction Assigned'));
+        const subjectBrief = tDraftSubject(c.draft_rti && c.draft_rti.application_subject) || tGrievance(c.raw_grievance) || (currentLang === 'hi' ? 'सार्वजनिक अभिलेख जांच' : 'Public Record Inquiry');
         const truncatedSubject = subjectBrief.length > 95 ? subjectBrief.substring(0, 92) + '...' : subjectBrief;
         const statusClass = c.status === 'APPROVED' ? 'approved' : (c.status === 'TRANSFERRED_SEC_6_3' ? 'neutral' : 'under-review');
         const statusLabel = tStatus(c.status);
-        const compName = tComplainant(c.complainant?.name) || (currentLang === 'hi' ? 'नागरिक आवेदक' : 'Anonymous Citizen');
+        const compName = tComplainant(c.complainant && c.complainant.name) || (currentLang === 'hi' ? 'नागरिक आवेदक' : 'Anonymous Citizen');
         const deptLabel = tDept(c.department || c.category) || (currentLang === 'hi' ? 'लोक प्राधिकरण' : 'Public Authority');
-        const addressLabel = pio.office_address ? tAddress(pio.office_address) : (c.complainant?.address ? tAddress(c.complainant.address) : (currentLang === 'hi' ? 'नामित प्रशासनिक परिसर' : 'Designated Administrative Complex'));
+        const addressLabel = pio.office_address ? tAddress(pio.office_address) : (c.complainant && c.complainant.address ? tAddress(c.complainant.address) : (currentLang === 'hi' ? 'नामित प्रशासनिक परिसर' : 'Designated Administrative Complex'));
 
         return `
           <div class="matched-case-card">
@@ -3461,7 +3983,7 @@ function handleRunLogSearch(rawQuery) {
                   <b style="font-family: var(--font-mono); color: var(--gov-navy); font-size: 12.5px;">${c.case_id}</b>
                   <span class="status-pill ${statusClass}" style="font-size: 9.5px;">${statusLabel}</span>
                 </div>
-                <span style="font-family: var(--font-mono); font-size: 10.5px; color: var(--gov-copper); font-weight: 700;">${currentLang === 'hi' ? 'समयसीमा' : 'SLA'}: ${c.sla_days_remaining ?? 14}${currentLang === 'hi' ? ' दिन' : 'd'}</span>
+                <span style="font-family: var(--font-mono); font-size: 10.5px; color: var(--gov-copper); font-weight: 700;">${currentLang === 'hi' ? 'समयसीमा' : 'SLA'}: ${c.sla_days_remaining !== undefined ? c.sla_days_remaining : 14}${currentLang === 'hi' ? ' दिन' : 'd'}</span>
               </div>
               
               <div style="font-size: 12px; font-weight: 700; color: var(--ink-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">
@@ -3590,7 +4112,7 @@ async function openCaseDetailView(caseId) {
     const compNameEl = document.getElementById("detailDocketComplainantName");
     if (compNameEl) compNameEl.textContent = tComplainant(caseData.complainant && caseData.complainant.name);
     const locEl = document.getElementById("detailDocketLocation");
-    if (locEl) locEl.textContent = caseData.district ? tAddress(`${caseData.district}, ${caseData.state || ''}`) : tAddress(caseData.confidence?.user_locality || "Local Jurisdiction");
+    if (locEl) locEl.textContent = caseData.district ? tAddress(`${caseData.district}, ${caseData.state || ''}`) : tAddress((caseData.confidence && caseData.confidence.user_locality) || "Local Jurisdiction");
     const pinEl = document.getElementById("detailPincodeBadge");
     if (pinEl) pinEl.textContent = `PIN: ${caseData.pincode || (caseData.complainant && caseData.complainant.pincode) || '—'}`;
 
@@ -3643,9 +4165,9 @@ async function openCaseDetailView(caseId) {
     const cName = document.getElementById("detailCompName");
     if (cName) cName.textContent = tComplainant(caseData.complainant && caseData.complainant.name);
     const cContact = document.getElementById("detailCompContact");
-    if (cContact) cContact.textContent = caseData.complainant?.contact || (currentLang === "hi" ? "संपर्क निर्दिष्ट नहीं" : "Contact not specified");
+    if (cContact) cContact.textContent = (caseData.complainant && caseData.complainant.contact) || (currentLang === "hi" ? "संपर्क निर्दिष्ट नहीं" : "Contact not specified");
     const cAddress = document.getElementById("detailCompAddress");
-    if (cAddress) cAddress.textContent = tAddress(caseData.complainant?.address || (currentLang === "hi" ? "पता उपलब्ध नहीं" : "Address not provided"));
+    if (cAddress) cAddress.textContent = tAddress((caseData.complainant && caseData.complainant.address) || (currentLang === "hi" ? "पता उपलब्ध नहीं" : "Address not provided"));
 
     const pio = caseData.suggested_pio || caseData.assigned_pio || {};
     const pioName = document.getElementById("detailPioName");
@@ -3662,7 +4184,7 @@ async function openCaseDetailView(caseId) {
     if (grievanceText) grievanceText.textContent = tGrievance(caseData.case_id, caseData.raw_grievance);
     const questionsList = document.getElementById("detailQuestionsList");
     if (questionsList) {
-      const qArr = tDraftQuestions(caseData.case_id, caseData.draft_rti?.questions) || [];
+      const qArr = tDraftQuestions(caseData.case_id, caseData.draft_rti && caseData.draft_rti.questions) || [];
       if (qArr.length > 0) {
         questionsList.innerHTML = qArr.map(q => `<li style="margin-bottom: 6px;">${q}</li>`).join("");
       } else {
@@ -3671,7 +4193,7 @@ async function openCaseDetailView(caseId) {
     }
 
     // 4. ML Domain Classification Intelligence
-    const mlConf = caseData.confidence?.overall || 95;
+    const mlConf = (caseData.confidence && caseData.confidence.overall) || 95;
     const mlConfBadge = document.getElementById("detailMlConfidenceBadge");
     if (mlConfBadge) {
       mlConfBadge.textContent = currentLang === "hi" ? `${mlConf}% एमएल सटीकता स्कोर` : `${mlConf}% ML Confidence`;
@@ -3680,17 +4202,17 @@ async function openCaseDetailView(caseId) {
     const domainTitle = document.getElementById("detailMlDomainTitle");
     if (domainTitle) domainTitle.textContent = tDept(caseData.department);
     const mlReason = document.getElementById("detailMlReason");
-    if (mlReason) mlReason.textContent = currentLang === "hi" ? "प्रामाणिक विधिक कीवर्ड ट्रिगर्स के साथ बहु-ग्राम टीएफ-आईडीएफ स्कोरिंग द्वारा वर्गीकृत।" : (caseData.confidence?.ml_prediction_reason || "Classified via multi-gram TF-IDF domain scoring with authentic statutory keyword triggers.");
+    if (mlReason) mlReason.textContent = currentLang === "hi" ? "प्रामाणिक विधिक कीवर्ड ट्रिगर्स के साथ बहु-ग्राम टीएफ-आईडीएफ स्कोरिंग द्वारा वर्गीकृत।" : ((caseData.confidence && caseData.confidence.ml_prediction_reason) || "Classified via multi-gram TF-IDF domain scoring with authentic statutory keyword triggers.");
 
     const triggersEl = document.getElementById("detailMlTriggers");
     if (triggersEl) {
-      const keywords = (caseData.statutory_legal_analysis?.matched_keywords || ["RTI 2005", caseData.department]).slice(0, 4);
+      const keywords = ((caseData.statutory_legal_analysis && caseData.statutory_legal_analysis.matched_keywords) || ["RTI 2005", caseData.department]).slice(0, 4);
       triggersEl.innerHTML = keywords.map(kw => `<span class="statutory-tag" style="font-size: 10px;">${kw}</span>`).join("");
     }
 
     const bnsMapping = document.getElementById("detailBnsMapping");
     if (bnsMapping) {
-      const primaryStatute = caseData.statutory_legal_analysis?.primary_bns_statute;
+      const primaryStatute = caseData.statutory_legal_analysis && caseData.statutory_legal_analysis.primary_bns_statute;
       if (primaryStatute) {
         const ipcStr = currentLang === "hi" ? tSection(primaryStatute.ipc_section) : primaryStatute.ipc_section;
         const bnsStr = currentLang === "hi" ? tSection(primaryStatute.bns_section) : primaryStatute.bns_section;
@@ -3702,7 +4224,7 @@ async function openCaseDetailView(caseId) {
 
     const penaltyEl = document.getElementById("detailSec20Penalty");
     if (penaltyEl) {
-      const pen = caseData.statutory_legal_analysis?.section_20_penalty_liability_inr || 0;
+      const pen = (caseData.statutory_legal_analysis && caseData.statutory_legal_analysis.section_20_penalty_liability_inr) || 0;
       penaltyEl.textContent = `₹${pen.toLocaleString('en-IN')}`;
     }
 
@@ -3753,7 +4275,7 @@ function populateMergeDuplicateSelect(currentCaseId) {
   candidates.forEach(c => {
     const opt = document.createElement("option");
     opt.value = c.case_id;
-    const name = tComplainant(c.complainant?.name || (currentLang === "hi" ? "आवेदक" : "Applicant"));
+    const name = tComplainant((c.complainant && c.complainant.name) || (currentLang === "hi" ? "आवेदक" : "Applicant"));
     const dept = tDept(c.department || (currentLang === "hi" ? "नागरिक सेवा" : "Civic"));
     const ref = c.application_ref_no ? `(${currentLang === "hi" ? "संदर्भ" : "Ref"}: ${c.application_ref_no})` : "";
     const stat = tStatus(c.status);
@@ -3852,10 +4374,10 @@ async function submitCaseUpdateFromDetail(event) {
   }
 
   const updateType = document.getElementById("updateTypeSelect").value;
-  const actor = (document.getElementById("updateActorInput")?.value || "").trim() || "Adv. S. Kalra (Legal Counsel)";
-  const rawTime = document.getElementById("updateTimestampInput")?.value;
-  const newStatus = document.getElementById("updateStatusSelect")?.value;
-  const remarks = (document.getElementById("updateRemarksTextarea")?.value || "").trim();
+  const actor = (document.getElementById("updateActorInput") ? document.getElementById("updateActorInput").value.trim() : "") || "Adv. S. Kalra (Legal Counsel)";
+  const rawTime = document.getElementById("updateTimestampInput") ? document.getElementById("updateTimestampInput").value : "";
+  const newStatus = document.getElementById("updateStatusSelect") ? document.getElementById("updateStatusSelect").value : "";
+  const remarks = (document.getElementById("updateRemarksTextarea") ? document.getElementById("updateRemarksTextarea").value.trim() : "");
   const statusMsg = document.getElementById("updateFormStatusMsg");
   const submitBtn = document.getElementById("btnSubmitCaseUpdate");
 
@@ -3953,7 +4475,7 @@ async function submitCaseMergeFromDetail(event) {
 
   const dupSelect = document.getElementById("mergeDuplicateSelect");
   const duplicateId = dupSelect ? dupSelect.value : "";
-  const remarks = (document.getElementById("mergeRemarksInput")?.value || "").trim();
+  const remarks = (document.getElementById("mergeRemarksInput") ? document.getElementById("mergeRemarksInput").value.trim() : "");
   const statusMsg = document.getElementById("mergeStatusMsg");
 
   if (!duplicateId) {
@@ -4046,8 +4568,9 @@ function openCaseInCaseworkDesk() {
 }
 
 function downloadActiveCasePdf() {
+  const langParam = (currentLang === "hi") ? "hi" : "en";
   if (activeDetailCase) {
-    window.open(`${API_BASE}/cases/${encodeURIComponent(activeDetailCase.case_id)}/pdf?type=rti`, "_blank");
+    window.open(`${API_BASE}/cases/${encodeURIComponent(activeDetailCase.case_id)}/pdf?type=rti&lang=${langParam}`, "_blank");
   } else if (typeof currentCase !== "undefined" && currentCase) {
     viewPdf("rti");
   }
@@ -4160,14 +4683,14 @@ function initRadarAnimation() {
 
     // 2. Multi-PIO Blips for Nearest Area Officers
     const c = currentCase;
-    const areaPios = c?.nearby_area_pios || c?.geospatial_meta?.nearby_pios || [];
-    const citizenCoords = c?.geospatial_meta?.user_coords || c?.suggested_pio?.user_coordinates || { latitude: 25.2905, longitude: 82.9995 };
+    const areaPios = (c && c.nearby_area_pios) || (c && c.geospatial_meta && c.geospatial_meta.nearby_pios) || [];
+    const citizenCoords = (c && c.geospatial_meta && c.geospatial_meta.user_coords) || (c && c.suggested_pio && c.suggested_pio.user_coordinates) || { latitude: 25.2905, longitude: 82.9995 };
 
     if (areaPios.length === 0) {
       // Fallback single target blip
       let pioOffsetX = 45;
       let pioOffsetY = -35;
-      if (currentCase?.geospatial_meta?.distance_km) {
+      if (currentCase && currentCase.geospatial_meta && currentCase.geospatial_meta.distance_km) {
         const d = currentCase.geospatial_meta.distance_km;
         pioOffsetX = Math.min(radius - 20, (d / 15) * radius * 0.8 + 25);
         pioOffsetY = -pioOffsetX * 0.7;
@@ -4255,8 +4778,8 @@ function updateRadarTelemetry(c) {
   const pEl = document.getElementById("radarPioCoords");
   const dEl = document.getElementById("radarDistance");
 
-  if (uEl) uEl.textContent = `${uCoords.latitude?.toFixed(4)}° N, ${uCoords.longitude?.toFixed(4)}° E`;
-  if (pEl) pEl.textContent = `${pCoords.latitude?.toFixed(4)}° N, ${pCoords.longitude?.toFixed(4)}° E`;
+  if (uEl) uEl.textContent = `${uCoords.latitude ? uCoords.latitude.toFixed(4) : ""}° N, ${uCoords.longitude ? uCoords.longitude.toFixed(4) : ""}° E`;
+  if (pEl) pEl.textContent = `${pCoords.latitude ? pCoords.latitude.toFixed(4) : ""}° N, ${pCoords.longitude ? pCoords.longitude.toFixed(4) : ""}° E`;
   if (dEl) dEl.textContent = geo.distance_label || pio.distance_label || "1.42 km away";
 }
 
@@ -4305,7 +4828,7 @@ async function updatePioMapForCase(c) {
   const assignedDistEl = document.getElementById("pioMapAssignedDist");
 
   const pio = c.suggested_pio || {};
-  const locality = c.confidence?.user_locality || c.complainant?.address || "Administrative Jurisdiction";
+  const locality = (c.confidence && c.confidence.user_locality) || (c.complainant && c.complainant.address) || "Administrative Jurisdiction";
 
   if (caseIdEl) caseIdEl.textContent = c.case_id;
   if (compEl) compEl.textContent = tComplainant(c.complainant && c.complainant.name);
@@ -4336,7 +4859,7 @@ function populatePioCaseSelector(selectedCaseId) {
   const cases = (allCasesCache && allCasesCache.length > 0) ? allCasesCache : (currentCase ? [currentCase] : []);
   sel.innerHTML = cases.map(cs => {
     const isSel = cs.case_id === selectedCaseId ? "selected" : "";
-    return `<option value="${cs.case_id}" ${isSel}>${cs.case_id} - ${cs.complainant?.name || 'Citizen'} (${cs.department || 'Public Authority'})</option>`;
+    return `<option value="${cs.case_id}" ${isSel}>${cs.case_id} - ${(cs.complainant && cs.complainant.name) || 'Citizen'} (${cs.department || 'Public Authority'})</option>`;
   }).join("");
 }
 
@@ -4374,7 +4897,7 @@ function renderAreaPiosDirectory(c, filterType = "all") {
   const countBadge = document.getElementById("radarAreaCount");
   if (!list) return;
 
-  let areaPios = c.nearby_area_pios || c.geospatial_meta?.nearby_pios || [];
+  let areaPios = c.nearby_area_pios || (c.geospatial_meta && c.geospatial_meta.nearby_pios) || [];
 
   if (filterType === "domain") {
     const dept = (c.department || "").toLowerCase();
@@ -4932,7 +5455,7 @@ async function fetchPostalSlipData(caseId) {
 }
 
 function buildPostalSlipHtml(slipData) {
-  const isUrgent = slipData.statutory_sla?.includes("48") || currentCase?.is_life_liberty;
+  const isUrgent = (slipData.statutory_sla && slipData.statutory_sla.indexOf("48") !== -1) || (currentCase && currentCase.is_life_liberty);
   const recipient = slipData.addressee || slipData.recipient || {};
   const sender = slipData.sender || {};
 
@@ -5031,7 +5554,8 @@ function printPostalSlip() {
 
 function downloadSlipPdf() {
   if (!currentCase) return;
-  window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=slip`, "_blank");
+  const langParam = (currentLang === "hi") ? "hi" : "en";
+  window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=slip&lang=${langParam}`, "_blank");
 }
 
 async function renderTabPostalSlip() {
@@ -5084,10 +5608,10 @@ function renderLeafletMapMarkers(c) {
 
   leafletMarkersLayer.clearLayers();
 
-  const citizenCoords = c?.geospatial_meta?.user_coords || c?.suggested_pio?.user_coordinates || { latitude: 25.2905, longitude: 82.9995 };
-  const assignedPio = c?.suggested_pio || {};
-  const pioCoords = c?.geospatial_meta?.pio_coords || assignedPio.pio_coordinates || { latitude: 25.3340, longitude: 82.9860 };
-  const areaPios = c?.nearby_area_pios || c?.geospatial_meta?.nearby_pios || [];
+  const citizenCoords = (c && c.geospatial_meta && c.geospatial_meta.user_coords) || (c && c.suggested_pio && c.suggested_pio.user_coordinates) || { latitude: 25.2905, longitude: 82.9995 };
+  const assignedPio = (c && c.suggested_pio) || {};
+  const pioCoords = (c && c.geospatial_meta && c.geospatial_meta.pio_coords) || assignedPio.pio_coordinates || { latitude: 25.3340, longitude: 82.9860 };
+  const areaPios = (c && c.nearby_area_pios) || (c && c.geospatial_meta && c.geospatial_meta.nearby_pios) || [];
 
   const bounds = [];
 
@@ -5107,8 +5631,8 @@ function renderLeafletMapMarkers(c) {
     citizenMarker.bindPopup(`
       <div style="font-family: var(--font-ui); font-size: 11px;">
         <b style="color: #D97706;">Citizen Complainant Origin</b><br/>
-        <b>${c?.complainant?.name || "Complainant"}</b><br/>
-        <span style="font-size: 10px; color: #64748B;">${c?.complainant?.address || "Local Jurisdiction"}</span>
+        <b>${(c && c.complainant && c.complainant.name) || "Complainant"}</b><br/>
+        <span style="font-size: 10px; color: #64748B;">${(c && c.complainant && c.complainant.address) || "Local Jurisdiction"}</span>
       </div>
     `);
   }
@@ -5130,7 +5654,7 @@ function renderLeafletMapMarkers(c) {
       <div style="font-family: var(--font-ui); font-size: 11px;">
         <b style="color: #1D4ED8;">★ ASSIGNED DOMAIN PIO</b><br/>
         <b>${assignedPio.pio_name || "Designated PIO"}</b><br/>
-        <span style="font-size: 10px; color: #475569;">${assignedPio.designation || "PIO"} &bull; ${assignedPio.department || c?.department}</span><br/>
+        <span style="font-size: 10px; color: #475569;">${assignedPio.designation || "PIO"} &bull; ${assignedPio.department || (c && c.department)}</span><br/>
         <span style="font-size: 10px; font-weight: 700; color: #15803D;">Distance: ${assignedPio.distance_label || "Nearest"}</span>
       </div>
     `);
@@ -5295,11 +5819,11 @@ function resetSlaCalculator() {
 }
 
 function calculateSlaPenalty() {
-  const filingVal = document.getElementById("slaFilingDate")?.value;
+  const filingVal = document.getElementById("slaFilingDate") ? document.getElementById("slaFilingDate").value : "";
   if (!filingVal) return;
 
   const filingDate = new Date(filingVal);
-  const provVal = document.getElementById("slaProvisionType")?.value || "30";
+  const provVal = (document.getElementById("slaProvisionType") ? document.getElementById("slaProvisionType").value : "") || "30";
   let slaDays = 30;
   if (provVal === "2") slaDays = 2;
   else if (provVal === "35_apio" || provVal === "35_transfer") slaDays = 35;
@@ -5308,7 +5832,7 @@ function calculateSlaPenalty() {
   const deadlineDate = new Date(filingDate);
   deadlineDate.setDate(deadlineDate.getDate() + slaDays);
 
-  const respVal = document.getElementById("slaResponseDate")?.value;
+  const respVal = document.getElementById("slaResponseDate") ? document.getElementById("slaResponseDate").value : "";
   const endDate = respVal ? new Date(respVal) : new Date();
 
   const diffTime = endDate.getTime() - filingDate.getTime();
@@ -5320,7 +5844,7 @@ function calculateSlaPenalty() {
   const fmtOpts = { day: "2-digit", month: "short", year: "numeric" };
   const deadlineStr = deadlineDate.toLocaleDateString("en-IN", fmtOpts);
   const filingStr = filingDate.toLocaleDateString("en-IN", fmtOpts);
-  const targetDept = document.getElementById("slaPioDepartment")?.value || "Public Authority";
+  const targetDept = (document.getElementById("slaPioDepartment") ? document.getElementById("slaPioDepartment").value : "") || "Public Authority";
 
   const elDeadline = document.getElementById("slaDeadlineDisplay");
   const elElapsed = document.getElementById("slaElapsedDaysDisplay");
@@ -5432,7 +5956,7 @@ function fallbackCopy(elClause, btnText) {
 // STATUTORY CODEX REAL-TIME MATRIX FILTER (PAGE 3)
 // ----------------------------------------------------
 function filterStatutoryMatrix() {
-  const query = (document.getElementById("statutorySearchInput")?.value || "").toLowerCase().trim();
+  const query = (document.getElementById("statutorySearchInput") ? document.getElementById("statutorySearchInput").value : "").toLowerCase().trim();
   const table = document.getElementById("statutoryCodexTable");
   if (!table) return;
   const rows = table.querySelectorAll("tbody tr");

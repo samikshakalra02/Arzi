@@ -273,7 +273,8 @@ def get_or_create_first_appeal(case_id):
     if not case:
         return jsonify({"error": "Not Found", "message": f"Case {case_id} not found"}), 404
 
-    appeal_draft = legal_engine.generate_first_appeal_draft(case)
+    lang = request.args.get("lang") or (request.json.get("lang") if request.is_json else None) or "en"
+    appeal_draft = legal_engine.generate_first_appeal_draft(case, lang=lang)
     case["first_appeal_draft"] = appeal_draft
     db_store.update_case(case_id, {"first_appeal_draft": appeal_draft})
 
@@ -286,11 +287,12 @@ def get_or_create_legal_notice(case_id):
     if not case:
         return jsonify({"error": "Not Found", "message": f"Case {case_id} not found"}), 404
 
+    lang = request.args.get("lang") or (request.json.get("lang") if request.is_json else None) or "en"
     legal_info = case.get("statutory_legal_analysis") or legal_engine.analyze_legal_standing(
         case.get("raw_grievance", ""),
         case.get("department", "Revenue & Land Records")
     )
-    notice_draft = legal_engine.generate_legal_notice_draft(case, legal_info)
+    notice_draft = legal_engine.generate_legal_notice_draft(case, legal_info, lang=lang)
     case["legal_notice_draft"] = notice_draft
     db_store.update_case(case_id, {"legal_notice_draft": notice_draft})
 
@@ -835,10 +837,11 @@ def download_rti_pdf(case_id):
         return jsonify({"error": "Not Found", "message": "Case not found"}), 404
 
     doc_type = request.args.get("type", "rti").lower()
-    pdf_bytes = pdf_generator.generate_pdf_bytes(case, doc_type=doc_type)
+    lang = request.args.get("lang", "en").lower()
+    pdf_bytes = pdf_generator.generate_pdf_bytes(case, doc_type=doc_type, lang=lang)
     response = make_response(pdf_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = f'inline; filename="ARZI_{doc_type.upper()}_{case_id}.pdf"'
+    response.headers['Content-Disposition'] = f'inline; filename="ARZI_{doc_type.upper()}_{case_id}_{lang.upper()}.pdf"'
     return response
 
 def _generate_code128_svg(code_str: str) -> str:

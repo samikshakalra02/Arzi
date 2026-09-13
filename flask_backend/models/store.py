@@ -248,13 +248,13 @@ class DataStore:
                 "draft_rti": {
                     "application_subject": "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: RC-88492, Submitted: 15-Feb-2026) in Ward 4, Civil Lines regarding Food & Civil Supplies",
                     "questions": [
-                        "1. Please provide the daily progress report and certified file movement register regarding the original grievance application (Ref No: RC-88492) submitted on 15-Feb-2026 by Sunita Devi residing in Ward 4, a copy whereof is annexed herewith as Annexure-A.",
-                        "2. Please specify the names, designations, and official contact details of all dealing officers/staff members at Ward 4 Civil Lines office with whom this matter remained pending beyond the 30-day statutory limit.",
+                        "1. Please provide the daily progress report and certified file movement register regarding the grievance application (Ref: RC-88492) submitted by Sunita Devi on 15-Feb-2026.",
+                        "2. Please specify the names, designations, and official contact details of all dealing officers/staff in Ward 4 Civil Lines office who held this file beyond statutory limits.",
                         "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
-                        "4. Please disclose the month-wise stock position and BPL entitlement distribution register copy for the concerned Fair Price Shop serving Ward 4.",
-                        "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, inspection reports, and official orders recorded on file regarding the processing and current disposal status of the aforesaid grievance application."
+                        "4. Please disclose the month-wise stock position and BPL entitlement distribution register copies for the fair price shop servicing Ward 4.",
+                        "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, and inspection reports concerning this grievance."
                     ],
-                    "fees_paid": "Rs. 10 Indian Postal Order (IPO No: 45F-992011, Dated: 15-Feb-2026, Issued by GPO Delhi) attached towards prescribed application fee under Rule 3 of RTI Rules 2012.",
+                    "fees_paid": "Rs. 10 Indian Postal Order (IPO No: 45F-992011, Dated: 15-Feb-2026, Issued by GPO Delhi) enclosed under Rule 3 of RTI Rules 2012.",
                     "version": 1
                 },
                 "update_history": [
@@ -272,8 +272,8 @@ class DataStore:
                 "approval_notes": None,
                 "dispatch_info": None
             }
-            c1["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c1)
-            c1["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c1, c1_legal)
+            c1["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c1, lang="en")
+            c1["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c1, c1_legal, lang="en")
             self.cases[c1_id] = c1
 
             # Seed 2: Primary Target Case ARZ-1046
@@ -342,13 +342,13 @@ class DataStore:
                 "draft_rti": {
                     "application_subject": "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: LND-88301, Submitted: 10-Jan-2026) in Mehrauli regarding Revenue & Land Records",
                     "questions": [
-                        "1. Please provide the daily progress report and certified file movement register regarding the original grievance application (Ref No: LND-88301) submitted on 10-Jan-2026 by Shivanshu Pandey residing in Mehrauli, a copy whereof is annexed herewith as Annexure-A.",
-                        "2. Please specify the names, designations, and official contact details of all dealing officers/staff members at Mehrauli division office with whom this matter remained pending beyond the 30-day statutory limit.",
-                        "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
-                        "4. Please disclose certified copies of Khasra/Khatauni mutations, field inspection reports, and Patwari notes issued for the concerned land parcel in Mehrauli.",
-                        "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, inspection reports, and official orders recorded on file regarding the processing and current disposal status of the aforesaid grievance application."
+                        "1. Please provide the daily progress report and certified file movement register regarding the land mutation application (Khasra 45/12, Ref: LND-88301) submitted on 10-Jan-2026 at Mehrauli Tehsil.",
+                        "2. Please specify the names, designations, and official contact details of all dealing officers, including Patwari and Revenue Inspector, who held this file beyond 30 days.",
+                        "3. What is the prescribed timeline as per the Citizen Charter and Delhi Land Reforms Act for passing land mutation orders?",
+                        "4. Please disclose certified copies of Khasra/Khatauni mutations, field inspection reports, and any objections lodged on record.",
+                        "5. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, and orders issued by the Tehsildar."
                     ],
-                    "fees_paid": "Rs. 10 Indian Postal Order (IPO No: 45F-LND992, Dated: 10-Jan-2026, Issued at PO Mehrauli) payable to Accounts Officer, Revenue & Land Records attached under Rule 3 & Rule 6 of Central RTI Rules 2012.",
+                    "fees_paid": "Rs. 10 Indian Postal Order (IPO No: 45F-LND992, Dated: 10-Jan-2026, Issued at PO Mehrauli) enclosed under Rule 3 of RTI Rules 2012.",
                     "version": 3
                 },
                 "update_history": [
@@ -393,8 +393,8 @@ class DataStore:
                 "approval_notes": None,
                 "dispatch_info": None
             }
-            c46["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c46)
-            c46["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c46, c46_legal)
+            c46["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c46, lang="en")
+            c46["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c46, c46_legal, lang="en")
             self.cases[c46_id] = c46
 
             # Seed 3: Duplicate Case ARZ-1047
@@ -425,9 +425,9 @@ class DataStore:
                 "created_at": t4,
                 "updated_at": t4,
                 "draft_rti": {
-                    "application_subject": "MERGED DUPLICATE ENTRY - SEE MASTER CASE ARZ-1046",
+                    "application_subject": "समेकित डुप्लिकेट प्रविष्टि - मुख्य केस ARZ-1046 देखें (भूमि नामांतरण खसरा 45/12)",
                     "questions": [],
-                    "fees_paid": "N/A",
+                    "fees_paid": "लागू नहीं",
                     "version": 1
                 },
                 "update_history": [
@@ -446,6 +446,8 @@ class DataStore:
                 "approval_notes": "Merged duplicate into ARZ-1046.",
                 "dispatch_info": None
             }
+            c47["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c47, lang="hi")
+            c47["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c47, c46_legal, lang="hi")
             self.cases[c47_id] = c47
 
             # Seed 4: Food Quality / Canteen Case ARZ-1048
@@ -480,21 +482,13 @@ class DataStore:
                 "assigned_pio": c48_pio,
                 "nearby_area_pios": c48_geo.get("nearby_area_pios", []),
                 "suggested_faa": c48_pio.get("faa"),
-                "geospatial_meta": {
-                    "distance_km": c48_pio.get("distance_km", 1.5),
-                    "distance_label": c48_pio.get("distance_label", "1.5 km away"),
-                    "room_no": c48_pio.get("room_no", "Room 04, Food Safety & Civil Supplies Block"),
-                    "user_coords": {"latitude": 28.5355, "longitude": 77.2732},
-                    "pio_coords": {"latitude": c48_pio.get("latitude", 28.5355), "longitude": c48_pio.get("longitude", 77.2732)},
-                    "nearby_pios": c48_geo.get("nearby_area_pios", [])
-                },
+                "suggested_faa": c48_pio["faa"],
                 "statutory_legal_analysis": c48_legal,
                 "confidence": {
-                    "overall": 97,
+                    "extracted_ref_no": "DISCOM-PWR-44910",
+                    "extracted_submission_date": "28-Feb-2026",
+                    "user_locality": "Kalkaji, South Delhi",
                     "department_confidence": 98,
-                    "jurisdiction_confidence": 98,
-                    "location_matched": True,
-                    "user_locality": "South Delhi, Delhi (110019)",
                     "draft_confidence": 95,
                     "risk_level": "LOW",
                     "evidence_gaps": [],
@@ -508,16 +502,16 @@ class DataStore:
                 "created_at": (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"),
                 "updated_at": (now - timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"),
                 "draft_rti": {
-                    "application_subject": "Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance (Ref No: DISCOM-PWR-44910) (Submitted: 28-Feb-2026) in South Delhi, Delhi (110019) regarding Food & Civil Supplies",
+                    "application_subject": "Application under Section 6(1) of RTI Act 2005 regarding public canteen hygiene and food safety inspection in South Delhi under FSSA 2006",
                     "questions": [
-                        "1. Please provide the daily progress report and certified file movement register regarding the original grievance application (Ref No: DISCOM-PWR-44910) submitted on 28-Feb-2026 by Virender Gupta residing in South Delhi, Delhi (110019), a copy whereof is annexed herewith as Annexure-A.",
-                        "2. Please specify the names, designations, and official contact details of all dealing officers/staff members at the South Delhi, Delhi (110019) division office with whom this matter remained pending beyond the 30-day statutory limit.",
-                        "3. What is the prescribed timeline as per the Citizen Charter for resolving this class of public grievance?",
-                        "4. FOOD SAFETY & HYGIENE AUDIT COMPLIANCE: Under Section 26 and Section 31 of the Food Safety and Standards Act (FSSA) 2006, please furnish certified true copies of the latest food safety inspection reports, periodic hygiene audit certificates, and valid FSSAI license/registration certificate issued to the concerned canteen/mess catering establishment in South Delhi, Delhi (110019).",
-                        "5. LABORATORY SAMPLE TESTING & ACTION TAKEN: Under Section 2(f) and Section 6(1) of the RTI Act, please disclose certified copies of all periodic food and potable water sample laboratory testing/microbiological analysis reports conducted over the last 12 months for the aforesaid establishment, along with certified copies of the daily raw material procurement inspection register and records of any punitive action taken against the catering contractor regarding substandard or rotten food.",
-                        "6. Please disclose certified copies of all existing file notings, office correspondence, processing sheets, inspection reports, and official orders recorded on file regarding the processing and current disposal status of the aforesaid grievance application."
+                        "1. Please provide certified copies of daily progress report and file movement register regarding grievance application (Ref: DISCOM-PWR-44910) submitted on 28-Feb-2026.",
+                        "2. Please disclose names and designations of dealing food safety officers who held the complaint beyond 30-day statutory SLA.",
+                        "3. What is the prescribed Citizen Charter timeline for resolving food hygiene complaints?",
+                        "4. Please provide certified copies of latest Food Safety Inspection Reports and valid FSSAI License under Sections 26/31 FSSA 2006.",
+                        "5. Please provide certified details of water and food sample laboratory test results collected over the last 12 months under Section 2(f) RTI Act 2005.",
+                        "6. Please provide certified copies of all notings, correspondence, and final orders issued by competent authority."
                     ],
-                    "fees_paid": "Rs. 10 Indian Postal Order attached under Rule 3 of Central RTI Rules 2012.",
+                    "fees_paid": "Rs. 10 Indian Postal Order enclosed under Rule 3 of RTI Rules 2012.",
                     "version": 1
                 },
                 "update_history": [
@@ -535,6 +529,8 @@ class DataStore:
                 "approval_notes": "Awaiting final PIO dispatch verification.",
                 "dispatch_info": None
             }
+            c48["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(c48, lang="hi")
+            c48["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c48, c48_legal, lang="hi")
             self.cases[c48_id] = c48
 
             # Seed Run Logs
@@ -637,6 +633,11 @@ class DataStore:
                 "new_value": f"Case {case_id} created",
                 "remarks": f"Created new case for complainant {case_data['complainant']['name']}"
             }
+            if not case_data.get("first_appeal_draft"):
+                case_data["first_appeal_draft"] = legal_engine.generate_first_appeal_draft(case_data, lang="en")
+            if not case_data.get("legal_notice_draft"):
+                case_data["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(case_data, case_data.get("statutory_legal_analysis", {}), lang="en")
+
             case_data["update_history"] = [history_entry]
             self.cases[case_id] = case_data
 
@@ -653,7 +654,12 @@ class DataStore:
 
     def get_case(self, case_id: str) -> dict:
         with self._lock:
-            return self.cases.get(case_id)
+            if not case_id:
+                return None
+            if case_id in self.cases:
+                return self.cases[case_id]
+            norm_id = str(case_id).replace("अर्जी-", "ARZ-").replace("अर्ज़ी-", "ARZ-")
+            return self.cases.get(norm_id)
 
     def get_all_cases(self) -> list:
         with self._lock:

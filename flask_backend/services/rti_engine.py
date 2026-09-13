@@ -286,7 +286,7 @@ class RTIEngine:
             "statutory_rebuttal_draft": rebuttal_text
         }
 
-    def analyze_and_structure(self, grievance_text: str, complainant_info: dict, requested_dept: str = None, ref_no: str = None, submission_date: str = None, urgent_override: bool = None, pincode: str = None) -> dict:
+    def analyze_and_structure(self, grievance_text: str, complainant_info: dict, requested_dept: str = None, ref_no: str = None, submission_date: str = None, urgent_override: bool = None, pincode: str = None, lang: str = "en") -> dict:
         text_lower = grievance_text.lower()
         complainant_name = complainant_info.get("name", "Citizen Applicant")
         user_address = complainant_info.get("address", "")
@@ -405,12 +405,19 @@ class RTIEngine:
         ref_str = f" (Ref No: {extracted_ref})" if extracted_ref else ""
         date_str = f" (Submitted: {extracted_date})" if extracted_date else ""
         
-        if is_life_liberty:
-            draft_subject = f"*** URGENT: APPLICATION UNDER PROVISO TO SECTION 7(1) OF RTI ACT 2005 - 48-HOUR MANDATORY DISCLOSURE FOR LIFE & LIBERTY *** - Status on pending grievance{ref_str}{date_str} in {user_locality} regarding {category}"
+        is_hi = (lang == "hi")
+        if is_hi:
+            if is_life_liberty:
+                draft_subject = f"*** अति-आवश्यक (PROVISO TO SECTION 7(1)): सूचना का अधिकार अधिनियम 2005 की धारा 7(1) के परंतुक के अधीन आवेदन (48 घंटे जीवन व स्वतंत्रता आपातकाल) *** - {user_locality} में {category} के संबंध में लंबित जन शिकायत{ref_str}{date_str} की प्रमाणित स्थिति"
+            else:
+                draft_subject = f"{category} के संबंध में {user_locality} में लंबित जन शिकायत{ref_str}{date_str} की स्थिति जानने हेतु सूचना का अधिकार अधिनियम 2005 की धारा 6(1) के तहत आवेदन पत्र"
         else:
-            draft_subject = f"Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance{ref_str}{date_str} in {user_locality} regarding {category}"
+            if is_life_liberty:
+                draft_subject = f"*** URGENT: APPLICATION UNDER PROVISO TO SECTION 7(1) OF RTI ACT 2005 - 48-HOUR MANDATORY DISCLOSURE FOR LIFE & LIBERTY *** - Status on pending grievance{ref_str}{date_str} in {user_locality} regarding {category}"
+            else:
+                draft_subject = f"Application under Section 6(1) of RTI Act 2005 seeking status on pending grievance{ref_str}{date_str} in {user_locality} regarding {category}"
 
-        # 7. Pre-generate First Appeal Draft under Section 19(1) for Law Firms / Overdue cases
+        # 7. Pre-generate First Appeal Draft under Section 19(1) for Law Firms / Overdue cases in chosen language
         dummy_case_for_appeal = {
             "case_id": "DRAFT",
             "complainant": complainant_info,
@@ -422,8 +429,8 @@ class RTIEngine:
             "is_life_liberty": is_life_liberty,
             "statutory_sla_hours": 48 if is_life_liberty else 720
         }
-        first_appeal_draft = legal_engine.generate_first_appeal_draft(dummy_case_for_appeal)
-        legal_notice_draft = legal_engine.generate_legal_notice_draft(dummy_case_for_appeal, statutory_legal_analysis)
+        first_appeal_draft = legal_engine.generate_first_appeal_draft(dummy_case_for_appeal, lang=lang)
+        legal_notice_draft = legal_engine.generate_legal_notice_draft(dummy_case_for_appeal, statutory_legal_analysis, lang=lang)
         section_8_shield = self.audit_section_8_exemptions(grievance_text, category)
 
         # 8. Generate Complete ML Legal RTI Assessment Report
