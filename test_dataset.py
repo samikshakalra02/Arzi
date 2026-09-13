@@ -37,6 +37,12 @@ dataset = [
         "id": "test-004", 
         "text": "drop table users;", 
         "expected_status": "REJECTED_INPUT"
+    },
+    {
+        "description": "5. Authentic Hindi Civic Request",
+        "id": "test-005",
+        "text": "सड़क पर गहरे गड्ढे और सीवर का गंदा पानी बह रहा है, कृपया निरीक्षण रिपोर्ट दें।",
+        "expected_status": "PROCESS_EXECUTION_SUCCESS"
     }
 ]
 

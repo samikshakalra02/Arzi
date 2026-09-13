@@ -8,6 +8,7 @@ from flask_backend.services.pdf_generator import pdf_generator
 from flask_backend.services.legal_engine import legal_engine
 from flask_backend.services.geo_locator import geo_locator
 from flask_backend.services.pincode_resolver import pincode_resolver
+from flask_backend.services.document_generator import generate_document
 
 cases_bp = Blueprint("cases", __name__, url_prefix="/api/v1/cases")
 
@@ -66,6 +67,10 @@ def create_intake():
     if not grievance or not complainant.get("name"):
         return jsonify({"error": "Bad Request", "message": "raw_grievance and complainant.name are required"}), 400
 
+    lang = data.get("lang") or complainant.get("language") or "en"
+    if lang not in ("en", "hi"):
+        lang = "en"
+
     analysis = rti_engine.analyze_and_structure(
         grievance_text=grievance,
         complainant_info=complainant,
@@ -73,7 +78,8 @@ def create_intake():
         ref_no=data.get("application_ref_no"),
         submission_date=data.get("original_submission_date"),
         urgent_override=data.get("is_urgent"),
-        pincode=pincode
+        pincode=pincode,
+        lang=lang
     )
 
     case_payload = {
@@ -297,6 +303,21 @@ def get_or_create_legal_notice(case_id):
     db_store.update_case(case_id, {"legal_notice_draft": notice_draft})
 
     return jsonify({"status": "success", "legal_notice": notice_draft}), 200
+
+@cases_bp.route("/generate-doc", methods=["POST"])
+def api_generate_document():
+    """Dynamically generates Form, Appeal, or Notice in English or Hindi using unified document generator."""
+    payload = request.get_json() or {}
+    doc_type = payload.get("document_type") or payload.get("type", "Form")
+    language = payload.get("language") or payload.get("lang", "en")
+    data = payload.get("data") or {}
+    rendered = generate_document(doc_type, language, data)
+    return jsonify({
+        "status": "success",
+        "document_type": doc_type,
+        "language": language,
+        "document": rendered
+    }), 200
 
 @cases_bp.route("/<case_id>/transfer-sec6-3", methods=["POST"])
 def execute_transfer_sec6_3(case_id):

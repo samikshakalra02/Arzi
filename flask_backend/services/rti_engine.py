@@ -5,6 +5,7 @@ from flask_backend.models.store import db_store
 from flask_backend.services.legal_engine import legal_engine
 from flask_backend.services.geo_locator import geo_locator
 from flask_backend.services.pincode_resolver import pincode_resolver
+from flask_backend.services.document_generator import generate_document
 
 class RTIEngine:
     """
@@ -393,6 +394,7 @@ class RTIEngine:
             risk_level = "HIGH"
 
         now = datetime.now()
+        today_date = now.strftime("%d-%b-%Y")
         if is_life_liberty:
             due_date = (now + timedelta(hours=48)).strftime("%Y-%m-%d %H:%M:%S")
             sla_days_rem = 2
@@ -510,6 +512,17 @@ class RTIEngine:
                 "application_subject": draft_subject,
                 "questions": questions,
                 "fees_paid": fee_string,
+                "full_document_text": generate_document('Form', lang, {
+                    'name': complainant_name,
+                    'address': complainant_info.get("address", user_locality),
+                    'contact': complainant_info.get("contact", "9876543210"),
+                    'department': matched_pio.get("department", category),
+                    'office_address': matched_pio.get("office_address", "District Collectorate"),
+                    'subject': draft_subject,
+                    'questions': questions,
+                    'fees': fee_string,
+                    'date': today_date
+                }),
                 "version": 1
             },
             "ml_report_format": report_text

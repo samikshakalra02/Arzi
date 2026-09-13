@@ -1668,6 +1668,13 @@ function setLanguage(lang) {
       : "Adv. S. Kalra (Bar Council / Legal Counsel)");
   }
 
+  const intakeTog = document.getElementById("intakeToggleText");
+  const intakeCont = document.getElementById("intakeFormContainer");
+  if (intakeTog) {
+    const isHidden = !intakeCont || intakeCont.style.display === "none";
+    intakeTog.textContent = (lang === "hi") ? (isHidden ? "+ नया फॉर्म खोलें" : "फॉर्म छुपाएं") : (isHidden ? "+ Expand Form" : "Hide Form");
+  }
+
   // Refresh workspace or queue if active
   if (typeof currentCase !== "undefined" && currentCase) {
     populateWorkspaceFields(currentCase);
@@ -2967,10 +2974,10 @@ function toggleIntakeForm() {
   if (c) {
     if (c.style.display === "none") {
       c.style.display = "block";
-      if (t) t.textContent = "Hide Form";
+      if (t) t.textContent = (currentLang === "hi") ? "फॉर्म छुपाएं" : "Hide Form";
     } else {
       c.style.display = "none";
-      if (t) t.textContent = "+ Expand Form";
+      if (t) t.textContent = (currentLang === "hi") ? "+ नया फॉर्म खोलें" : "+ Expand Form";
     }
   }
 }
@@ -3027,7 +3034,9 @@ async function handlePincodeInput(val) {
 
   pincodeLookupTimeout = setTimeout(async () => {
     badge.style.display = "block";
-    badge.innerHTML = `<span style="color: var(--gov-navy); font-weight: 600;">Resolving official postal jurisdiction for PIN <b>${pin}</b>...</span>`;
+    badge.innerHTML = (currentLang === "hi")
+      ? `<span style="color: var(--gov-navy); font-weight: 600;">पिन <b>${pin}</b> हेतु आधिकारिक डाक क्षेत्राधिकार की पुष्टि जारी...</span>`
+      : `<span style="color: var(--gov-navy); font-weight: 600;">Resolving official postal jurisdiction for PIN <b>${pin}</b>...</span>`;
     renderLucide();
 
     try {
@@ -3036,23 +3045,37 @@ async function handlePincodeInput(val) {
       if (res.ok && data.status === "success") {
         const codex = data.land_codex || {};
         const pio = data.assigned_pio || {};
+        const isHi = (currentLang === "hi");
+        const titleTxt = isHi ? "✓ सत्यापित प्रशासनिक क्षेत्राधिकार:" : "✓ Verified Administrative Jurisdiction:";
+        const pioLabel = isHi ? "नामित जन सूचना अधिकारी:" : "Designated PIO:";
+        const pioName = tOfficer(pio.pio_name || (isHi ? "तहसीलदार / नोडल अधिकारी" : "Tahsildar / Nodal Officer"));
+        const pioDesig = tDesignation(pio.designation || (isHi ? "जन सूचना अधिकारी" : "PIO"));
+        const landLabel = isHi ? "राज्य भू-राजस्व कानून:" : "State Land Law:";
+        const portalLabel = isHi ? "पोर्टल:" : "Portal:";
+        const centerLabel = isHi ? "केंद्र:" : "Center:";
+        const landAct = tAddress(codex.primary_land_act || (isHi ? "राज्य भू-राजस्व अधिनियम" : "State Land Revenue Act"));
+        const portalName = codex.digital_land_portal || (isHi ? "डिजिटल भू-अभिलेख" : "Digital Land Records");
+        const blockName = data.block || (isHi ? "तहसील / ब्लॉक" : "Taluk/Block");
+
         badge.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px;">
             <div>
-              <b style="color: var(--gov-navy);">✓ Verified Administrative Jurisdiction:</b>
-              <span style="font-weight: 600; color: var(--ink-primary);">${data.district}, ${data.state} (${data.block || 'Taluk/Block'})</span>
+              <b style="color: var(--gov-navy);">${titleTxt}</b>
+              <span style="font-weight: 600; color: var(--ink-primary);">${data.district}, ${data.state} (${blockName})</span>
             </div>
-            <span style="font-size: 10px; color: var(--status-active); font-weight: 700;">Center: ${data.latitude ? data.latitude.toFixed(4) : ""}, ${data.longitude ? data.longitude.toFixed(4) : ""}</span>
+            <span style="font-size: 10px; color: var(--status-active); font-weight: 700;">${centerLabel} ${data.latitude ? data.latitude.toFixed(4) : ""}, ${data.longitude ? data.longitude.toFixed(4) : ""}</span>
           </div>
           <div style="margin-top: 3px; color: var(--ink-secondary); font-size: 10.5px;">
-            <b>Designated PIO:</b> ${pio.pio_name || 'Tahsildar / Nodal Officer'} &bull; <i>${pio.designation || 'PIO'}</i>
+            <b>${pioLabel}</b> ${pioName} &bull; <i>${pioDesig}</i>
           </div>
           <div style="margin-top: 2px; color: var(--gov-copper); font-size: 10px; font-weight: 600;">
-            <b>State Land Law:</b> ${codex.primary_land_act || 'State Land Revenue Act'} &bull; <b>Portal:</b> ${codex.digital_land_portal || 'Digital Land Records'}
+            <b>${landLabel}</b> ${landAct} &bull; <b>${portalLabel}</b> ${portalName}
           </div>
         `;
       } else {
-        badge.innerHTML = `<span style="color: #DC2626;">⚠ Could not resolve PIN ${pin}. Please verify the 6-digit postal code.</span>`;
+        badge.innerHTML = (currentLang === "hi")
+          ? `<span style="color: #DC2626;">⚠ पिन कोड ${pin} का सत्यापन नहीं हो सका। कृपया 6-अंकों का वैध डाक कोड दर्ज करें।</span>`
+          : `<span style="color: #DC2626;">⚠ Could not resolve PIN ${pin}. Please verify the 6-digit postal code.</span>`;
       }
       renderLucide();
     } catch (err) {
@@ -3086,7 +3109,7 @@ async function submitIntake(event) {
     const res = await fetch(`${API_BASE}/cases/intake`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ complainant, raw_grievance, application_ref_no, original_submission_date, is_urgent, pincode })
+      body: JSON.stringify({ complainant, raw_grievance, application_ref_no, original_submission_date, is_urgent, pincode, lang: currentLang })
     });
 
     const data = await res.json();
@@ -3113,7 +3136,10 @@ async function submitIntake(event) {
         const pio = data.case.suggested_pio || {};
         const nearbyCount = data.case.nearby_area_pios ? data.case.nearby_area_pios.length : 5;
         const areaLabel = data.case.district ? `${data.case.district}, ${data.case.state} (${data.case.pincode || ''})` : (pio.matched_user_locality || 'Local Division');
-        bannerText.innerHTML = `✓ Docket <b>${data.case.case_id}</b> Registered in <b>${areaLabel}</b>! Assigned nearest domain (<b>${data.case.department}</b>) PIO: <b>${pio.pio_name}</b> (${pio.distance_label}). All ${nearbyCount} district/area public authorities mapped below.`;
+        const pioDist = formatDistanceLabel(pio.distance_label);
+        bannerText.innerHTML = (currentLang === "hi")
+          ? `✓ अर्जी डॉसियर <b>${data.case.case_id}</b> <b>${areaLabel}</b> में दर्ज हुआ! आवंटित विभागीय (<b>${tDept(data.case.department)}</b>) जन सूचना अधिकारी: <b>${tOfficer(pio.pio_name)}</b> (${pioDist})। संबंधित ${nearbyCount} क्षेत्रीय लोक प्राधिकारी नीचे मानचित्र पर उपलब्ध हैं।`
+          : `✓ Docket <b>${data.case.case_id}</b> Registered in <b>${areaLabel}</b>! Assigned nearest domain (<b>${data.case.department}</b>) PIO: <b>${pio.pio_name}</b> (${pio.distance_label}). All ${nearbyCount} district/area public authorities mapped below.`;
         banner.style.display = "block";
       }
 
@@ -3567,13 +3593,13 @@ function populateWorkspaceFields(c) {
 
   // PIO & FAA Block
   document.getElementById("viewDistanceLabel").textContent = formatDistanceLabel(pio.distance_label || "1.5 km away");
-  document.getElementById("viewPioName").textContent = tOfficer(pio.pio_name || "Designated PIO");
+  document.getElementById("viewPioName").textContent = tOfficer(pio.pio_name || (currentLang === "hi" ? "नामित जन सूचना अधिकारी" : "Designated PIO"));
   document.getElementById("viewPioDept").textContent = tDept(pio.department || c.department);
-  document.getElementById("viewPioAddr").textContent = tAddress(pio.office_address || "District Kachehri");
+  document.getElementById("viewPioAddr").textContent = tAddress(pio.office_address || (currentLang === "hi" ? "जिला कलेक्ट्रेट" : "District Kachehri"));
   const roomTxt = currentLang === "hi" ? `कमरा: ${tAddress(pio.room_no || 'कमरा 101, भूतल')} &middot; ईमेल: ${pio.email || 'उपलब्ध नहीं'}` : `Room: ${pio.room_no || 'Room 101, Ground Floor'} &middot; Email: ${pio.email || 'N/A'}`;
   document.getElementById("viewPioRoom").innerHTML = roomTxt;
 
-  document.getElementById("viewFaaName").textContent = tOfficer(faa.faa_name || "Additional District Magistrate (Revenue)");
+  document.getElementById("viewFaaName").textContent = tOfficer(faa.faa_name || (currentLang === "hi" ? "अपर जिलाधिकारी (राजस्व) / अपीलीय प्राधिकारी" : "Additional District Magistrate (Revenue)"));
 
   // Statutory Pills (IPC & BNS)
   const ipcPillsBox = document.getElementById("viewIpcPills");
@@ -4390,11 +4416,11 @@ async function submitCaseUpdateFromDetail(event) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.innerHTML = "<span>Recording Update...</span>";
+    submitBtn.innerHTML = (currentLang === "hi") ? "<span>अपडेट दर्ज हो रहा है...</span>" : "<span>Recording Update...</span>";
   }
   if (statusMsg) {
     statusMsg.style.color = "var(--ink-muted)";
-    statusMsg.textContent = "Recording update to case docket...";
+    statusMsg.textContent = (currentLang === "hi") ? "केस डॉसियर पर अपडेट दर्ज किया जा रहा है..." : "Recording update to case docket...";
   }
 
   try {
@@ -4443,7 +4469,7 @@ async function submitCaseUpdateFromDetail(event) {
     // Show feedback
     if (statusMsg) {
       statusMsg.style.color = "var(--status-active)";
-      statusMsg.textContent = "✓ Timestamped update recorded successfully!";
+      statusMsg.textContent = (currentLang === "hi") ? "✓ समय-मुद्रित अपडेट सफलतापूर्वक दर्ज हुआ!" : "✓ Timestamped update recorded successfully!";
       setTimeout(() => { if (statusMsg) statusMsg.textContent = ""; }, 4000);
     }
 
@@ -4479,17 +4505,20 @@ async function submitCaseMergeFromDetail(event) {
   const statusMsg = document.getElementById("mergeStatusMsg");
 
   if (!duplicateId) {
-    alert("Please select a duplicate case to consolidate into this docket.");
+    alert((currentLang === "hi") ? "कृपया इस डॉसियर में विलय करने हेतु कोई डुप्लिकेट केस चुनें।" : "Please select a duplicate case to consolidate into this docket.");
     return;
   }
 
-  if (!confirm(`Are you sure you want to merge duplicate case ${duplicateId} into Master Docket ${activeDetailCase.case_id}?\n\nThis will mark ${duplicateId} as MERGED_DUPLICATE and consolidate all facts.`)) {
+  const confirmMsg = (currentLang === "hi")
+    ? `क्या आप वाकई डुप्लिकेट केस ${duplicateId} को मास्टर डॉसियर ${activeDetailCase.case_id} में विलय करना चाहते हैं?\n\nयह केस ${duplicateId} को 'विलय किया गया डुप्लिकेट' के रूप में चिह्नित करेगा और सभी तथ्यों को एकीकृत करेगा।`
+    : `Are you sure you want to merge duplicate case ${duplicateId} into Master Docket ${activeDetailCase.case_id}?\n\nThis will mark ${duplicateId} as MERGED_DUPLICATE and consolidate all facts.`;
+  if (!confirm(confirmMsg)) {
     return;
   }
 
   if (statusMsg) {
     statusMsg.style.color = "var(--ink-muted)";
-    statusMsg.textContent = "Executing deduplication merge...";
+    statusMsg.textContent = (currentLang === "hi") ? "डुप्लिकेट विलय की प्रक्रिया जारी..." : "Executing deduplication merge...";
   }
 
   try {
@@ -4535,7 +4564,9 @@ async function submitCaseMergeFromDetail(event) {
 
     if (statusMsg) {
       statusMsg.style.color = "var(--status-active)";
-      statusMsg.textContent = `✓ Successfully merged ${duplicateId} into ${activeDetailCase.case_id}!`;
+      statusMsg.textContent = (currentLang === "hi")
+        ? `✓ सफलतापूर्वक केस ${duplicateId} को ${activeDetailCase.case_id} में विलय किया गया!`
+        : `✓ Successfully merged ${duplicateId} into ${activeDetailCase.case_id}!`;
       setTimeout(() => { if (statusMsg) statusMsg.textContent = ""; }, 5000);
     }
 
@@ -4780,7 +4811,7 @@ function updateRadarTelemetry(c) {
 
   if (uEl) uEl.textContent = `${uCoords.latitude ? uCoords.latitude.toFixed(4) : ""}° N, ${uCoords.longitude ? uCoords.longitude.toFixed(4) : ""}° E`;
   if (pEl) pEl.textContent = `${pCoords.latitude ? pCoords.latitude.toFixed(4) : ""}° N, ${pCoords.longitude ? pCoords.longitude.toFixed(4) : ""}° E`;
-  if (dEl) dEl.textContent = geo.distance_label || pio.distance_label || "1.42 km away";
+  if (dEl) dEl.textContent = formatDistanceLabel(geo.distance_label || pio.distance_label || "1.42 km away");
 }
 
 // Full PIO Geospatial Map & Directory Controller for Active Docket
