@@ -2926,3 +2926,536 @@ body.lang-bi .lang-hi-block {
   font-family: var(--font-ui);
   font-size: 11px;
 }
+
+/* ==========================================================================
+   AUTHENTICATION FLOW & DUAL LOGIN SCREEN (FIRST SCREEN)
+   ========================================================================== */
+body.auth-mode {
+  background: radial-gradient(circle at 50% 20%, rgba(30, 58, 138, 0.05) 0%, rgba(248, 249, 250, 0.95) 70%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body.dark-mode.auth-mode {
+  background: radial-gradient(circle at 50% 20%, rgba(30, 58, 138, 0.15) 0%, #0F172A 80%);
+}
+
+body.auth-mode .app-container {
+  padding: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+body.auth-mode .app-header,
+body.auth-mode #mainAppHeader,
+body.auth-mode .institutional-footer,
+body.auth-mode #mainAppFooter,
+body.auth-mode #headerNav {
+  display: none !important;
+}
+
+body.auth-mode .site-page:not(#page-auth) {
+  display: none !important;
+}
+
+body.auth-mode #page-auth {
+  display: block !important;
+}
+
+body:not(.auth-mode) #page-auth {
+  display: none !important;
+}
+
+.auth-portal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 30px 16px;
+  background: transparent;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.auth-card-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.auth-portal-card {
+  width: 100%;
+  max-width: 660px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-top: 4px solid var(--gov-navy);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  padding: 32px 36px;
+  transition: all 0.2s ease;
+}
+
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-emblem {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  margin-bottom: 12px;
+}
+
+.auth-portal-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gov-navy);
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.auth-portal-subtitle {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.auth-role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+  background: var(--bg-subtle);
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.auth-role-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  color: var(--ink-secondary);
+}
+
+.auth-role-tab:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--gov-navy);
+}
+
+.auth-role-tab.active {
+  background: var(--bg-surface);
+  border-color: var(--border-medium);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  color: var(--gov-navy);
+}
+
+.auth-role-tab.active i {
+  color: var(--gov-navy);
+}
+
+.auth-tab-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-tab-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.auth-tab-sub {
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.auth-form-panel {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.auth-form-panel.hidden,
+.hidden {
+  display: none !important;
+}
+
+.auth-role-banner {
+  border-left: 3px solid var(--gov-navy);
+  background: #F8FAFC;
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 18px;
+  border: 1px solid var(--border-subtle);
+  border-left-width: 3px;
+  border-left-color: var(--gov-navy);
+}
+
+.auth-role-banner.admin {
+  border-left-color: var(--gov-copper);
+}
+
+.auth-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gov-navy);
+  margin-bottom: 4px;
+}
+
+.auth-banner-badge.admin {
+  color: var(--gov-copper);
+}
+
+.auth-banner-desc {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.form-group-gov {
+  margin-bottom: 14px;
+}
+
+.auth-select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  background: var(--bg-surface);
+  color: var(--ink-primary);
+  font-family: var(--font-ui);
+}
+
+.auth-select:focus,
+.studio-input:focus,
+.studio-textarea:focus {
+  outline: none;
+  border-color: var(--gov-navy);
+  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
+}
+
+.btn-auth-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gov-navy);
+  color: #FFFFFF;
+  border: 1px solid var(--gov-navy-hover);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-auth-submit:hover {
+  background: var(--gov-navy-hover);
+}
+
+.btn-auth-submit.admin {
+  background: #0F172A;
+  border-color: #020617;
+}
+
+.btn-auth-submit.admin:hover {
+  background: #1E293B;
+}
+
+.auth-mode-switch {
+  display: flex;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 4px;
+  margin-bottom: 16px;
+  gap: 6px;
+}
+
+.auth-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-ui);
+}
+
+.auth-mode-btn:hover {
+  color: var(--gov-navy);
+}
+
+.auth-mode-btn.active {
+  background: var(--bg-surface);
+  color: var(--gov-navy);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
+}
+
+.auth-mode-btn.active.admin {
+  color: var(--gov-copper);
+}
+
+.auth-alert-box {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.auth-alert-box.show {
+  display: flex;
+}
+
+.auth-alert-box.error {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #991B1B;
+}
+
+.auth-alert-box.success {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  color: #166534;
+}
+
+.auth-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-password-wrap .studio-input {
+  width: 100%;
+  padding-right: 36px;
+}
+
+.btn-pwd-toggle {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.btn-pwd-toggle:hover {
+  color: var(--gov-navy);
+}
+
+.auth-quick-creds {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 16px 0;
+}
+
+.creds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--gov-navy);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.creds-chip:hover {
+  background: #E2E8F0;
+  border-color: var(--gov-navy);
+}
+
+.creds-chip.admin {
+  color: #0F172A;
+}
+
+.creds-chip.admin:hover {
+  border-color: var(--gov-copper);
+}
+
+.auth-actions-row {
+  margin-top: 18px;
+}
+
+.auth-switch-prompt {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+
+.auth-toggle-text-link {
+  background: transparent;
+  border: none;
+  color: var(--gov-navy);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 4px;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+}
+
+.auth-toggle-text-link:hover {
+  color: var(--gov-navy-hover);
+}
+
+.auth-footer-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.header-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gov-navy);
+}
+
+.header-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.header-logout-btn:hover {
+  background: #FEF2F2;
+  border-color: #FECACA;
+  color: #991B1B;
+}
+
+.role-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+/* Dark mode adjustments for auth screen */
+body.dark-mode .auth-portal-card {
+  background: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .auth-portal-title {
+  color: #93C5FD;
+}
+
+body.dark-mode .auth-role-tabs,
+body.dark-mode .auth-mode-switch {
+  background: #0F172A;
+  border-color: #334155;
+}
+
+body.dark-mode .auth-role-tab.active,
+body.dark-mode .auth-mode-btn.active {
+  background: #1E293B;
+  color: #93C5FD;
+  border-color: #475569;
+}
+
+body.dark-mode .auth-role-banner {
+  background: #0F172A;
+  border-color: #334155;
+}
+
+body.dark-mode .creds-chip {
+  background: #0F172A;
+  border-color: #334155;
+  color: #93C5FD;
+}
+
+body.dark-mode .header-role-badge {
+  background: rgba(30, 58, 138, 0.3);
+  border-color: #1E3A8A;
+  color: #93C5FD;
+}
+
+body.dark-mode .header-logout-btn {
+  border-color: #334155;
+  color: #CBD5E1;
+}
+
+body.dark-mode .header-logout-btn:hover {
+  background: rgba(185, 28, 28, 0.2);
+  border-color: #B91C1C;
+  color: #F87171;
+}
+

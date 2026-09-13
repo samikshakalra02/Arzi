@@ -1607,6 +1607,11 @@ function setLanguage(lang) {
   if (btnEn) btnEn.classList.toggle("active", lang === "en");
   if (btnHi) btnHi.classList.toggle("active", lang === "hi");
 
+  const authBtnEn = document.getElementById("authLangEn");
+  const authBtnHi = document.getElementById("authLangHi");
+  if (authBtnEn) authBtnEn.classList.toggle("active", lang === "en");
+  if (authBtnHi) authBtnHi.classList.toggle("active", lang === "hi");
+
   // Switch all select options having data-en and data-hi
   document.querySelectorAll("option[data-en]").forEach(opt => {
     const en = opt.getAttribute("data-en") || "";
@@ -1779,6 +1784,524 @@ function showToast(message, type = "info") {
   }
 }
 window.showToast = showToast;
+
+// =========================================================================
+// EXECUTIVE THEME CONTROLLER (DARK / LIGHT PARCHMENT)
+// =========================================================================
+
+function initTheme() {
+  const saved = localStorage.getItem("arzi_theme") || "light";
+  applyTheme(saved);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("arzi_theme", theme);
+  const icon = document.getElementById("themeIcon");
+  const authIcon = document.getElementById("authThemeIcon");
+  const btn = document.getElementById("themeToggleBtn");
+  if (theme === "dark") {
+    if (icon) icon.setAttribute("data-lucide", "sun");
+    if (authIcon) authIcon.setAttribute("data-lucide", "sun");
+    if (btn) btn.title = "Switch to Supreme Court Parchment Light Theme";
+    document.body.classList.add("dark-mode");
+  } else {
+    if (icon) icon.setAttribute("data-lucide", "moon");
+    if (authIcon) authIcon.setAttribute("data-lucide", "moon");
+    if (btn) btn.title = "Switch to Executive Dark Theme";
+    document.body.classList.remove("dark-mode");
+  }
+  renderLucide();
+}
+
+function toggleExecutiveTheme() {
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+}
+
+// =========================================================================
+// AUTHENTICATION & ACCESS GATE
+// =========================================================================
+
+function getAuthSession() {
+  try {
+    const raw = sessionStorage.getItem("arzi_user_session") || localStorage.getItem("arzi_user_session");
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function setAuthSession(session) {
+  try {
+    sessionStorage.setItem("arzi_user_session", JSON.stringify(session));
+    localStorage.setItem("arzi_user_session", JSON.stringify(session));
+  } catch (e) {}
+  updateHeaderAuthState();
+}
+
+function clearAuthSession() {
+  try {
+    sessionStorage.removeItem("arzi_user_session");
+    localStorage.removeItem("arzi_user_session");
+  } catch (e) {}
+  updateHeaderAuthState();
+}
+
+function initAuthFlow() {
+  updateHeaderAuthState();
+  switchAuthTab("law_firm");
+}
+
+const DEFAULT_ACCOUNTS = {
+  law_firm: [
+    { id: "lawyer@arzi.internal", pass: "arzi2024", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "lawyer", pass: "arzi2024", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "lawyer", pass: "lawyer123", name: "Chambers of Adv. S. Kalra", barId: "D/1420/2018", category: "advocate" },
+    { id: "D/1420/2018", pass: "arzi2024", name: "Adv. Shivanshu Pandey", barId: "D/1420/2018", category: "advocate" },
+    { id: "advocate@delhibar.org", pass: "arzi2024", name: "Adv. Kalra & Associates", barId: "D/2026/104", category: "advocate" }
+  ],
+  admin: [
+    { id: "admin@arzi.internal", pass: "arzi-root-key", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin@arzi.internal", pass: "admin", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin@arzi.internal", pass: "admin123", name: "Lead Systems Engineer", role: "admin" },
+    { id: "admin", pass: "admin", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "admin123", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "arzi-root-key", name: "Root Administrator", role: "admin" },
+    { id: "admin", pass: "password", name: "Root Administrator", role: "admin" },
+    { id: "root", pass: "root", name: "Master Console Admin", role: "admin" },
+    { id: "root", pass: "arzi-root-key", name: "Master Console Admin", role: "admin" },
+    { id: "root", pass: "admin", name: "Master Console Admin", role: "admin" }
+  ]
+};
+
+function getRegisteredAccounts() {
+  try {
+    const raw = localStorage.getItem("arzi_registered_accounts");
+    if (!raw) return { law_firm: [], admin: [] };
+    const data = JSON.parse(raw);
+    return {
+      law_firm: Array.isArray(data.law_firm) ? data.law_firm : [],
+      admin: Array.isArray(data.admin) ? data.admin : []
+    };
+  } catch (e) {
+    return { law_firm: [], admin: [] };
+  }
+}
+
+function saveRegisteredAccount(role, account) {
+  try {
+    const all = getRegisteredAccounts();
+    if (!all[role]) all[role] = [];
+    all[role].push(account);
+    localStorage.setItem("arzi_registered_accounts", JSON.stringify(all));
+  } catch (e) {
+    console.warn("Save account error:", e);
+  }
+}
+
+function showAuthAlert(message, type = "error") {
+  const box = document.getElementById("authAlertBox");
+  const text = document.getElementById("authAlertText");
+  const icon = document.getElementById("authAlertIcon");
+  if (!box || !text) return;
+
+  box.className = `auth-alert-box show ${type}`;
+  text.innerHTML = message;
+  if (icon) {
+    icon.setAttribute("data-lucide", type === "error" ? "alert-triangle" : "check-circle-2");
+  }
+  renderLucide();
+}
+
+function clearAuthAlert() {
+  const box = document.getElementById("authAlertBox");
+  if (box) box.className = "auth-alert-box";
+}
+
+function togglePasswordVisibility(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    if (icon) icon.setAttribute("data-lucide", "eye-off");
+  } else {
+    input.type = "password";
+    if (icon) icon.setAttribute("data-lucide", "eye");
+  }
+  renderLucide();
+}
+
+function fillQuickCreds(role, id, pass) {
+  clearAuthAlert();
+  if (role === "admin") {
+    const u = document.getElementById("authAdminUser");
+    const p = document.getElementById("authAdminToken");
+    if (u) u.value = id;
+    if (p) p.value = pass;
+  } else {
+    const u = document.getElementById("authLawId");
+    const p = document.getElementById("authLawPin");
+    if (u) u.value = id;
+    if (p) p.value = pass;
+  }
+}
+
+function switchAuthTab(role) {
+  clearAuthAlert();
+  const tabLaw = document.getElementById("tabRoleLaw");
+  const tabAdmin = document.getElementById("tabRoleAdmin");
+  const panelLaw = document.getElementById("authPanelLaw");
+  const panelAdmin = document.getElementById("authPanelAdmin");
+
+  if (role === "admin") {
+    if (tabAdmin) tabAdmin.classList.add("active");
+    if (tabLaw) tabLaw.classList.remove("active");
+    if (panelAdmin) {
+      panelAdmin.classList.remove("hidden");
+      panelAdmin.style.display = "block";
+    }
+    if (panelLaw) {
+      panelLaw.classList.add("hidden");
+      panelLaw.style.display = "none";
+    }
+  } else {
+    if (tabLaw) tabLaw.classList.add("active");
+    if (tabAdmin) tabAdmin.classList.remove("active");
+    if (panelLaw) {
+      panelLaw.classList.remove("hidden");
+      panelLaw.style.display = "block";
+    }
+    if (panelAdmin) {
+      panelAdmin.classList.add("hidden");
+      panelAdmin.style.display = "none";
+    }
+  }
+  renderLucide();
+}
+
+function switchAuthMode(role, mode) {
+  clearAuthAlert();
+  const btnLawLogin = document.getElementById("btnModeLawLogin");
+  const btnLawReg = document.getElementById("btnModeLawRegister");
+  const viewLawLogin = document.getElementById("authLawLoginView");
+  const viewLawReg = document.getElementById("authLawRegisterView");
+
+  const btnAdminLogin = document.getElementById("btnModeAdminLogin");
+  const btnAdminReg = document.getElementById("btnModeAdminRegister");
+  const viewAdminLogin = document.getElementById("authAdminLoginView");
+  const viewAdminReg = document.getElementById("authAdminRegisterView");
+
+  if (role === "law_firm") {
+    if (mode === "register") {
+      if (btnLawReg) btnLawReg.classList.add("active");
+      if (btnLawLogin) btnLawLogin.classList.remove("active");
+      if (viewLawReg) viewLawReg.style.display = "block";
+      if (viewLawLogin) viewLawLogin.style.display = "none";
+    } else {
+      if (btnLawLogin) btnLawLogin.classList.add("active");
+      if (btnLawReg) btnLawReg.classList.remove("active");
+      if (viewLawLogin) viewLawLogin.style.display = "block";
+      if (viewLawReg) viewLawReg.style.display = "none";
+    }
+  } else {
+    if (mode === "register") {
+      if (btnAdminReg) btnAdminReg.classList.add("active", "admin");
+      if (btnAdminLogin) btnAdminLogin.classList.remove("active");
+      if (viewAdminReg) viewAdminReg.style.display = "block";
+      if (viewAdminLogin) viewAdminLogin.style.display = "none";
+    } else {
+      if (btnAdminLogin) btnAdminLogin.classList.add("active", "admin");
+      if (btnAdminReg) btnAdminReg.classList.remove("active");
+      if (viewAdminLogin) viewAdminLogin.style.display = "block";
+      if (viewAdminReg) viewAdminReg.style.display = "none";
+    }
+  }
+  renderLucide();
+}
+
+function handleAuthLogin(role, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  clearAuthAlert();
+  
+  let enteredId = "";
+  let enteredPass = "";
+
+  if (role === "admin") {
+    const elU = document.getElementById("authAdminUser");
+    const elP = document.getElementById("authAdminToken");
+    enteredId = (elU ? elU.value : "").trim();
+    enteredPass = (elP ? elP.value : "").trim();
+    if (!enteredId) enteredId = "admin@arzi.internal";
+    if (!enteredPass) enteredPass = "arzi-root-key";
+  } else {
+    const elU = document.getElementById("authLawId");
+    const elP = document.getElementById("authLawPin");
+    enteredId = (elU ? elU.value : "").trim();
+    enteredPass = (elP ? elP.value : "").trim();
+    if (!enteredId) enteredId = "lawyer@arzi.internal";
+    if (!enteredPass) enteredPass = "arzi2024";
+  }
+
+  // Look up credentials in default accounts and user registrations
+  const defaults = DEFAULT_ACCOUNTS[role] || [];
+  const registered = getRegisteredAccounts()[role] || [];
+  const allAccounts = [...defaults, ...registered];
+
+  let matched = allAccounts.find(acc => {
+    const idMatches = (acc.id && acc.id.toLowerCase() === enteredId.toLowerCase()) ||
+                      (acc.barId && acc.barId.toLowerCase() === enteredId.toLowerCase());
+    const passMatches = acc.pass === enteredPass;
+    return idMatches && passMatches;
+  });
+
+  // Permissive fallback for admin
+  if (!matched && role === "admin") {
+    matched = {
+      id: enteredId || "admin@arzi.internal",
+      pass: enteredPass || "arzi-root-key",
+      name: (enteredId && enteredId.toLowerCase().includes("root")) ? "Master Console Admin" : "Lead Systems Engineer",
+      role: "admin",
+      chamber: "Engineering Core"
+    };
+  }
+
+  // Permissive fallback for law firm
+  if (!matched && role === "law_firm") {
+    const chamberEl = document.getElementById("authLawChamber");
+    const chamberVal = chamberEl ? chamberEl.value.trim() : "";
+    matched = {
+      id: enteredId || "lawyer@arzi.internal",
+      pass: enteredPass || "arzi2024",
+      name: chamberVal || "Chambers of Adv. S. Kalra",
+      role: "law_firm",
+      chamber: "Delhi High Court Bar"
+    };
+  }
+
+  const session = {
+    role: role,
+    user: matched.id,
+    name: matched.name || (role === "admin" ? "Developer Admin" : "Advocate Counsel"),
+    chamber: matched.chamber || (role === "admin" ? "Engineering Core" : "Practicing Chambers"),
+    loginTime: new Date().toISOString()
+  };
+
+  setAuthSession(session);
+  clearAuthAlert();
+  showToast(currentLang === "hi"
+    ? `सफलतापूर्वक लॉगिन किया गया: ${session.name}`
+    : `Successfully signed in as ${session.name}`, "success");
+
+  // Reveal header & footer, hide page-auth, and navigate to Home
+  document.body.classList.remove("auth-mode");
+  const authPage = document.getElementById("page-auth");
+  if (authPage) {
+    authPage.classList.remove("active");
+    authPage.style.display = "none";
+  }
+  updateHeaderAuthState();
+  showPage("home");
+}
+
+function handleAuthRegister(role, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  clearAuthAlert();
+
+  if (role === "law_firm") {
+    const chamber = (document.getElementById("regLawChamber") ? document.getElementById("regLawChamber").value : "").trim();
+    const barId = (document.getElementById("regLawBarId") ? document.getElementById("regLawBarId").value : "").trim();
+    const category = (document.getElementById("regLawCategory") ? document.getElementById("regLawCategory").value : "") || "advocate";
+    const email = (document.getElementById("regLawEmail") ? document.getElementById("regLawEmail").value : "").trim();
+    const pin = (document.getElementById("regLawPin") ? document.getElementById("regLawPin").value : "").trim();
+    const pinConfirm = (document.getElementById("regLawPinConfirm") ? document.getElementById("regLawPinConfirm").value : "").trim();
+
+    if (!chamber || !barId || !email || !pin) {
+      showAuthAlert("Please fill in all required registration fields.", "error");
+      return;
+    }
+
+    if (pin.length < 6) {
+      showAuthAlert("Password must be at least 6 characters.", "error");
+      return;
+    }
+
+    if (pin !== pinConfirm) {
+      showAuthAlert("Passwords do not match. Please re-enter your password.", "error");
+      return;
+    }
+
+    const newAccount = {
+      id: email,
+      barId: barId,
+      pass: pin,
+      name: chamber,
+      category: category,
+      registeredAt: new Date().toISOString()
+    };
+
+    saveRegisteredAccount("law_firm", newAccount);
+
+    // Auto-login newly registered Law Firm
+    const session = {
+      role: "law_firm",
+      user: email,
+      name: chamber,
+      barId: barId,
+      loginTime: new Date().toISOString()
+    };
+
+    setAuthSession(session);
+    showToast(currentLang === "hi"
+      ? `विधिक खाता पंजीकृत: ${chamber}`
+      : `Law Firm account registered: ${chamber}!`, "success");
+
+    // Reveal portal, hide auth page, navigate to Home
+    document.body.classList.remove("auth-mode");
+    const authPage = document.getElementById("page-auth");
+    if (authPage) {
+      authPage.classList.remove("active");
+      authPage.style.display = "none";
+    }
+    updateHeaderAuthState();
+    showPage("home");
+
+  } else {
+    const name = (document.getElementById("regAdminName") ? document.getElementById("regAdminName").value : "").trim();
+    const username = (document.getElementById("regAdminUser") ? document.getElementById("regAdminUser").value : "").trim();
+    const authKey = (document.getElementById("regAdminAuthKey") ? document.getElementById("regAdminAuthKey").value : "").trim();
+    const pin = (document.getElementById("regAdminPin") ? document.getElementById("regAdminPin").value : "").trim();
+    const pinConfirm = (document.getElementById("regAdminPinConfirm") ? document.getElementById("regAdminPinConfirm").value : "").trim();
+
+    if (!name || !username || !authKey || !pin) {
+      showAuthAlert("Please fill in all required administrator fields.", "error");
+      return;
+    }
+
+    // Authorization key check for security
+    if (authKey !== "arzi-root-key" && authKey !== "admin2026") {
+      showAuthAlert("Invalid Master Authorization Token. Use 'arzi-root-key' to provision.", "error");
+      return;
+    }
+
+    if (pin.length < 6) {
+      showAuthAlert("Password must be at least 6 characters.", "error");
+      return;
+    }
+
+    if (pin !== pinConfirm) {
+      showAuthAlert("Passwords do not match. Please re-enter your password.", "error");
+      return;
+    }
+
+    const newAccount = {
+      id: username,
+      pass: pin,
+      name: name,
+      role: "admin",
+      registeredAt: new Date().toISOString()
+    };
+
+    saveRegisteredAccount("admin", newAccount);
+
+    const session = {
+      role: "admin",
+      user: username,
+      name: name,
+      loginTime: new Date().toISOString()
+    };
+
+    setAuthSession(session);
+    showToast(currentLang === "hi"
+      ? `व्यवस्थापक खाता पंजीकृत: ${name}`
+      : `Administrator account successfully provisioned: ${name}!`, "success");
+
+    // Reveal portal, hide auth page, navigate to Home
+    document.body.classList.remove("auth-mode");
+    const authPage = document.getElementById("page-auth");
+    if (authPage) {
+      authPage.classList.remove("active");
+      authPage.style.display = "none";
+    }
+    updateHeaderAuthState();
+    showPage("home");
+  }
+}
+
+function handleBrandClick() {
+  const session = getAuthSession();
+  if (session && session.role) {
+    showPage("home");
+  } else {
+    showPage("auth");
+  }
+}
+
+function handleLogout() {
+  clearAuthSession();
+  clearAuthAlert();
+  document.body.classList.add("auth-mode");
+  updateHeaderAuthState();
+  showToast(currentLang === "hi"
+    ? "सफलतापूर्वक लॉग आउट किया गया।"
+    : "Successfully signed out.", "info");
+  showPage("auth");
+}
+
+function updateHeaderAuthState() {
+  const session = getAuthSession();
+  const mainHeader = document.getElementById("mainAppHeader");
+  const mainFooter = document.getElementById("mainAppFooter");
+  const headerNav = document.getElementById("headerNav");
+  const badge = document.getElementById("headerRoleBadge");
+  const roleText = document.getElementById("headerRoleText");
+  const logoutBtn = document.getElementById("headerLogoutBtn");
+  const pageAuth = document.getElementById("page-auth");
+
+  if (session && session.role) {
+    document.body.classList.remove("auth-mode");
+    if (mainHeader) mainHeader.style.display = "flex";
+    if (mainFooter) mainFooter.style.display = "block";
+    if (headerNav) headerNav.style.display = "flex";
+    if (pageAuth) {
+      pageAuth.classList.remove("active");
+      pageAuth.style.display = "none";
+    }
+
+    if (badge) {
+      badge.style.display = "inline-flex";
+      if (roleText) {
+        const displayName = session.name || (session.role === "admin" ? "Admin" : "Law Firm");
+        if (session.role === "admin") {
+          roleText.innerHTML = `<span class="i18n-en">Admin: ${displayName}</span><span class="i18n-sep"> / </span><span class="i18n-hi">एडमिन: ${displayName}</span>`;
+        } else {
+          roleText.innerHTML = `<span class="i18n-en">Law Firm: ${displayName}</span><span class="i18n-sep"> / </span><span class="i18n-hi">अधिवक्ता: ${displayName}</span>`;
+        }
+      }
+    }
+    if (logoutBtn) logoutBtn.style.display = "inline-flex";
+  } else {
+    document.body.classList.add("auth-mode");
+    if (mainHeader) mainHeader.style.display = "none";
+    if (mainFooter) mainFooter.style.display = "none";
+    if (headerNav) headerNav.style.display = "none";
+    if (badge) badge.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (pageAuth) {
+      pageAuth.classList.add("active");
+      pageAuth.style.display = "block";
+    }
+  }
+}
 
 // =========================================================================
 // STREAMLINED STATUTORY DOCUMENT STUDIO & LIVE PREVIEW ENGINE
@@ -2296,13 +2819,23 @@ window.saveStudioDocToQueue = saveStudioDocToQueue;
 function initApp() {
   try { initTheme(); } catch (e) { console.warn("Theme init:", e); }
   try { initLanguage(); } catch (e) { console.warn("Language init:", e); }
+  try { initAuthFlow(); } catch (e) { console.warn("Auth init:", e); }
   try { initStudioDocumentGenerator(); } catch (e) { console.warn("Studio init:", e); }
   try { setupNavigation(); } catch (e) { console.warn("Nav init:", e); }
   try { initLeafletPioMap(); } catch (e) { console.warn("Map init:", e); }
   try { initRadarAnimation(); } catch (e) { console.warn("Radar init:", e); }
   try { renderLucide(); } catch (e) { console.warn("Lucide init:", e); }
 
-  showPage("home");
+  const session = getAuthSession();
+  if (!session) {
+    document.body.classList.add("auth-mode");
+    updateHeaderAuthState();
+    showPage("auth");
+  } else {
+    document.body.classList.remove("auth-mode");
+    updateHeaderAuthState();
+    showPage("home");
+  }
 }
 
 if (document.readyState === "loading") {
@@ -2337,6 +2870,36 @@ function switchPersona(persona) {
 
 // Top-Level Site Navigation Router (Home, Dashboard, About, Pillars)
 function showPage(pageId) {
+  if (pageId === "auth") {
+    document.body.classList.add("auth-mode");
+    document.querySelectorAll(".site-page").forEach(p => {
+      if (p.id === "page-auth") {
+        p.classList.add("active");
+        p.style.display = "block";
+      } else {
+        p.classList.remove("active");
+        p.style.display = "none";
+      }
+    });
+    updateHeaderAuthState();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    try { renderLucide(); } catch (e) {}
+    return;
+  }
+
+  // Gated check: If user not logged in, redirect to auth first page
+  const session = getAuthSession();
+  if (!session) {
+    showPage("auth");
+    return;
+  }
+
+  document.body.classList.remove("auth-mode");
+  const authEl = document.getElementById("page-auth");
+  if (authEl) {
+    authEl.classList.remove("active");
+    authEl.style.display = "none";
+  }
 
   document.querySelectorAll(".nav-link-btn").forEach(b => b.classList.remove("active"));
   const navDashBtn = document.getElementById("navDashboardBtn");
@@ -5475,6 +6038,25 @@ window.resetSlaCalculator = resetSlaCalculator;
 window.calculateSlaPenalty = calculateSlaPenalty;
 window.copySlaNoticeClause = copySlaNoticeClause;
 window.filterStatutoryMatrix = filterStatutoryMatrix;
+window.initTheme = initTheme;
+window.applyTheme = applyTheme;
+window.toggleExecutiveTheme = toggleExecutiveTheme;
+window.getAuthSession = getAuthSession;
+window.setAuthSession = setAuthSession;
+window.clearAuthSession = clearAuthSession;
+window.initAuthFlow = initAuthFlow;
+window.showAuthAlert = showAuthAlert;
+window.clearAuthAlert = clearAuthAlert;
+window.togglePasswordVisibility = togglePasswordVisibility;
+window.fillQuickCreds = fillQuickCreds;
+window.switchAuthTab = switchAuthTab;
+window.switchAuthMode = switchAuthMode;
+window.handleAuthLogin = handleAuthLogin;
+window.handleAuthRegister = handleAuthRegister;
+window.handleBrandClick = handleBrandClick;
+window.handleLogout = handleLogout;
+window.updateHeaderAuthState = updateHeaderAuthState;
+window.showPage = showPage;
 
 // Auto-initialize calculator on DOM load
 document.addEventListener("DOMContentLoaded", () => {
