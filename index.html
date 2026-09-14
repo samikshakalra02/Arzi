@@ -1360,7 +1360,7 @@
 </div>
 <button class="btn-gov-primary" style="width: 100%;" type="submit">
 <i data-lucide="send" style="width: 13px; height: 13px;"></i>
-<span><span class="i18n-en">Submit Grievance &amp; Route PIO →</span><span class="i18n-sep"> / </span><span class="i18n-hi">शिकायत दर्ज करें एवं अधिकारी खोजें →</span></span>
+<span><span class="i18n-en">Register Case &amp; Route PIO →</span><span class="i18n-sep"> / </span><span class="i18n-hi">केस दर्ज करें एवं अधिकारी खोजें →</span></span>
 </button>
 </form>
 <!-- 1-Click Civic Presets Bar -->
@@ -2419,14 +2419,14 @@
       ✓
     </div>
     <h3 style="font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: #166534; margin-bottom: 6px;">
-      <span class="i18n-en">Your case is registered. Success!</span>
+      <span class="i18n-en">Successfully registered!</span>
       <span class="i18n-sep"> • </span>
-      <span class="i18n-hi">आपका केस सफलतापूर्वक दर्ज हो गया है! (सफलता)</span>
+      <span class="i18n-hi">सफलतापूर्वक पंजीकृत!</span>
     </h3>
     <p style="font-size: 13px; color: var(--ink-secondary, #475569); margin-bottom: 18px;">
-      <span class="i18n-en">Your civic legal docket has been securely recorded and assigned to the public authority.</span>
+      <span class="i18n-en">Your case docket has been successfully registered and journaled into the <b>Audit Run Log</b>.</span>
       <span class="i18n-sep"> • </span>
-      <span class="i18n-hi">आपकी जन शिकायत आधिकारिक रूप से दर्ज कर ली गई है।</span>
+      <span class="i18n-hi">आपका केस सफलतापूर्वक पंजीकृत कर <b>ऑडिट रन लॉग</b> में दर्ज कर लिया गया है।</span>
     </p>
 
     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; text-align: left; margin-bottom: 20px; font-size: 12px;">
@@ -2448,11 +2448,14 @@
       </div>
     </div>
 
-    <div style="display: flex; gap: 10px; justify-content: center;">
-      <button class="btn-gov-primary" onclick="closeCaseRegisteredModal()" style="padding: 9px 24px; font-size: 13px; font-weight: 600; border-radius: 4px; background: #16a34a; border-color: #15803d; color: #ffffff; cursor: pointer;">
-        <span class="i18n-en">View Registered Case Dossier</span>
-        <span class="i18n-sep"> • </span>
-        <span class="i18n-hi">केस डॉसियर देखें</span>
+    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+      <button class="btn-gov-primary" onclick="closeCaseRegisteredModal()" style="padding: 9px 22px; font-size: 13px; font-weight: 600; border-radius: 4px; background: #16a34a; border-color: #15803d; color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+        <i data-lucide="file-check" style="width: 14px; height: 14px;"></i>
+        <span><span class="i18n-en">View Registered Case Dossier</span><span class="i18n-sep"> • </span><span class="i18n-hi">केस डॉसियर देखें</span></span>
+      </button>
+      <button class="btn-gov-outline" onclick="goToAuditRunLogForCase()" style="padding: 9px 20px; font-size: 13px; font-weight: 600; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border-color: var(--gov-navy); color: var(--gov-navy);">
+        <i data-lucide="scroll-text" style="width: 14px; height: 14px;"></i>
+        <span><span class="i18n-en">View in Audit Run Log</span><span class="i18n-sep"> • </span><span class="i18n-hi">ऑडिट लॉग में देखें</span></span>
       </button>
     </div>
   </div>

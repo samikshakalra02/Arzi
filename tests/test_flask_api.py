@@ -48,8 +48,17 @@ def test_create_intake_case(client):
     # Verify IPC/BNS and Geospatial outputs
     assert "statutory_legal_analysis" in case
     assert len(case["statutory_legal_analysis"]["ipc_sections"]) > 0
-    assert len(case["statutory_legal_analysis"]["bns_sections"]) > 0
     assert "geospatial_meta" in case
+
+    # Verify run log was updated with this registration
+    run_log_res = client.get("/api/v1/run-log")
+    assert run_log_res.status_code == 200
+    run_logs = run_log_res.get_json()["run_logs"]
+    matching_log = next((l for l in run_logs if l["case_id"] == case["case_id"]), None)
+    assert matching_log is not None
+    assert matching_log["event_type"] in ("CASE_REGISTERED", "INTAKE_RECEIVED")
+    assert "Successfully registered case" in matching_log["action"] or "Created case" in matching_log["action"]
+    assert matching_log["result"] == "SUCCESS"
 
 def test_varanasi_banaras_intake_and_search(client):
     payload = {

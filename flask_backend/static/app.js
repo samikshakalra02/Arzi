@@ -1531,6 +1531,7 @@ function tRunLogEvent(ev) {
   if (!ev) return "";
   if (currentLang !== "hi") return ev;
   const map = {
+    "CASE_REGISTERED": "केस पंजीकृत",
     "INTAKE_INGESTED": "शिकायत दर्ज",
     "INTAKE_RECEIVED": "शिकायत प्राप्त",
     "INPLACE_GRIEVANCE_UPDATE": "यथास्थान अद्यतन",
@@ -1569,7 +1570,8 @@ function tRunLogAction(action) {
   if (!action) return "";
   if (currentLang !== "hi") return action;
   let str = action;
-  str = str.replace(/Created case/gi, "केस सृजित:")
+  str = str.replace(/Successfully registered case/gi, "केस सफलतापूर्वक पंजीकृत:")
+           .replace(/Created case/gi, "केस सृजित:")
            .replace(/Corrected complainant name in-place from/gi, "शिकायतकर्ता का नाम यथास्थान संशोधित:")
            .replace(/Operator corrected department from/gi, "ऑपरेटर द्वारा विभाग संशोधित:")
            .replace(/Grievance ingested for Land Mutation khasra/gi, "भूमि नामांतरण खसरा हेतु शिकायत दर्ज:")
@@ -2827,9 +2829,27 @@ function saveStudioDocToQueue() {
     if (inboxEl) inboxEl.textContent = caseQueue.length;
   }
 
+  // Update Run Log reactive ledger
+  const studioLog = {
+    run_id: `RLOG-${Date.now().toString().slice(-4)}`,
+    timestamp: new Date().toISOString().replace("T", " ").slice(0, 19),
+    event_type: "CASE_REGISTERED",
+    case_id: docketRef,
+    actor: "Legal Studio Workspace",
+    source: "Statutory Studio Generator",
+    action: `Successfully registered case ${docketRef} for ${applicantName} (${authorityName})`,
+    result: "SUCCESS",
+    correlation_id: `CORR-${docketRef}`
+  };
+  if (!allRunLogsCache) allRunLogsCache = [];
+  allRunLogsCache = [studioLog, ...allRunLogsCache.filter(l => !(l.case_id === docketRef && l.event_type === "CASE_REGISTERED"))];
+  if (typeof renderRunLogsTable === "function") renderRunLogsTable(allRunLogsCache);
+  const rCount = document.getElementById("runLogCountBadge");
+  if (rCount) rCount.textContent = allRunLogsCache.length;
+
   showToast(currentLang === "hi"
-    ? `दस्तावेज ${docketRef} सफलतापूर्वक मामला कतार में सहेजा गया!`
-    : `Docket ${docketRef} saved into active Case Queue!`, "success");
+    ? `सफलतापूर्वक पंजीकृत! केस डॉसियर ${docketRef} ऑडिट रन लॉग में दर्ज हो गया है।`
+    : `Successfully registered! Case docket ${docketRef} recorded in Audit Run Log.`, "success");
 }
 
 window.initStudioDocumentGenerator = initStudioDocumentGenerator;
@@ -2993,6 +3013,12 @@ function switchDashTab(tabId) {
   if (tabId === "casework") loadCaseQueue();
   if (tabId === "statutory") loadCustomActs();
   if (tabId === "compliance") initSlaPenaltyCalculator();
+  if (tabId === "runlog") {
+    loadRunLogs();
+    renderRunLogsTable(allRunLogsCache);
+    const countBadge = document.getElementById("runLogCountBadge");
+    if (countBadge) countBadge.textContent = (allRunLogsCache || []).length;
+  }
   if (tabId === "pio") {
     updatePioMapForCase(currentCase);
     if (leafletMap) {
@@ -3145,8 +3171,23 @@ function closeCaseRegisteredModal() {
 }
 window.closeCaseRegisteredModal = closeCaseRegisteredModal;
 
+// Direct Navigation from Modal to Audit Run Log
+function goToAuditRunLogForCase() {
+  const m = document.getElementById("caseRegisteredModal");
+  if (m) m.classList.add("hidden");
+  switchDashTab("runlog");
+  const caseId = window.activeRegisteredCaseId || (currentCase && currentCase.case_id) || "";
+  const searchInput = document.getElementById("runLogSearchInput");
+  if (searchInput && caseId) {
+    searchInput.value = caseId;
+    handleRunLogSearch(caseId);
+  }
+}
+window.goToAuditRunLogForCase = goToAuditRunLogForCase;
+
 // Show Case Registered Success Screen & Modal
 function showCaseRegistrationSuccessScreen(c) {
+  window.activeRegisteredCaseId = c.case_id;
   const m = document.getElementById("caseRegisteredModal");
   if (m) {
     const idEl = document.getElementById("regModalCaseId");
@@ -3160,10 +3201,18 @@ function showCaseRegistrationSuccessScreen(c) {
     m.classList.remove("hidden");
   }
 
-  // Also trigger native alert confirmation
+  // Toast notification
+  const toastMsg = (currentLang === "hi")
+    ? `सफलतापूर्वक पंजीकृत! केस डॉसियर ${c.case_id} ऑडिट रन लॉग में दर्ज हो गया है।`
+    : `Successfully registered! Case docket ${c.case_id} recorded in Audit Run Log.`;
+  if (typeof showToast === "function") {
+    showToast(toastMsg, "success");
+  }
+
+  // Also trigger alert confirmation with explicit "Successfully registered!" message
   const successMsg = (currentLang === "hi")
-    ? `✓ आपका केस सफलतापूर्वक दर्ज हो गया है! (सफलता)\nकेस डॉसियर संख्या: ${c.case_id}\nआवेदक: ${(c.complainant && c.complainant.name) || 'नागरिक'}\nविभाग: ${tDept(c.department)}`
-    : `✓ Your case is registered. Success!\n\nDocket Number: ${c.case_id}\nComplainant: ${(c.complainant && c.complainant.name) || 'Citizen'}\nDepartment: ${c.department}`;
+    ? `✓ सफलतापूर्वक पंजीकृत!\n\nकेस डॉसियर संख्या: ${c.case_id}\nआवेदक: ${(c.complainant && c.complainant.name) || 'नागरिक'}\nविभाग: ${tDept(c.department)}\nऑडिट रन लॉग: सुरक्षित रूप से दर्ज`
+    : `✓ Successfully registered!\n\nDocket Number: ${c.case_id}\nComplainant: ${(c.complainant && c.complainant.name) || 'Citizen'}\nDepartment: ${c.department}\nAudit Run Log: Case records updated in immutable log.`;
   try {
     alert(successMsg);
   } catch (e) {}
@@ -3415,13 +3464,31 @@ async function submitIntake(event) {
   // Refresh case table
   renderCaseQueueFromCache();
 
+  // Update Run Log Audit Trail immediately so case record reflects instantly
+  const regLogEntry = {
+    run_id: `RLOG-${Date.now().toString().slice(-4)}`,
+    timestamp: new Date().toISOString().replace("T", " ").slice(0, 19),
+    event_type: "CASE_REGISTERED",
+    case_id: finalCase.case_id,
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: `Successfully registered case ${finalCase.case_id} for complainant ${(finalCase.complainant && finalCase.complainant.name) || 'Citizen'} (${finalCase.department || 'Public Authority'})`,
+    result: "SUCCESS",
+    correlation_id: `CORR-${finalCase.case_id}`
+  };
+  if (!allRunLogsCache) allRunLogsCache = [];
+  allRunLogsCache = [regLogEntry, ...allRunLogsCache.filter(l => !(l.case_id === finalCase.case_id && (l.event_type === "CASE_REGISTERED" || l.event_type === "INTAKE_RECEIVED")))];
+  renderRunLogsTable(allRunLogsCache);
+  const rBadge = document.getElementById("runLogCountBadge");
+  if (rBadge) rBadge.textContent = allRunLogsCache.length;
+
   // Populate workspace and switch directly to registered case screen!
   currentCase = finalCase;
   populateWorkspaceFields(finalCase);
   updatePioMapForCase(finalCase);
   switchMainModule("casework");
 
-  // Show "Your case is registered. Success!" screen & modal
+  // Show "Successfully registered!" modal & notification
   showCaseRegistrationSuccessScreen(finalCase);
 
   try { loadRunLogs(); } catch (e) {}
@@ -4122,16 +4189,26 @@ async function loadRunLogs() {
   try {
     const res = await fetch(`${API_BASE}/run-log`);
     const data = await res.json();
-    if (!res.ok) return;
+    if (!res.ok) {
+      renderRunLogsTable(allRunLogsCache);
+      const countBadge = document.getElementById("runLogCountBadge");
+      if (countBadge) countBadge.textContent = (allRunLogsCache || []).length;
+      return;
+    }
 
-    allRunLogsCache = data.run_logs || [];
+    const serverLogs = data.run_logs || [];
+    // Retain any newly registered local logs that the server might not yet have returned
+    const localLogs = (allRunLogsCache || []).filter(l => !serverLogs.some(s => s.case_id === l.case_id && s.event_type === l.event_type));
+    allRunLogsCache = [...localLogs, ...serverLogs];
 
     // Also load cases to cross-reference keywords across Name, Place, Subject, Address, Officer
     try {
       const caseRes = await fetch(`${API_BASE}/cases`);
       const caseData = await caseRes.json();
       if (caseRes.ok) {
-        allCasesCache = caseData.cases || [];
+        const serverCases = caseData.cases || [];
+        const localCases = (allCasesCache || []).filter(c => !serverCases.some(sc => sc.case_id === c.case_id));
+        allCasesCache = [...localCases, ...serverCases];
       }
     } catch (e) {
       console.warn("Could not preload cases for run log search:", e);
@@ -4159,6 +4236,9 @@ async function loadRunLogs() {
     }
   } catch (err) {
     console.error("Run log error:", err);
+    renderRunLogsTable(allRunLogsCache);
+    const countBadge = document.getElementById("runLogCountBadge");
+    if (countBadge) countBadge.textContent = (allRunLogsCache || []).length;
   }
 }
 

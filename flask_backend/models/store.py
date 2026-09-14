@@ -642,11 +642,11 @@ class DataStore:
             self.cases[case_id] = case_data
 
             self.add_run_log(
-                event_type="INTAKE_RECEIVED",
+                event_type="CASE_REGISTERED",
                 case_id=case_id,
                 actor="Citizen Intake Gateway",
                 source="Web Portal Form",
-                action=f"Created case {case_id} for complainant {case_data['complainant']['name']}",
+                action=f"Successfully registered case {case_id} for complainant {case_data['complainant']['name']} ({case_data.get('department', 'Public Authority')})",
                 result="SUCCESS",
                 correlation_id=f"CORR-{hashlib.md5(case_id.encode()).hexdigest()[:6]}"
             )
