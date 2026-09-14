@@ -287,11 +287,13 @@ def get_or_create_first_appeal(case_id):
         return jsonify({"error": "Not Found", "message": f"Case {case_id} not found"}), 404
 
     lang = request.args.get("lang") or (request.json.get("lang") if request.is_json else None) or "en"
+    model = request.args.get("model") or (request.json.get("model") if request.is_json else None) or "Gemini 3.8 Flash"
     appeal_draft = legal_engine.generate_first_appeal_draft(case, lang=lang)
+    appeal_draft["drafted_ai_model"] = model
     case["first_appeal_draft"] = appeal_draft
     db_store.update_case(case_id, {"first_appeal_draft": appeal_draft})
 
-    return jsonify({"status": "success", "appeal": appeal_draft}), 200
+    return jsonify({"status": "success", "model": model, "appeal": appeal_draft}), 200
 
 @cases_bp.route("/<case_id>/legal-notice", methods=["GET", "POST"])
 def get_or_create_legal_notice(case_id):
@@ -301,29 +303,66 @@ def get_or_create_legal_notice(case_id):
         return jsonify({"error": "Not Found", "message": f"Case {case_id} not found"}), 404
 
     lang = request.args.get("lang") or (request.json.get("lang") if request.is_json else None) or "en"
+    model = request.args.get("model") or (request.json.get("model") if request.is_json else None) or "Gemini 3.8 Flash"
     legal_info = case.get("statutory_legal_analysis") or legal_engine.analyze_legal_standing(
         case.get("raw_grievance", ""),
         case.get("department", "Revenue & Land Records")
     )
     notice_draft = legal_engine.generate_legal_notice_draft(case, legal_info, lang=lang)
+    notice_draft["drafted_ai_model"] = model
     case["legal_notice_draft"] = notice_draft
     db_store.update_case(case_id, {"legal_notice_draft": notice_draft})
 
-    return jsonify({"status": "success", "legal_notice": notice_draft}), 200
+    return jsonify({"status": "success", "model": model, "legal_notice": notice_draft}), 200
 
 @cases_bp.route("/generate-doc", methods=["POST"])
 def api_generate_document():
-    """Dynamically generates Form, Appeal, or Notice in English or Hindi using unified document generator."""
+    """Dynamically generates Form, Appeal, or Notice in English or Hindi using chosen AI model."""
     payload = request.get_json() or {}
     doc_type = payload.get("document_type") or payload.get("type", "Form")
     language = payload.get("language") or payload.get("lang", "en")
+    model = payload.get("model") or "Gemini 3.8 Flash"
     data = payload.get("data") or {}
-    rendered = generate_document(doc_type, language, data)
+    rendered = generate_document(doc_type, language, data, model=model)
     return jsonify({
         "status": "success",
         "document_type": doc_type,
         "language": language,
+        "model": model,
         "document": rendered
+    }), 200
+
+@cases_bp.route("/cloud-api-keys", methods=["GET", "POST"])
+def manage_cloud_api_keys():
+    """Allows setting or checking availability of cloud API keys for Gemini, Claude, GPT."""
+    if request.method == "POST":
+        payload = request.get_json() or {}
+        gemini_key = payload.get("gemini_key")
+        anthropic_key = payload.get("anthropic_key")
+        openai_key = payload.get("openai_key")
+        if gemini_key:
+            os.environ["GEMINI_API_KEY"] = gemini_key.strip()
+        if anthropic_key:
+            os.environ["ANTHROPIC_API_KEY"] = anthropic_key.strip()
+        if openai_key:
+            os.environ["OPENAI_API_KEY"] = openai_key.strip()
+        return jsonify({
+            "status": "success",
+            "message": "API keys updated successfully.",
+            "configured": {
+                "gemini": bool(os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")),
+                "claude": bool(os.environ.get("ANTHROPIC_API_KEY")),
+                "gpt": bool(os.environ.get("OPENAI_API_KEY") or os.environ.get("OPENROUTER_API_KEY"))
+            }
+        }), 200
+
+    return jsonify({
+        "status": "success",
+        "configured": {
+            "gemini": bool(os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")),
+            "claude": bool(os.environ.get("ANTHROPIC_API_KEY")),
+            "gpt": bool(os.environ.get("OPENAI_API_KEY") or os.environ.get("OPENROUTER_API_KEY"))
+        }
     }), 200
 
 @cases_bp.route("/<case_id>/transfer-sec6-3", methods=["POST"])

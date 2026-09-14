@@ -597,6 +597,16 @@ class DataStore:
                 existing_case.setdefault("update_history", []).append(history_entry)
 
                 self.add_run_log(
+                    event_type="CASE_REGISTERED",
+                    case_id=case_id,
+                    actor="Citizen Intake Gateway",
+                    source="Web Intake Portal",
+                    action=f"Successfully registered case {case_id} for complainant {new_name} ({case_data.get('department', 'Public Authority')})",
+                    result="SUCCESS",
+                    correlation_id=f"CORR-{hashlib.md5(case_id.encode()).hexdigest()[:6]}"
+                )
+
+                self.add_run_log(
                     event_type="INPLACE_GRIEVANCE_UPDATE",
                     case_id=case_id,
                     actor="Intake Gateway / Legal Reviewer",

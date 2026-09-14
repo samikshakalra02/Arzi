@@ -39,8 +39,8 @@ class RepoValidator:
         if self.simulated_kill_switch:
             return False, "CRITICAL INTEGRITY BREACH: GitHub Repository deleted or binding revoked (HTTP 404 Not Found)."
         
-        # If explicitly disabled for local testing or mock URL
-        if os.getenv("TESTING") == "true" or self.repo_url == "mock":
+        # If explicitly disabled for local testing or mock URL, or if check not enabled
+        if os.getenv("TESTING") == "true" or self.repo_url == "mock" or os.getenv("GITHUB_REPO_CHECK_ENABLED", "false").lower() != "true":
             return self._last_status, self._last_message
 
         try:

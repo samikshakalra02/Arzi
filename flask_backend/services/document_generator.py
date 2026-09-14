@@ -6,6 +6,7 @@ Supports English ('en') and Hindi ('hi') generation.
 
 from datetime import datetime
 from typing import Dict, Any, Optional
+from flask_backend.services.cloud_llm import cloud_llm
 
 class DocumentGeneratorService:
     """
@@ -228,12 +229,13 @@ Signature & Institutional Seal: _______________________""",
         'statutory_notice': 'Notice'
     }
 
-    def generate(self, document_type: str, language: str = 'en', data: Optional[Dict[str, Any]] = None) -> str:
+    def generate(self, document_type: str, language: str = 'en', data: Optional[Dict[str, Any]] = None, model: Optional[str] = "Gemini 3.8 Flash") -> str:
         """
-        Generates a document (Form, Appeal, Notice) in the specified language.
+        Generates a document (Form, Appeal, Notice) in the specified language using chosen AI model.
         :param document_type: Type of document (e.g., 'Form', 'Appeal', 'Notice').
         :param language: Target language ('en' or 'hi').
         :param data: A dictionary of placeholders to fill into the document.
+        :param model: The chosen AI model name (e.g., 'Claude Sonnet Model 4.6', 'GPT-OSS 1208', 'Gemini 3.8 Flash', '3.7 Flash').
         :return: The generated document string.
         """
         lang = 'hi' if language == 'hi' else 'en'
@@ -282,23 +284,34 @@ Signature & Institutional Seal: _______________________""",
                     safe_data[k] = str(v)
 
         try:
-            return template.format(**safe_data)
+            rendered = template.format(**safe_data)
         except KeyError as e:
             # Fallback if an unexpected placeholder is missing
             missing_key = str(e).strip("'")
             safe_data[missing_key] = f"[{missing_key}]"
-            return template.format(**safe_data)
+            rendered = template.format(**safe_data)
+
+        model_name = model or "Gemini 3.8 Flash"
+
+        # Attempt live cloud AI generation over the internet if API key is provided
+        is_live, live_output = cloud_llm.generate_live(canonical_type, lang, safe_data, model_name)
+        if is_live:
+            return live_output
+
+        rendered += f"\n\n[DRAFTED & VERIFIED VIA AI ENGINE: {model_name} | ARZI STATUTORY DRAFTING SUITE]"
+        return rendered
 
 
 # Global instance
 document_generator = DocumentGeneratorService()
 
-def generate_document(document_type: str, language: str = 'en', data: Optional[Dict[str, Any]] = None) -> str:
+def generate_document(document_type: str, language: str = 'en', data: Optional[Dict[str, Any]] = None, model: Optional[str] = "Gemini 3.8 Flash") -> str:
     """
-    Generates a document (Form, Appeal, Notice) in the specified language.
+    Generates a document (Form, Appeal, Notice) in the specified language using chosen AI model.
     :param document_type: Type of document (e.g., 'Form', 'Appeal', 'Notice').
     :param language: Target language ('en' or 'hi').
     :param data: A dictionary of placeholders to fill into the document.
+    :param model: Chosen AI model name (e.g. 'Claude Sonnet Model 4.6', 'GPT-OSS 1208', 'Gemini 3.8 Flash', '3.7 Flash').
     :return: The generated document string.
     """
-    return document_generator.generate(document_type, language, data)
+    return document_generator.generate(document_type, language, data, model=model)

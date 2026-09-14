@@ -42,7 +42,7 @@ def main():
     print("Press CTRL+C to stop the service.\n")
 
     try:
-        app.run(host="0.0.0.0", port=port, debug=False)
+        app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
     except KeyboardInterrupt:
         print("\n>> ARZI Platform stopped gracefully.")
 

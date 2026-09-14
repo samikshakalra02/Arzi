@@ -502,5 +502,40 @@ def test_food_quality_canteen_ml_classification_and_officer_routing(client):
     assert c48["category"] == "Food & Civil Supplies"
     assert "Food Safety" in c48["suggested_pio"]["pio_name"] or "Food Safety" in c48["suggested_pio"]["designation"]
 
+def test_generate_doc_ai_models_choice(client):
+    """Verifies that lawyers can choose between Claude Sonnet Model 4.6, GPT-OSS 1208, Gemini 3.8 Flash, and 3.7 Flash for Form, Appeal, Notice."""
+    models = ["Claude Sonnet Model 4.6", "GPT-OSS 1208", "Gemini 3.8 Flash", "3.7 Flash"]
+    doc_types = ["Form", "Appeal", "Notice"]
+
+    for model in models:
+        for doc_type in doc_types:
+            res = client.post("/api/v1/cases/generate-doc", json={
+                "document_type": doc_type,
+                "language": "en",
+                "model": model,
+                "data": {
+                    "name": "Advocate Kalra",
+                    "department": "Revenue Department",
+                    "subject": f"Statutory filing test for {doc_type}",
+                    "questions": "1. Provide certified copy of order."
+                }
+            })
+            assert res.status_code == 200
+            data = res.get_json()
+            assert data["status"] == "success"
+            assert data["document_type"] == doc_type
+            assert data["model"] == model
+            assert f"[DRAFTED & VERIFIED VIA AI ENGINE: {model} | ARZI STATUTORY DRAFTING SUITE]" in data["document"]
+
+    # Test with Hindi as well
+    res_hi = client.post("/api/v1/cases/generate-doc", json={
+        "document_type": "Form",
+        "language": "hi",
+        "model": "Claude Sonnet Model 4.6",
+        "data": {"name": "शिवंशु पांडेय"}
+    })
+    assert res_hi.status_code == 200
+    assert "[DRAFTED & VERIFIED VIA AI ENGINE: Claude Sonnet Model 4.6 | ARZI STATUTORY DRAFTING SUITE]" in res_hi.get_json()["document"]
+
 
 

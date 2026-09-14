@@ -1027,6 +1027,27 @@
 </p>
 </div>
 
+<!-- AI Model Selector for Lawyer (Form, Appeal, Notice) -->
+<div class="studio-model-bar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 9px 14px; background: var(--bg-surface, #ffffff); border: 1px solid var(--border-medium, #cbd5e1); border-left: 4px solid var(--gov-navy, #1e3a8a); border-radius: 4px; gap: 10px; flex-wrap: wrap;">
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <i data-lucide="cpu" style="width: 15px; height: 15px; color: var(--gov-navy, #1e3a8a);"></i>
+    <span style="font-size: 12px; font-weight: 700; color: var(--gov-navy, #1e3a8a);">
+      <span class="i18n-en">AI Drafting Model:</span>
+      <span class="i18n-sep"> / </span>
+      <span class="i18n-hi">एआई प्रारूपण मॉडल:</span>
+    </span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 250px; max-width: 440px;">
+    <select id="studioAiModelSelect" onchange="setDraftingAiModel(this.value)" style="width: 100%; height: 32px; padding: 2px 10px; font-size: 12px; font-weight: 600; border: 1px solid var(--border-medium, #cbd5e1); border-radius: 4px; background: #ffffff; color: var(--ink-primary, #0f172a); cursor: pointer;">
+      <option value="claude-sonnet-4.6">Claude Sonnet Model 4.6</option>
+      <option value="gpt-oss-1208">GPT-OSS 1208</option>
+      <option value="gemini-3.8-flash" selected>Gemini 3.8 Flash</option>
+      <option value="gemini-3.7-flash">3.7 Flash</option>
+    </select>
+    <span id="studioModelPill" class="status-pill approved" style="font-size: 10px; white-space: nowrap; font-family: var(--font-mono);">Gemini 3.8 Flash</span>
+  </div>
+</div>
+
 <!-- Document Type Switcher Pills -->
 <div class="studio-doc-selector">
 <button class="doc-type-pill active" id="docTypePillForm" onclick="setStudioDocType('form')" type="button">
@@ -1358,7 +1379,7 @@
 <div class="voice-live-transcript" id="voiceLiveTranscript"></div>
 <div id="liveMlPredictionBox" style="display: none; margin-top: 6px; padding: 8px 10px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 2px; font-size: 11px;"></div>
 </div>
-<button class="btn-gov-primary" style="width: 100%;" type="submit">
+<button class="btn-gov-primary" id="btnRegisterCase" style="width: 100%;" type="submit">
 <i data-lucide="send" style="width: 13px; height: 13px;"></i>
 <span><span class="i18n-en">Register Case &amp; Route PIO →</span><span class="i18n-sep"> / </span><span class="i18n-hi">केस दर्ज करें एवं अधिकारी खोजें →</span></span>
 </button>
@@ -1541,10 +1562,27 @@
 </button>
 </div>
 </div>
-</div>
 <!-- 5. Document Drafter & Official Instruments -->
 <div style="margin-bottom: 14px;">
-<label class="form-label"><span class="i18n-en">Statutory Instruments &amp; Official Filings</span><span class="i18n-sep"> • </span><span class="i18n-hi">तैयार किए गए विधिक दस्तावेज</span></label>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+<label class="form-label" style="margin-bottom: 0;"><span class="i18n-en">Statutory Instruments &amp; Official Filings</span><span class="i18n-sep"> • </span><span class="i18n-hi">तैयार किए गए विधिक दस्तावेज</span></label>
+<div style="display: flex; align-items: center; gap: 6px;">
+  <label for="caseworkAiModelSelect" style="font-size: 11px; font-weight: 700; color: var(--gov-navy); white-space: nowrap;">
+    <i data-lucide="cpu" style="width: 12px; height: 12px; display: inline-block; vertical-align: middle; margin-right: 2px;"></i>
+    <span class="i18n-en">Model:</span><span class="i18n-hi">मॉडल:</span>
+  </label>
+  <select id="caseworkAiModelSelect" onchange="setDraftingAiModel(this.value)" style="height: 28px; padding: 2px 8px; font-size: 11.5px; font-weight: 600; border: 1px solid var(--border-medium); border-radius: 3px; background: #ffffff; color: var(--gov-navy); cursor: pointer;">
+    <option value="claude-sonnet-4.6">Claude Sonnet Model 4.6</option>
+    <option value="gpt-oss-1208">GPT-OSS 1208</option>
+    <option value="gemini-3.8-flash" selected>Gemini 3.8 Flash</option>
+    <option value="gemini-3.7-flash">3.7 Flash</option>
+  </select>
+  <button class="btn-gov-outline" onclick="regenerateActiveDocumentWithModel()" style="font-size: 10px; padding: 2px 8px; height: 28px; display: inline-flex; align-items: center; gap: 4px;" title="Regenerate active document with selected AI model" type="button">
+    <i data-lucide="sparkles" style="width: 11px; height: 11px; color: var(--gov-amber);"></i>
+    <span><span class="i18n-en">Apply Model</span><span class="i18n-sep"> • </span><span class="i18n-hi">मॉडल लागू करें</span></span>
+  </button>
+</div>
+</div>
 <div style="border: 1px solid var(--border-medium); border-radius: 2px; overflow: hidden;">
 <div class="doc-draft-nav">
 <button class="doc-draft-tab active" data-doctab="rti" onclick="switchDocTab('rti')"><span class="i18n-en">Form-A RTI (Sec 6)</span><span class="i18n-sep"> / </span><span class="i18n-hi">फॉर्म-A</span></button>
@@ -1556,6 +1594,10 @@
 </div>
 <div style="padding: 10px; background: var(--bg-surface);">
 <div id="docPanelRti">
+<div id="modelStampRti" style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 77, 107, 0.07); border: 1px solid rgba(30, 77, 107, 0.2); border-radius: 3px; padding: 4px 8px; margin-bottom: 8px; font-size: 10.5px; font-family: var(--font-mono); color: var(--gov-navy);">
+  <span><b>⚡ AI Drafting Engine:</b> <span id="modelNameRti">Gemini 3.8 Flash</span></span>
+  <span style="font-size: 9.5px; color: var(--ink-muted);">Form-A (Section 6(1))</span>
+</div>
 <div style="margin-bottom: 6px;">
 <label class="form-label" style="font-size: 10px;"><span class="i18n-en">Subject Matter (Section 6(1))</span><span class="i18n-sep"> • </span><span class="i18n-hi">आवेदन का विषय (धारा 6(1))</span></label>
 <input id="editDraftSubject" type="text"/>
@@ -1570,6 +1612,10 @@
 </div>
 </div>
 <div class="hidden" id="docPanelAppeal">
+<div id="modelStampAppeal" style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 77, 107, 0.07); border: 1px solid rgba(30, 77, 107, 0.2); border-radius: 3px; padding: 4px 8px; margin-bottom: 8px; font-size: 10.5px; font-family: var(--font-mono); color: var(--gov-navy);">
+  <span><b>⚡ AI Drafting Engine:</b> <span id="modelNameAppeal">Gemini 3.8 Flash</span></span>
+  <span style="font-size: 9.5px; color: var(--ink-muted);">First Appeal (Section 19(1))</span>
+</div>
 <div style="margin-bottom: 6px;">
 <label class="form-label" style="font-size: 10px;"><span class="i18n-en">Memorandum of First Appeal (Section 19(1))</span><span class="i18n-sep"> • </span><span class="i18n-hi">प्रथम अपील का विषय (धारा 19(1))</span></label>
 <input id="viewAppealSubject" readonly="" type="text"/>
@@ -1584,6 +1630,10 @@
 </div>
 </div>
 <div class="hidden" id="docPanelNotice">
+<div id="modelStampNotice" style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 77, 107, 0.07); border: 1px solid rgba(30, 77, 107, 0.2); border-radius: 3px; padding: 4px 8px; margin-bottom: 8px; font-size: 10.5px; font-family: var(--font-mono); color: var(--gov-navy);">
+  <span><b>⚡ AI Drafting Engine:</b> <span id="modelNameNotice">Gemini 3.8 Flash</span></span>
+  <span style="font-size: 9.5px; color: var(--ink-muted);">Statutory Legal Notice (Section 80 CPC)</span>
+</div>
 <label class="form-label" style="font-size: 10px;"><span class="i18n-en">Statutory Legal Notice (Section 80 CPC)</span><span class="i18n-sep"> • </span><span class="i18n-hi">धारा 80 सीपीसी विधिक नोटिस</span></label>
 <textarea id="viewLegalNoticeText" readonly="" rows="8" style="font-family: var(--font-mono); font-size: 10.5px;"></textarea>
 </div>
