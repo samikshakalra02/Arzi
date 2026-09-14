@@ -52,7 +52,7 @@ The platform combines rule-based legal templates with intelligent classification
 | Document Generation | ReportLab (PDF generation) |
 | Validation | Pydantic / Pydantic Settings |
 | Testing | Pytest |
-| Deployment | Docker, Railway, Render, Vercel |
+| Deployment | Railway|
 
 ---
 
