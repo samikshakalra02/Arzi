@@ -5,6 +5,135 @@
 
 const API_BASE = "/api/v1";
 
+// Standalone Local Timestamp Generator
+function getLocalTimestamp() {
+  const dt = new Date();
+  const y = dt.getFullYear();
+  const m = String(dt.getMonth() + 1).padStart(2, "0");
+  const d = String(dt.getDate()).padStart(2, "0");
+  const h = String(dt.getHours()).padStart(2, "0");
+  const min = String(dt.getMinutes()).padStart(2, "0");
+  const s = String(dt.getSeconds()).padStart(2, "0");
+  return `${y}-${m}-${d} ${h}:${min}:${s}`;
+}
+window.getLocalTimestamp = getLocalTimestamp;
+
+// Default Immutable Seed Run Logs across Diverse Civic Dockets
+const DEFAULT_SEED_RUN_LOGS = [
+  {
+    run_id: "RLOG-5009",
+    timestamp: "2026-09-15 04:30:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1049",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1049 for complainant Citizen (Food & Civil Supplies)",
+    result: "SUCCESS",
+    correlation_id: "CORR-ARZ-1049"
+  },
+  {
+    run_id: "RLOG-5008",
+    timestamp: "2026-09-15 04:15:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1048",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1048 for Rohit Verma (Food Safety & Hygiene)",
+    result: "SUCCESS",
+    correlation_id: "CORR-104801"
+  },
+  {
+    run_id: "RLOG-5007",
+    timestamp: "2026-09-15 03:50:00",
+    event_type: "LEGAL_DISPATCH_COMPLETED",
+    case_id: "ARZ-1048",
+    actor: "Adv. S. Kalra (Bar Council Counsel)",
+    source: "Legal Dispatch Suite",
+    action: "Statutory demand notice issued under FSSA 2006 for ARZ-1048 with speed post tracking",
+    result: "DISPATCH_SUCCESS",
+    correlation_id: "CORR-104802"
+  },
+  {
+    run_id: "RLOG-5006",
+    timestamp: "2026-09-15 03:10:00",
+    event_type: "INPLACE_COMPLAINANT_FIX",
+    case_id: "ARZ-1046",
+    actor: "Adv. S. Kalra (Legal NGO)",
+    source: "Approval Workspace",
+    action: "Corrected complainant name in-place from 'Samiksha' to 'Shivanshu Pandey' & resolved duplicacy with ARZ-1047",
+    result: "INPLACE_UPDATE_SUCCESS",
+    correlation_id: "CORR-104603"
+  },
+  {
+    run_id: "RLOG-5005",
+    timestamp: "2026-09-15 02:45:00",
+    event_type: "DEPT_OVERRIDE_CORRECTED",
+    case_id: "ARZ-1046",
+    actor: "Legal Operator",
+    source: "Approval Workspace",
+    action: "Operator corrected department from Food & Civil Supplies -> Revenue & Land Records (15-sec correction)",
+    result: "OVERRIDE_SUCCESS",
+    correlation_id: "CORR-104602"
+  },
+  {
+    run_id: "RLOG-5004",
+    timestamp: "2026-09-15 02:30:00",
+    event_type: "SECTION_6_3_TRANSFER",
+    case_id: "ARZ-1045",
+    actor: "Public Information Officer",
+    source: "Delhi Jal Board Desk",
+    action: "Transferred case ARZ-1045 to Urban Development & Drainage under Section 6(3)",
+    result: "TRANSFER_SUCCESS",
+    correlation_id: "CORR-104501"
+  },
+  {
+    run_id: "RLOG-5003",
+    timestamp: "2026-09-15 02:00:00",
+    event_type: "SECTION_7_1_FASTTRACK",
+    case_id: "ARZ-1044",
+    actor: "Emergency Triage Gateway",
+    source: "48-Hour Fast-Track Engine",
+    action: "Fast-tracked case ARZ-1044 under Section 7(1) Life & Liberty for Smt. Kamla Devi (Health & Family Welfare)",
+    result: "FASTTRACK_ACTIVATED",
+    correlation_id: "CORR-104401"
+  },
+  {
+    run_id: "RLOG-5002",
+    timestamp: "2026-09-15 01:30:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1042",
+    actor: "System Ingestion Gateway",
+    source: "Web Intake Portal",
+    action: "Application ref RC-88492 queued for PIO inspection at Civil Lines DSO",
+    result: "SUCCESS",
+    correlation_id: "CORR-104202"
+  },
+  {
+    run_id: "RLOG-5001",
+    timestamp: "2026-09-15 01:15:00",
+    event_type: "INTAKE_RECEIVED",
+    case_id: "ARZ-1042",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1042 for Sunita Devi (Food & Civil Supplies - Ration Card Delay)",
+    result: "SUCCESS",
+    correlation_id: "CORR-104201"
+  }
+];
+
+// Immutable Run Logs & Multi-Field Search Cache (Initialized from localStorage or default seed)
+var allRunLogsCache = (() => {
+  try {
+    const raw = localStorage.getItem("arzi_run_logs_ledger");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  return [...DEFAULT_SEED_RUN_LOGS];
+})();
+var allCasesCache = [];
+
 // =========================================================================
 // BILINGUAL (ENGLISH / HINDI) TRANSLATION ENGINE & DICTIONARY
 // =========================================================================
@@ -3575,7 +3704,7 @@ function renderCaseQueueFromCache() {
 
 // Submit Citizen / Advocate Intake
 async function submitIntake(event) {
-  event.preventDefault();
+  if (event) event.preventDefault();
 
   const submitBtn = (event && event.target) ? event.target.querySelector('button[type="submit"]') : document.getElementById("btnRegisterCase");
   let origBtnHtml = "";
@@ -3593,70 +3722,89 @@ async function submitIntake(event) {
   }
 
   try {
+    const rawGrievanceInput = document.getElementById("rawGrievance");
+    const raw_grievance = rawGrievanceInput ? rawGrievanceInput.value.trim() : "";
+    if (!raw_grievance) {
+      if (typeof showToast === "function") {
+        showToast(currentLang === "hi" ? "कृपया अपनी शिकायत का विवरण दर्ज करें।" : "Please enter your grievance narrative.", "warning");
+      } else {
+        alert(currentLang === "hi" ? "कृपया अपनी शिकायत का विवरण दर्ज करें।" : "Please enter your grievance narrative.");
+      }
+      return;
+    }
+
     const pincodeInput = document.getElementById("complainantPincode");
-    const pincode = pincodeInput ? pincodeInput.value.trim() : "";
+    const pincode = (pincodeInput && pincodeInput.value.trim()) || "221005";
+
+    const nameInput = document.getElementById("complainantName");
+    const contactInput = document.getElementById("complainantContact");
+    const addrInput = document.getElementById("complainantAddr");
+    const langSelect = document.getElementById("complainantLang");
 
     const complainant = {
-      name: document.getElementById("complainantName").value.trim(),
-      contact: document.getElementById("complainantContact").value.trim(),
-      address: document.getElementById("complainantAddr").value.trim(),
+      name: (nameInput && nameInput.value.trim()) || "Citizen Applicant",
+      contact: (contactInput && contactInput.value.trim()) || "+91-9876543210",
+      address: (addrInput && addrInput.value.trim()) || "Assi Ghat, Varanasi, UP",
       pincode: pincode,
-      language: document.getElementById("complainantLang").value
+      language: (langSelect && langSelect.value) || "English"
     };
 
-    const raw_grievance = document.getElementById("rawGrievance").value.trim();
-    const application_ref_no = document.getElementById("intakeRefNo").value.trim();
-    const original_submission_date = document.getElementById("intakeSubDate").value.trim();
+    const refNoInput = document.getElementById("intakeRefNo");
+    const application_ref_no = (refNoInput && refNoInput.value.trim()) || `REF-${Math.floor(10000 + Math.random() * 90000)}`;
+    const dateInput = document.getElementById("intakeSubDate");
+    const original_submission_date = (dateInput && dateInput.value.trim()) || getLocalTimestamp().slice(0, 10);
     const is_urgent = document.getElementById("intakeUrgent") ? document.getElementById("intakeUrgent").checked : false;
 
-    let finalCase = null;
+    // 1. Immediately determine next Case ID
+    const existingIds = (allCasesCache || []).map(c => {
+      const m = (c.case_id || "").match(/\d+/);
+      return m ? parseInt(m[0]) : 1040;
+    });
+    const nextNum = Math.max(...existingIds, 1048) + 1;
+    const localCaseId = `ARZ-${nextNum}`;
 
+    let finalCase = buildLocalRegisteredCase({
+      caseId: localCaseId,
+      complainant,
+      raw_grievance,
+      application_ref_no,
+      original_submission_date,
+      is_urgent,
+      pincode
+    });
+
+    // 2. Fast non-blocking / short-timeout server request (max 1.2s so UI is never stuck on static/offline)
     try {
+      const controller = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 1200) : null;
+
       const res = await fetch(`${API_BASE}/cases/intake`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ complainant, raw_grievance, application_ref_no, original_submission_date, is_urgent, pincode, lang: currentLang })
+        body: JSON.stringify({ complainant, raw_grievance, application_ref_no, original_submission_date, is_urgent, pincode, lang: currentLang }),
+        signal: controller ? controller.signal : undefined
       });
+      if (timeoutId) clearTimeout(timeoutId);
 
-      if (res.ok) {
+      if (res && res.ok) {
         const data = await res.json().catch(() => null);
         if (data && data.case) {
           finalCase = data.case;
         }
-      } else {
-        console.warn("Intake server returned non-200 status:", res.status);
       }
     } catch (err) {
-      console.warn("Server intake network error, applying zero-latency local fallback:", err);
+      console.warn("Intake fast server sync skipped, using deterministic local docket:", err);
     }
 
-    // Guaranteed fallback registration if server had network/500 glitch
-    if (!finalCase) {
-      const existingIds = (allCasesCache || []).map(c => {
-        const m = (c.case_id || "").match(/\d+/);
-        return m ? parseInt(m[0]) : 1040;
-      });
-      const nextNum = Math.max(...existingIds, 1048) + 1;
-      const caseId = `ARZ-${nextNum}`;
-      finalCase = buildLocalRegisteredCase({
-        caseId,
-        complainant,
-        raw_grievance,
-        application_ref_no,
-        original_submission_date,
-        is_urgent,
-        pincode
-      });
-    }
-
-    // Reset intake form
-    document.getElementById("intakeForm").reset();
+    // 3. Reset intake form
+    const intakeForm = document.getElementById("intakeForm");
+    if (intakeForm) intakeForm.reset();
     const pBadge = document.getElementById("pincodeJurisdictionBadge");
     if (pBadge) { pBadge.style.display = "none"; pBadge.innerHTML = ""; }
     const mlBox = document.getElementById("liveMlPredictionBox");
     if (mlBox) { mlBox.style.display = "none"; mlBox.innerHTML = ""; }
 
-    // Update in-memory case list
+    // 4. Update in-memory case list
     if (!allCasesCache) allCasesCache = [];
     const idx = allCasesCache.findIndex(x => x.case_id === finalCase.case_id);
     if (idx >= 0) {
@@ -3665,13 +3813,15 @@ async function submitIntake(event) {
       allCasesCache.unshift(finalCase);
     }
 
-    // Refresh case table
-    renderCaseQueueFromCache();
+    // 5. Refresh case table
+    if (typeof renderCaseQueueFromCache === "function") {
+      renderCaseQueueFromCache();
+    }
 
-    // Update Run Log Audit Trail immediately so case record reflects instantly
+    // 6. Update Run Log Audit Trail immediately with new Case ID
     const regLogEntry = {
       run_id: `RLOG-${Date.now().toString().slice(-4)}`,
-      timestamp: typeof getLocalTimestamp === "function" ? getLocalTimestamp() : new Date().toISOString().replace("T", " ").slice(0, 19),
+      timestamp: getLocalTimestamp(),
       event_type: "CASE_REGISTERED",
       case_id: finalCase.case_id,
       actor: "Citizen Intake Gateway",
@@ -3680,29 +3830,39 @@ async function submitIntake(event) {
       result: "SUCCESS",
       correlation_id: `CORR-${finalCase.case_id}`
     };
+
     if (!allRunLogsCache) allRunLogsCache = [];
     allRunLogsCache = [regLogEntry, ...allRunLogsCache.filter(l => !(l.case_id === finalCase.case_id && (l.event_type === "CASE_REGISTERED" || l.event_type === "INTAKE_RECEIVED")))];
     try {
       localStorage.setItem("arzi_run_logs_ledger", JSON.stringify(allRunLogsCache.slice(0, 100)));
     } catch (e) {}
-    renderRunLogsTable(allRunLogsCache);
-    const rBadge = document.getElementById("runLogCountBadge");
-    if (rBadge) rBadge.textContent = allRunLogsCache.length;
 
-    // Reset search input so newly registered case appears at the top when viewing Audit Run Log
+    // Reset search input so newly registered case appears at the top
     const searchInput = document.getElementById("runLogSearchInput");
     if (searchInput) searchInput.value = "";
 
-    // Populate workspace and switch directly to registered case screen!
+    if (typeof renderRunLogsTable === "function") {
+      renderRunLogsTable(allRunLogsCache);
+    }
+    const rBadge = document.getElementById("runLogCountBadge");
+    if (rBadge) rBadge.textContent = allRunLogsCache.length;
+
+    // 7. Populate workspace and switch directly to registered case screen
     currentCase = finalCase;
-    populateWorkspaceFields(finalCase);
-    updatePioMapForCase(finalCase);
-    switchMainModule("casework");
+    if (typeof populateWorkspaceFields === "function") populateWorkspaceFields(finalCase);
+    if (typeof switchMainModule === "function") switchMainModule("casework");
 
-    // Show "Successfully registered!" modal & notification
-    showCaseRegistrationSuccessScreen(finalCase);
+    // 8. Show "Successfully registered!" modal & notification
+    if (typeof showCaseRegistrationSuccessScreen === "function") {
+      showCaseRegistrationSuccessScreen(finalCase);
+    }
 
-    try { await loadRunLogs(); } catch (e) {}
+    // 9. Non-blocking background sync for map and server run-logs
+    setTimeout(() => {
+      try { if (typeof updatePioMapForCase === "function") updatePioMapForCase(finalCase); } catch (e) {}
+      try { if (typeof loadRunLogs === "function") loadRunLogs(); } catch (e) {}
+    }, 50);
+
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
@@ -4412,126 +4572,7 @@ function viewPdf(type = "rti") {
   window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=${type}&lang=${langParam}`, "_blank");
 }
 
-// Local Time Generator (YYYY-MM-DD HH:MM:SS) for Indian Standard Time / Local system consistency
-function getLocalTimestamp() {
-  const now = new Date();
-  const pad = n => String(n).padStart(2, '0');
-  const y = now.getFullYear();
-  const m = pad(now.getMonth() + 1);
-  const d = pad(now.getDate());
-  const h = pad(now.getHours());
-  const min = pad(now.getMinutes());
-  const s = pad(now.getSeconds());
-  return `${y}-${m}-${d} ${h}:${min}:${s}`;
-}
-window.getLocalTimestamp = getLocalTimestamp;
-
-// Default Immutable Seed Run Logs across Diverse Civic Dockets
-const DEFAULT_SEED_RUN_LOGS = [
-  {
-    run_id: "RLOG-5009",
-    timestamp: "2026-09-15 04:30:00",
-    event_type: "CASE_REGISTERED",
-    case_id: "ARZ-1049",
-    actor: "Citizen Intake Gateway",
-    source: "Web Intake Portal",
-    action: "Successfully registered case ARZ-1049 for complainant Citizen (Food & Civil Supplies)",
-    result: "SUCCESS",
-    correlation_id: "CORR-ARZ-1049"
-  },
-  {
-    run_id: "RLOG-5008",
-    timestamp: "2026-09-15 04:15:00",
-    event_type: "CASE_REGISTERED",
-    case_id: "ARZ-1048",
-    actor: "Citizen Intake Gateway",
-    source: "Web Intake Portal",
-    action: "Successfully registered case ARZ-1048 for Rohit Verma (Food Safety & Hygiene)",
-    result: "SUCCESS",
-    correlation_id: "CORR-104801"
-  },
-  {
-    run_id: "RLOG-5007",
-    timestamp: "2026-09-15 03:50:00",
-    event_type: "LEGAL_DISPATCH_COMPLETED",
-    case_id: "ARZ-1048",
-    actor: "Adv. S. Kalra (Bar Council Counsel)",
-    source: "Legal Dispatch Suite",
-    action: "Statutory demand notice issued under FSSA 2006 for ARZ-1048 with speed post tracking",
-    result: "DISPATCH_SUCCESS",
-    correlation_id: "CORR-104802"
-  },
-  {
-    run_id: "RLOG-5006",
-    timestamp: "2026-09-15 03:10:00",
-    event_type: "INPLACE_COMPLAINANT_FIX",
-    case_id: "ARZ-1046",
-    actor: "Adv. S. Kalra (Legal NGO)",
-    source: "Approval Workspace",
-    action: "Corrected complainant name in-place from 'Samiksha' to 'Shivanshu Pandey' & resolved duplicacy with ARZ-1047",
-    result: "INPLACE_UPDATE_SUCCESS",
-    correlation_id: "CORR-104603"
-  },
-  {
-    run_id: "RLOG-5005",
-    timestamp: "2026-09-15 02:45:00",
-    event_type: "DEPT_OVERRIDE_CORRECTED",
-    case_id: "ARZ-1046",
-    actor: "Legal Operator",
-    source: "Approval Workspace",
-    action: "Operator corrected department from Food & Civil Supplies -> Revenue & Land Records (15-sec correction)",
-    result: "OVERRIDE_SUCCESS",
-    correlation_id: "CORR-104602"
-  },
-  {
-    run_id: "RLOG-5004",
-    timestamp: "2026-09-15 02:30:00",
-    event_type: "SECTION_6_3_TRANSFER",
-    case_id: "ARZ-1045",
-    actor: "Public Information Officer",
-    source: "Delhi Jal Board Desk",
-    action: "Transferred case ARZ-1045 to Urban Development & Drainage under Section 6(3)",
-    result: "TRANSFER_SUCCESS",
-    correlation_id: "CORR-104501"
-  },
-  {
-    run_id: "RLOG-5003",
-    timestamp: "2026-09-15 02:00:00",
-    event_type: "SECTION_7_1_FASTTRACK",
-    case_id: "ARZ-1044",
-    actor: "Emergency Triage Gateway",
-    source: "48-Hour Fast-Track Engine",
-    action: "Fast-tracked case ARZ-1044 under Section 7(1) Life & Liberty for Smt. Kamla Devi (Health & Family Welfare)",
-    result: "FASTTRACK_ACTIVATED",
-    correlation_id: "CORR-104401"
-  },
-  {
-    run_id: "RLOG-5002",
-    timestamp: "2026-09-15 01:30:00",
-    event_type: "CASE_REGISTERED",
-    case_id: "ARZ-1042",
-    actor: "System Ingestion Gateway",
-    source: "Web Intake Portal",
-    action: "Application ref RC-88492 queued for PIO inspection at Civil Lines DSO",
-    result: "SUCCESS",
-    correlation_id: "CORR-104202"
-  },
-  {
-    run_id: "RLOG-5001",
-    timestamp: "2026-09-15 01:15:00",
-    event_type: "INTAKE_RECEIVED",
-    case_id: "ARZ-1042",
-    actor: "Citizen Intake Gateway",
-    source: "Web Intake Portal",
-    action: "Successfully registered case ARZ-1042 for Sunita Devi (Food & Civil Supplies - Ration Card Delay)",
-    result: "SUCCESS",
-    correlation_id: "CORR-104201"
-  }
-];
-
-// Immutable Run Logs & Multi-Field Search Cache
-let allRunLogsCache = [...DEFAULT_SEED_RUN_LOGS];
-let allCasesCache = [];
+// [Seed run logs and cache initialized at top of script]
 
 async function loadRunLogs() {
   try {
@@ -4542,16 +4583,19 @@ async function loadRunLogs() {
       if (raw) localSavedLogs = JSON.parse(raw);
     } catch (e) {}
 
-    // 2. Fetch server logs
+    // 2. Fetch server logs (with fast 1s timeout for offline/static resilience)
     let serverLogs = [];
     try {
-      const res = await fetch(`${API_BASE}/run-log`);
-      if (res.ok) {
-        const data = await res.json();
+      const controller = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 1000) : null;
+      const res = await fetch(`${API_BASE}/run-log`, { signal: controller ? controller.signal : undefined });
+      if (timeoutId) clearTimeout(timeoutId);
+      if (res && res.ok) {
+        const data = await res.json().catch(() => null);
         if (data && data.run_logs) serverLogs = data.run_logs;
       }
     } catch (e) {
-      console.warn("Could not fetch server run-logs, using local cache:", e);
+      // server offline or static host
     }
 
     // 3. Merge in-memory cache, local storage, server logs, and default seeds
@@ -4570,17 +4614,22 @@ async function loadRunLogs() {
       localStorage.setItem("arzi_run_logs_ledger", JSON.stringify(allRunLogsCache.slice(0, 100)));
     } catch (e) {}
 
-    // Also load cases to cross-reference keywords across Name, Place, Subject, Address, Officer
+    // Also load cases to cross-reference keywords (with fast 1s timeout)
     try {
-      const caseRes = await fetch(`${API_BASE}/cases`);
-      const caseData = await caseRes.json();
-      if (caseRes.ok) {
-        const serverCases = caseData.cases || [];
-        const localCases = (allCasesCache || []).filter(c => !serverCases.some(sc => sc.case_id === c.case_id));
-        allCasesCache = [...serverCases, ...localCases];
+      const controller = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 1000) : null;
+      const caseRes = await fetch(`${API_BASE}/cases`, { signal: controller ? controller.signal : undefined });
+      if (timeoutId) clearTimeout(timeoutId);
+      if (caseRes && caseRes.ok) {
+        const caseData = await caseRes.json().catch(() => null);
+        if (caseData && caseData.cases) {
+          const serverCases = caseData.cases || [];
+          const localCases = (allCasesCache || []).filter(c => !serverCases.some(sc => sc.case_id === c.case_id));
+          allCasesCache = [...serverCases, ...localCases];
+        }
       }
     } catch (e) {
-      console.warn("Could not preload cases for run log search:", e);
+      // static host
     }
 
     const searchInput = document.getElementById("runLogSearchInput");
