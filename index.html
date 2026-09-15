@@ -2102,7 +2102,7 @@
 <div class="ops-panel-header">
 <div style="display: flex; align-items: center; gap: 8px;">
 <i data-lucide="scroll-text" style="width: 14px; height: 14px; color: var(--gov-navy);"></i>
-<span class="ops-panel-title"><span class="i18n-en">Immutable Code-Generated Execution Run Log (</span><span class="i18n-hi">अपरिवर्तनीय ऑडिट रन लॉग (</span><span id="runLogCountBadge">0</span> <span class="i18n-en">Records)</span><span class="i18n-hi">रिकॉर्ड)</span></span>
+<span class="ops-panel-title"><span class="i18n-en">Immutable Code-Generated Execution Run Log (</span><span class="i18n-hi">अपरिवर्तनीय ऑडिट रन लॉग (</span><span id="runLogCountBadge">9</span> <span class="i18n-en">Records)</span><span class="i18n-hi">रिकॉर्ड)</span></span>
 </div>
 <span class="status-pill approved" id="runLogFilterBadge" style="font-size: 10px;"><span class="i18n-en">All Events</span><span class="i18n-sep"> • </span><span class="i18n-hi">सभी घटनाएं</span></span>
 </div>
@@ -2118,7 +2118,80 @@
 <th><span class="i18n-en">Correlation ID</span><span class="i18n-sep"> / </span><span class="i18n-hi">ट्रैकिंग आईडी</span></th>
 </tr>
 </thead>
-<tbody id="runLogBody"></tbody>
+<tbody id="runLogBody">
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 04:30:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">CASE_REGISTERED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1049')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1049</a></td>
+<td><b>Citizen Intake Gateway</b></td>
+<td>Successfully registered case ARZ-1049 for complainant Citizen (Food &amp; Civil Supplies)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-ARZ-1049</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 04:15:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">CASE_REGISTERED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1048')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1048</a></td>
+<td><b>Citizen Intake Gateway</b></td>
+<td>Successfully registered case ARZ-1048 for Rohit Verma (Food Safety &amp; Hygiene)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104801</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 03:50:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">LEGAL_DISPATCH_COMPLETED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1048')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1048</a></td>
+<td><b>Adv. S. Kalra (Bar Council Counsel)</b></td>
+<td>Statutory demand notice issued under FSSA 2006 for ARZ-1048 with speed post tracking<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: DISPATCH_SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104802</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 03:10:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">INPLACE_COMPLAINANT_FIX</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1046')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1046</a></td>
+<td><b>Adv. S. Kalra (Legal NGO)</b></td>
+<td>Corrected complainant name in-place from 'Samiksha' to 'Shivanshu Pandey' &amp; resolved duplicacy with ARZ-1047<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: INPLACE_UPDATE_SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104603</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 02:45:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">DEPT_OVERRIDE_CORRECTED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1046')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1046</a></td>
+<td><b>Legal Operator</b></td>
+<td>Operator corrected department from Food &amp; Civil Supplies -&gt; Revenue &amp; Land Records (15-sec correction)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: OVERRIDE_SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104602</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 02:30:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">SECTION_6_3_TRANSFER</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1045')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1045</a></td>
+<td><b>Public Information Officer</b></td>
+<td>Transferred case ARZ-1045 to Urban Development &amp; Drainage under Section 6(3)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: TRANSFER_SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104501</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 02:00:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">SECTION_7_1_FASTTRACK</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1044')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1044</a></td>
+<td><b>Emergency Triage Gateway</b></td>
+<td>Fast-tracked case ARZ-1044 under Section 7(1) Life &amp; Liberty for Smt. Kamla Devi (Health &amp; Family Welfare)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: FASTTRACK_ACTIVATED</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104401</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 01:30:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">CASE_REGISTERED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1042')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1042</a></td>
+<td><b>System Ingestion Gateway</b></td>
+<td>Application ref RC-88492 queued for PIO inspection at Civil Lines DSO<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104202</td>
+</tr>
+<tr>
+<td style="font-family: var(--font-mono); font-size: 11px;">2026-09-15 01:15:00</td>
+<td><span class="statutory-tag" style="font-size: 10px;">INTAKE_RECEIVED</span></td>
+<td><a href="#" onclick="event.preventDefault(); inspectCaseFromRunLog('ARZ-1042')" style="font-family: var(--font-mono); color: var(--gov-navy); font-weight: 700; font-size: 11.5px; text-decoration: underline;">ARZ-1042</a></td>
+<td><b>Citizen Intake Gateway</b></td>
+<td>Successfully registered case ARZ-1042 for Sunita Devi (Food &amp; Civil Supplies - Ration Card Delay)<br/><span style="font-family: var(--font-mono); font-size: 10px; color: var(--status-active);">Result: SUCCESS</span></td>
+<td style="font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted);">CORR-104201</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>

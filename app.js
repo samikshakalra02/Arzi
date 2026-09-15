@@ -4426,8 +4426,111 @@ function getLocalTimestamp() {
 }
 window.getLocalTimestamp = getLocalTimestamp;
 
+// Default Immutable Seed Run Logs across Diverse Civic Dockets
+const DEFAULT_SEED_RUN_LOGS = [
+  {
+    run_id: "RLOG-5009",
+    timestamp: "2026-09-15 04:30:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1049",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1049 for complainant Citizen (Food & Civil Supplies)",
+    result: "SUCCESS",
+    correlation_id: "CORR-ARZ-1049"
+  },
+  {
+    run_id: "RLOG-5008",
+    timestamp: "2026-09-15 04:15:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1048",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1048 for Rohit Verma (Food Safety & Hygiene)",
+    result: "SUCCESS",
+    correlation_id: "CORR-104801"
+  },
+  {
+    run_id: "RLOG-5007",
+    timestamp: "2026-09-15 03:50:00",
+    event_type: "LEGAL_DISPATCH_COMPLETED",
+    case_id: "ARZ-1048",
+    actor: "Adv. S. Kalra (Bar Council Counsel)",
+    source: "Legal Dispatch Suite",
+    action: "Statutory demand notice issued under FSSA 2006 for ARZ-1048 with speed post tracking",
+    result: "DISPATCH_SUCCESS",
+    correlation_id: "CORR-104802"
+  },
+  {
+    run_id: "RLOG-5006",
+    timestamp: "2026-09-15 03:10:00",
+    event_type: "INPLACE_COMPLAINANT_FIX",
+    case_id: "ARZ-1046",
+    actor: "Adv. S. Kalra (Legal NGO)",
+    source: "Approval Workspace",
+    action: "Corrected complainant name in-place from 'Samiksha' to 'Shivanshu Pandey' & resolved duplicacy with ARZ-1047",
+    result: "INPLACE_UPDATE_SUCCESS",
+    correlation_id: "CORR-104603"
+  },
+  {
+    run_id: "RLOG-5005",
+    timestamp: "2026-09-15 02:45:00",
+    event_type: "DEPT_OVERRIDE_CORRECTED",
+    case_id: "ARZ-1046",
+    actor: "Legal Operator",
+    source: "Approval Workspace",
+    action: "Operator corrected department from Food & Civil Supplies -> Revenue & Land Records (15-sec correction)",
+    result: "OVERRIDE_SUCCESS",
+    correlation_id: "CORR-104602"
+  },
+  {
+    run_id: "RLOG-5004",
+    timestamp: "2026-09-15 02:30:00",
+    event_type: "SECTION_6_3_TRANSFER",
+    case_id: "ARZ-1045",
+    actor: "Public Information Officer",
+    source: "Delhi Jal Board Desk",
+    action: "Transferred case ARZ-1045 to Urban Development & Drainage under Section 6(3)",
+    result: "TRANSFER_SUCCESS",
+    correlation_id: "CORR-104501"
+  },
+  {
+    run_id: "RLOG-5003",
+    timestamp: "2026-09-15 02:00:00",
+    event_type: "SECTION_7_1_FASTTRACK",
+    case_id: "ARZ-1044",
+    actor: "Emergency Triage Gateway",
+    source: "48-Hour Fast-Track Engine",
+    action: "Fast-tracked case ARZ-1044 under Section 7(1) Life & Liberty for Smt. Kamla Devi (Health & Family Welfare)",
+    result: "FASTTRACK_ACTIVATED",
+    correlation_id: "CORR-104401"
+  },
+  {
+    run_id: "RLOG-5002",
+    timestamp: "2026-09-15 01:30:00",
+    event_type: "CASE_REGISTERED",
+    case_id: "ARZ-1042",
+    actor: "System Ingestion Gateway",
+    source: "Web Intake Portal",
+    action: "Application ref RC-88492 queued for PIO inspection at Civil Lines DSO",
+    result: "SUCCESS",
+    correlation_id: "CORR-104202"
+  },
+  {
+    run_id: "RLOG-5001",
+    timestamp: "2026-09-15 01:15:00",
+    event_type: "INTAKE_RECEIVED",
+    case_id: "ARZ-1042",
+    actor: "Citizen Intake Gateway",
+    source: "Web Intake Portal",
+    action: "Successfully registered case ARZ-1042 for Sunita Devi (Food & Civil Supplies - Ration Card Delay)",
+    result: "SUCCESS",
+    correlation_id: "CORR-104201"
+  }
+];
+
 // Immutable Run Logs & Multi-Field Search Cache
-let allRunLogsCache = [];
+let allRunLogsCache = [...DEFAULT_SEED_RUN_LOGS];
 let allCasesCache = [];
 
 async function loadRunLogs() {
@@ -4451,10 +4554,10 @@ async function loadRunLogs() {
       console.warn("Could not fetch server run-logs, using local cache:", e);
     }
 
-    // 3. Merge server logs, in-memory cache, and local storage with clean deduplication
+    // 3. Merge in-memory cache, local storage, server logs, and default seeds
     const seen = new Set();
     const merged = [];
-    for (const log of [...serverLogs, ...(allRunLogsCache || []), ...localSavedLogs]) {
+    for (const log of [...(allRunLogsCache || []), ...localSavedLogs, ...serverLogs, ...DEFAULT_SEED_RUN_LOGS]) {
       const key = log.run_id || `${log.case_id}_${log.event_type}_${(log.timestamp || '').slice(0, 19)}`;
       if (!seen.has(key)) {
         seen.add(key);
@@ -6693,10 +6796,16 @@ window.handleLogout = handleLogout;
 window.updateHeaderAuthState = updateHeaderAuthState;
 window.showPage = showPage;
 
-// Auto-initialize calculator on DOM load
+// Auto-initialize calculator and run log ledger on DOM load
 document.addEventListener("DOMContentLoaded", () => {
   initSlaPenaltyCalculator();
   if (typeof setDraftingAiModel === "function") {
     setDraftingAiModel(currentAiDraftingModel, false);
+  }
+  if (typeof renderRunLogsTable === "function" && typeof allRunLogsCache !== "undefined") {
+    renderRunLogsTable(allRunLogsCache);
+  }
+  if (typeof loadRunLogs === "function") {
+    loadRunLogs();
   }
 });
