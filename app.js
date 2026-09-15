@@ -3006,7 +3006,7 @@ function saveStudioDocToQueue() {
   // Update Run Log reactive ledger
   const studioLog = {
     run_id: `RLOG-${Date.now().toString().slice(-4)}`,
-    timestamp: new Date().toISOString().replace("T", " ").slice(0, 19),
+    timestamp: typeof getLocalTimestamp === "function" ? getLocalTimestamp() : new Date().toISOString().replace("T", " ").slice(0, 19),
     event_type: "CASE_REGISTERED",
     case_id: docketRef,
     actor: "Legal Studio Workspace",
@@ -3017,6 +3017,9 @@ function saveStudioDocToQueue() {
   };
   if (!allRunLogsCache) allRunLogsCache = [];
   allRunLogsCache = [studioLog, ...allRunLogsCache.filter(l => !(l.case_id === docketRef && l.event_type === "CASE_REGISTERED"))];
+  try {
+    localStorage.setItem("arzi_run_logs_ledger", JSON.stringify(allRunLogsCache.slice(0, 100)));
+  } catch (e) {}
   if (typeof renderRunLogsTable === "function") renderRunLogsTable(allRunLogsCache);
   const rCount = document.getElementById("runLogCountBadge");
   if (rCount) rCount.textContent = allRunLogsCache.length;
@@ -3192,10 +3195,16 @@ function switchDashTab(tabId) {
   if (tabId === "statutory") loadCustomActs();
   if (tabId === "compliance") initSlaPenaltyCalculator();
   if (tabId === "runlog") {
-    loadRunLogs();
+    const searchInput = document.getElementById("runLogSearchInput");
+    if (searchInput && !window._keepRunLogQueryOnce) {
+      searchInput.value = "";
+    }
+    window._keepRunLogQueryOnce = false;
+
     renderRunLogsTable(allRunLogsCache);
     const countBadge = document.getElementById("runLogCountBadge");
     if (countBadge) countBadge.textContent = (allRunLogsCache || []).length;
+    loadRunLogs();
   }
   if (tabId === "pio") {
     updatePioMapForCase(currentCase);
@@ -3354,6 +3363,7 @@ function goToAuditRunLogForCase() {
   const m = document.getElementById("caseRegisteredModal");
   if (m) m.classList.add("hidden");
   const caseId = window.activeRegisteredCaseId || (currentCase && currentCase.case_id) || "";
+  window._keepRunLogQueryOnce = true;
   const searchInput = document.getElementById("runLogSearchInput");
   if (searchInput && caseId) {
     searchInput.value = caseId;
@@ -3661,7 +3671,7 @@ async function submitIntake(event) {
     // Update Run Log Audit Trail immediately so case record reflects instantly
     const regLogEntry = {
       run_id: `RLOG-${Date.now().toString().slice(-4)}`,
-      timestamp: new Date().toISOString().replace("T", " ").slice(0, 19),
+      timestamp: typeof getLocalTimestamp === "function" ? getLocalTimestamp() : new Date().toISOString().replace("T", " ").slice(0, 19),
       event_type: "CASE_REGISTERED",
       case_id: finalCase.case_id,
       actor: "Citizen Intake Gateway",
@@ -3672,9 +3682,16 @@ async function submitIntake(event) {
     };
     if (!allRunLogsCache) allRunLogsCache = [];
     allRunLogsCache = [regLogEntry, ...allRunLogsCache.filter(l => !(l.case_id === finalCase.case_id && (l.event_type === "CASE_REGISTERED" || l.event_type === "INTAKE_RECEIVED")))];
+    try {
+      localStorage.setItem("arzi_run_logs_ledger", JSON.stringify(allRunLogsCache.slice(0, 100)));
+    } catch (e) {}
     renderRunLogsTable(allRunLogsCache);
     const rBadge = document.getElementById("runLogCountBadge");
     if (rBadge) rBadge.textContent = allRunLogsCache.length;
+
+    // Reset search input so newly registered case appears at the top when viewing Audit Run Log
+    const searchInput = document.getElementById("runLogSearchInput");
+    if (searchInput) searchInput.value = "";
 
     // Populate workspace and switch directly to registered case screen!
     currentCase = finalCase;
@@ -4395,27 +4412,50 @@ function viewPdf(type = "rti") {
   window.open(`${API_BASE}/cases/${currentCase.case_id}/pdf?type=${type}&lang=${langParam}`, "_blank");
 }
 
+// Local Time Generator (YYYY-MM-DD HH:MM:SS) for Indian Standard Time / Local system consistency
+function getLocalTimestamp() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const y = now.getFullYear();
+  const m = pad(now.getMonth() + 1);
+  const d = pad(now.getDate());
+  const h = pad(now.getHours());
+  const min = pad(now.getMinutes());
+  const s = pad(now.getSeconds());
+  return `${y}-${m}-${d} ${h}:${min}:${s}`;
+}
+window.getLocalTimestamp = getLocalTimestamp;
+
 // Immutable Run Logs & Multi-Field Search Cache
 let allRunLogsCache = [];
 let allCasesCache = [];
 
 async function loadRunLogs() {
   try {
-    const res = await fetch(`${API_BASE}/run-log`);
-    const data = await res.json();
-    if (!res.ok) {
-      renderRunLogsTable(allRunLogsCache);
-      const countBadge = document.getElementById("runLogCountBadge");
-      if (countBadge) countBadge.textContent = (allRunLogsCache || []).length;
-      return;
+    // 1. Recover locally saved logs first
+    let localSavedLogs = [];
+    try {
+      const raw = localStorage.getItem("arzi_run_logs_ledger");
+      if (raw) localSavedLogs = JSON.parse(raw);
+    } catch (e) {}
+
+    // 2. Fetch server logs
+    let serverLogs = [];
+    try {
+      const res = await fetch(`${API_BASE}/run-log`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.run_logs) serverLogs = data.run_logs;
+      }
+    } catch (e) {
+      console.warn("Could not fetch server run-logs, using local cache:", e);
     }
 
-    const serverLogs = data.run_logs || [];
-    // Merge server logs and cached logs with clean deduplication and sort newest first
+    // 3. Merge server logs, in-memory cache, and local storage with clean deduplication
     const seen = new Set();
     const merged = [];
-    for (const log of [...serverLogs, ...(allRunLogsCache || [])]) {
-      const key = `${log.case_id}_${log.event_type}_${(log.timestamp || '').slice(0, 19)}`;
+    for (const log of [...serverLogs, ...(allRunLogsCache || []), ...localSavedLogs]) {
+      const key = log.run_id || `${log.case_id}_${log.event_type}_${(log.timestamp || '').slice(0, 19)}`;
       if (!seen.has(key)) {
         seen.add(key);
         merged.push(log);
@@ -4423,6 +4463,9 @@ async function loadRunLogs() {
     }
     merged.sort((a, b) => (b.timestamp || "").localeCompare(a.timestamp || ""));
     allRunLogsCache = merged;
+    try {
+      localStorage.setItem("arzi_run_logs_ledger", JSON.stringify(allRunLogsCache.slice(0, 100)));
+    } catch (e) {}
 
     // Also load cases to cross-reference keywords across Name, Place, Subject, Address, Officer
     try {

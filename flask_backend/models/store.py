@@ -533,7 +533,61 @@ class DataStore:
             c48["legal_notice_draft"] = legal_engine.generate_legal_notice_draft(c48, c48_legal, lang="hi")
             self.cases[c48_id] = c48
 
-            # Seed Run Logs
+            # Seed Diverse Run Logs across Multiple Authentic Dockets
+            self.add_run_log(
+                event_type="INTAKE_RECEIVED",
+                case_id="ARZ-1042",
+                actor="Citizen Intake Gateway",
+                source="Web Intake Portal",
+                action="Successfully registered case ARZ-1042 for Sunita Devi (Food & Civil Supplies - Ration Card Delay)",
+                result="SUCCESS",
+                correlation_id="CORR-104201"
+            )
+            self.add_run_log(
+                event_type="CASE_REGISTERED",
+                case_id="ARZ-1042",
+                actor="System Ingestion Gateway",
+                source="Web Intake Portal",
+                action="Application ref RC-88492 queued for PIO inspection at Civil Lines DSO",
+                result="SUCCESS",
+                correlation_id="CORR-104202"
+            )
+            self.add_run_log(
+                event_type="SECTION_7_1_FASTTRACK",
+                case_id="ARZ-1044",
+                actor="Emergency Triage Gateway",
+                source="48-Hour Fast-Track Engine",
+                action="Fast-tracked case ARZ-1044 under Section 7(1) Life & Liberty for Smt. Kamla Devi (Health & Family Welfare)",
+                result="FASTTRACK_ACTIVATED",
+                correlation_id="CORR-104401"
+            )
+            self.add_run_log(
+                event_type="SECTION_6_3_TRANSFER",
+                case_id="ARZ-1045",
+                actor="Public Information Officer",
+                source="Delhi Jal Board Desk",
+                action="Transferred case ARZ-1045 to Urban Development & Drainage under Section 6(3)",
+                result="TRANSFER_SUCCESS",
+                correlation_id="CORR-104501"
+            )
+            self.add_run_log(
+                event_type="CASE_REGISTERED",
+                case_id="ARZ-1048",
+                actor="Citizen Intake Gateway",
+                source="Web Intake Portal",
+                action="Successfully registered case ARZ-1048 for Rohit Verma (Food Safety & Hygiene)",
+                result="SUCCESS",
+                correlation_id="CORR-104801"
+            )
+            self.add_run_log(
+                event_type="LEGAL_DISPATCH_COMPLETED",
+                case_id="ARZ-1048",
+                actor="Adv. S. Kalra (Bar Council Counsel)",
+                source="Legal Dispatch Suite",
+                action="Statutory demand notice issued under FSSA 2006 for ARZ-1048 with speed post tracking",
+                result="DISPATCH_SUCCESS",
+                correlation_id="CORR-104802"
+            )
             self.add_run_log(
                 event_type="INTAKE_RECEIVED",
                 case_id="ARZ-1046",
@@ -565,12 +619,15 @@ class DataStore:
     def add_case(self, case_data: dict) -> dict:
         with self._lock:
             ref_no = case_data.get("application_ref_no")
+            comp_name = (case_data.get("complainant") or {}).get("name", "").strip().lower()
             existing_case = None
             if ref_no and ref_no not in ("Not Provided", "Unconfirmed"):
                 for c in self.cases.values():
+                    c_name = (c.get("complainant") or {}).get("name", "").strip().lower()
                     if c.get("application_ref_no") == ref_no and c["status"] != "MERGED_DUPLICATE":
-                        existing_case = c
-                        break
+                        if not comp_name or not c_name or comp_name in c_name or c_name in comp_name:
+                            existing_case = c
+                            break
 
             if existing_case:
                 case_id = existing_case["case_id"]

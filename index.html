@@ -2072,14 +2072,15 @@
 <!-- Quick Filter Pill Suggestions -->
 <div style="display: flex; gap: 6px; margin-top: 10px; align-items: center; flex-wrap: wrap;">
 <span style="font-size: 10.5px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase;"><span class="i18n-en">Quick Search</span><span class="i18n-sep"> • </span><span class="i18n-hi">त्वरित खोज:</span></span>
+<button class="statutory-tag" onclick="clearRunLogSearch()" style="cursor: pointer; border: 1px solid var(--gov-navy); background: rgba(30, 77, 107, 0.08); font-weight: 700; color: var(--gov-navy);" type="button"><span class="i18n-en">All Events</span><span class="i18n-sep"> • </span><span class="i18n-hi">सभी घटनाएँ</span></button>
+<button class="statutory-tag" onclick="setRunLogSearchQuery('ARZ-1042')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">ARZ-1042 (Ration)</span><span class="i18n-sep"> • </span><span class="i18n-hi">अर्जी-1042 (राशन)</span></button>
+<button class="statutory-tag" onclick="setRunLogSearchQuery('ARZ-1046')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">ARZ-1046 (Mutation)</span><span class="i18n-sep"> • </span><span class="i18n-hi">अर्जी-1046 (नामांतरण)</span></button>
+<button class="statutory-tag" onclick="setRunLogSearchQuery('ARZ-1048')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">ARZ-1048 (Canteen)</span><span class="i18n-sep"> • </span><span class="i18n-hi">अर्जी-1048 (कैंटीन)</span></button>
 <button class="statutory-tag" onclick="setRunLogSearchQuery('Shivanshu')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Shivanshu</span><span class="i18n-sep"> • </span><span class="i18n-hi">शिवंशु</span></button>
 <button class="statutory-tag" onclick="setRunLogSearchQuery('Sunita')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Sunita Devi</span><span class="i18n-sep"> • </span><span class="i18n-hi">सुनीता देवी</span></button>
 <button class="statutory-tag" onclick="setRunLogSearchQuery('Varanasi')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Varanasi</span><span class="i18n-sep"> • </span><span class="i18n-hi">वाराणसी</span></button>
-<button class="statutory-tag" onclick="setRunLogSearchQuery('Mehrauli')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Mehrauli</span><span class="i18n-sep"> • </span><span class="i18n-hi">महरौली</span></button>
 <button class="statutory-tag" onclick="setRunLogSearchQuery('Civil Lines')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Civil Lines</span><span class="i18n-sep"> • </span><span class="i18n-hi">सिविल लाइंस</span></button>
 <button class="statutory-tag" onclick="setRunLogSearchQuery('Sharma')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Shri R. K. Sharma</span><span class="i18n-sep"> • </span><span class="i18n-hi">आर. के. शर्मा</span></button>
-<button class="statutory-tag" onclick="setRunLogSearchQuery('Land Mutation')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">Land Mutation</span><span class="i18n-sep"> • </span><span class="i18n-hi">जमीन नामांतरण</span></button>
-<button class="statutory-tag" onclick="setRunLogSearchQuery('ARZ-1046')" style="cursor: pointer; border: 1px solid var(--border-medium); background: var(--bg-surface);" type="button"><span class="i18n-en">ARZ-1046</span><span class="i18n-sep"> • </span><span class="i18n-hi">अर्जी-1046</span></button>
 </div>
 </div>
 </div>
@@ -2512,6 +2513,6 @@
 </div>
 </footer>
 
-<script src="app.js?v=20260913.1"></script>
+<script src="app.js?v=20260915.3"></script>
 </body>
 </html>
