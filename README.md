@@ -207,3 +207,4 @@ This project is licensed under the **MIT License**.
 ## 🙏 Acknowledgements
 
 Built during the **Automate India Hackathon** at **Microsoft Office, Noida**, with the goal of making Indian public law — RTI filings, legal notices, and statutory compliance — more accessible to everyday citizens.
+Team- Samiksha Kalra, Shivanshu Pandey, Tanya Tiwari and Nivika Goyal
